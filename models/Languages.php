@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\admin\models;
+namespace panix\mod\admin\models;
 
 /**
  * This is the model class for table "EngineLanguage".

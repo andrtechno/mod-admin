@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\admin\controllers;
+namespace panix\mod\admin\controllers;
 
 use Yii;
 use panix\engine\controllers\AdminController;

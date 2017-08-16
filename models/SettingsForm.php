@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\admin\models;
+namespace panix\mod\admin\models;
 
 use panix\engine\SettingsModel;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace panix\admin\controllers\admin;
+namespace panix\mod\admin\controllers\admin;
 
 use Yii;
 use panix\engine\controllers\AdminController;
-use panix\admin\models\Languages;
+use panix\mod\admin\models\Languages;
 
 class LanguagesController extends AdminController {
 

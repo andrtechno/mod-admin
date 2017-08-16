@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\admin;
+namespace panix\mod\admin;
 
 use Yii;
 //use yii\base\BootstrapInterface; // implements BootstrapInterface
