@@ -2,6 +2,7 @@
 
 namespace panix\mod\admin\models;
 
+use Yii;
 /**
  * This is the model class for table "EngineLanguage".
  *
@@ -35,7 +36,7 @@ class Languages extends \yii\db\ActiveRecord {
     }
 
     public function beforeDelete() {
-        if ($this->default)
+        if ($this->is_default)
             return false;
         return parent::beforeDelete();
     }
@@ -60,6 +61,54 @@ class Languages extends \yii\db\ActiveRecord {
         }
 
         return $result;
+    }
+    static $current = null;
+
+//Получение текущего объекта языка
+    static function getCurrent() {
+        if (self::$current === null) {
+            self::$current = self::getDefaultLang();
+        }
+        return self::$current;
+    }
+
+//Установка текущего объекта языка и локаль пользователя
+    static function setCurrent($url = null) {
+        $language = self::getLangByUrl($url);
+        self::$current = ($language === null) ? self::getDefaultLang() : $language;
+        Yii::$app->language = self::$current->code;
+    }
+
+//Получения объекта языка по умолчанию
+    static function getDefaultLang() {
+        return Languages::find()->where('`is_default` = :default', [':default' => 1])->one();
+    }
+
+//Получения объекта языка по буквенному идентификатору
+    static function getLangByUrl($url = null) {
+        if ($url === null) {
+            return null;
+        } else {
+            $language = Languages::find()->where('code = :url', [':url' => $url])->one();
+            if ($language === null) {
+                return null;
+            } else {
+                return $language;
+            }
+        }
+    }
+    
+    
+        public function behaviors() {
+        return [
+            'timestamp' => [
+                'class' => 'yii\behaviors\TimestampBehavior',
+                'attributes' => [
+                    \yii\db\ActiveRecord::EVENT_BEFORE_INSERT => ['date_create', 'date_update'],
+                    \yii\db\ActiveRecord::EVENT_BEFORE_UPDATE => ['date_update'],
+            ],
+                ],
+        ];
     }
 
 }
