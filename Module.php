@@ -20,12 +20,12 @@ class Module extends WebModule {
     }
     public function getInfo() {
         return [
-            'name' => Yii::t('admin/default', 'MODNAME'),
+            'name' => Yii::t('admin/default', 'MODULE_NAME'),
             'author' => 'dev@corner-cms.com',
             'version' => '1.0',
             'icon' => 'icon-tools',
-            'description' => Yii::t('admin/default', 'MODDESC'),
-            'url' => ['/admin'],
+            'description' => Yii::t('admin/default', 'MODULE_DESC'),
+            'url' => ['/admin/app'],
         ];
     }
     public function getNav() {
