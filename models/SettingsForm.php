@@ -3,6 +3,7 @@
 namespace panix\mod\admin\models;
 
 use panix\engine\SettingsModel;
+use yii\helpers\FileHelper;
 
 class SettingsForm extends SettingsModel {
 
@@ -11,27 +12,23 @@ class SettingsForm extends SettingsModel {
     public $sitename;
     public $pagenum;
     public $email;
-    public $grid_btn_icon_size;
+    public $theme;
 
     public function rules() {
         return [
             [["email", 'sitename', 'pagenum'], "required"],
             ["email", "email"],
-            [['grid_btn_icon_size'], "string"],
+            [['theme'], "string"],
             ["email", "filter", "filter" => "trim"],
         ];
     }
 
 
 
-    public static function getButtonIconSizeList() {
+    public static function getThemes() {
         return [
-            ''=>'Normal',
-            'fa-lg'=>'x1',
-            'fa-2x'=>'x2',
-            'fa-3x'=>'x3',
-            //'fa-4x'=>'x4',
-            //'fa-5x'=>'x5',
+            'corner'=>'Corner',
+            'test'=>'test',
         ];
     }
 
