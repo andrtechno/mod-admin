@@ -37,11 +37,17 @@ class Module extends WebModule {
                 'visible' => true
             ],
             [
-                'label' => Yii::t('app','LANGUAGES'),
+                'label' => Yii::t('admin/default','LANGUAGES'),
                 'url' => ['/admin/app/languages'],
                 'icon' => 'icon-language',
                 'visible' => true
-            ]
+            ],
+            [
+                'label' => Yii::t('admin/default','DATABASE'),
+                'url' => ['/admin/app/database'],
+                'icon' => 'icon-database',
+                'visible' => true
+            ],
         ];
     }
 
