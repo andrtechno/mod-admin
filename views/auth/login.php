@@ -40,7 +40,7 @@ $form = ActiveForm::begin([
 ?>
 
 <?= $form->field($model, 'username')->textInput(['class' => 'form-control', 'placeholder' => 'Логин']) ?>
-<?= $form->field($model, 'password')->passwordInput()->textInput(['placeholder' => 'Пароль']) ?>
+<?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Пароль']) ?>
 
 <div class="row">
     <div class="col-sm-6">
