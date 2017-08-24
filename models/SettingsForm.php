@@ -13,22 +13,28 @@ class SettingsForm extends SettingsModel {
     public $pagenum;
     public $email;
     public $theme;
+    public $maintenance;
+    public $maintenance_text;
+    public $maintenance_allow_users;
+    public $maintenance_allow_ips;
+    public $censor;
+    public $censor_words;
+    public $censor_replace;
 
     public function rules() {
         return [
-            [["email", 'sitename', 'pagenum'], "required"],
+            [["email", 'sitename', 'pagenum','maintenance_allow_users'], "required"],
             ["email", "email"],
-            [['theme'], "string"],
+            [['theme', 'censor_words', 'censor_replace', 'maintenance_text', 'maintenance_allow_ips', 'maintenance_allow_users'], "string"],
+            [['maintenance', 'censor'], 'boolean'],
             ["email", "filter", "filter" => "trim"],
         ];
     }
 
-
-
-    public static function getThemes() {
+    public function getThemes() {
         return [
-            'corner'=>'Corner',
-            'test'=>'test',
+            'corner' => 'Corner',
+            'test' => 'test',
         ];
     }
 

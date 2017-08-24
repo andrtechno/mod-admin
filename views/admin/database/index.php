@@ -1,6 +1,6 @@
 <?php
 
-use yii\bootstrap\ActiveForm;
+use panix\engine\bootstrap\ActiveForm;
 use yii\widgets\Pjax;
 use panix\engine\Html;
 use panix\engine\CMS;
@@ -42,19 +42,7 @@ if (!$db->checkLimit()) {
     <div class="col-md-6">
 <?php
 
-$form = ActiveForm::begin([
-
-            'layout' => 'horizontal',
-            'fieldConfig' => [
-                'horizontalCssClasses' => [
-                    'label' => 'col-sm-4',
-                    'offset' => 'col-sm-offset-4',
-                    'wrapper' => 'col-sm-8',
-                    'error' => '',
-                    'hint' => '',
-                ],
-            ],
-        ]);
+$form = ActiveForm::begin();
 ?>
 <div class="panel panel-default">
     <div class="panel-heading">
