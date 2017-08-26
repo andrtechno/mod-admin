@@ -20,12 +20,12 @@ class SettingsForm extends SettingsModel {
     public $censor;
     public $censor_words;
     public $censor_replace;
-
+    public $timezone;
     public function rules() {
         return [
-            [["email", 'sitename', 'pagenum','maintenance_allow_users'], "required"],
+            [["email", 'sitename', 'pagenum','maintenance_allow_users','timezone'], "required"],
             ["email", "email"],
-            [['theme', 'censor_words', 'censor_replace', 'maintenance_text', 'maintenance_allow_ips', 'maintenance_allow_users'], "string"],
+            [['theme', 'censor_words', 'censor_replace', 'maintenance_text', 'maintenance_allow_ips', 'maintenance_allow_users','timezone'], "string"],
             [['maintenance', 'censor'], 'boolean'],
             ["email", "filter", "filter" => "trim"],
         ];
