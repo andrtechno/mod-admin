@@ -12,7 +12,7 @@ class DefaultController extends AdminController {
     public function actionIndex(){
 
         return $this->render('index', [
-            'model' => $model,
+           
         ]);
     }
 
