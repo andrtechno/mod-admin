@@ -4,8 +4,8 @@ namespace panix\mod\admin\models;
 
 use Yii;
 
-class Languages extends \yii\db\ActiveRecord {
-
+class Languages extends \panix\engine\WebModel {
+    const MODULE_ID = 'admin';
     private static $_languages;
 
     /**
@@ -18,16 +18,17 @@ class Languages extends \yii\db\ActiveRecord {
     public function rules() {
         return [
             [['name', 'code', 'locale'], 'required'],
-            [['flag_name'], 'string', 'max' => 255],
-            [['locale', 'name'], 'string', 'max' => 100],
-            [['code'], 'string', 'max' => 25],
+            [['name'], 'string', 'max' => 100],
+            [['code'], 'string', 'max' => 2],
+            [['locale'], 'string', 'max' => 5],
             [['is_default'], 'in', 'range' => [0, 1]],
         ];
     }
 
     public function beforeDelete() {
-        if ($this->is_default)
+        if ($this->is_default){
             return false;
+        }
         return parent::beforeDelete();
     }
 
@@ -37,20 +38,8 @@ class Languages extends \yii\db\ActiveRecord {
         return parent::beforeDelete();
     }
 
-    public static function getFlagImagesList() {
-        Yii::import('system.utils.CFileHelper');
-        $flagsPath = 'webroot.uploads.language';
-
-        $result = array();
-        $flags = CFileHelper::findFiles(Yii::getPathOfAlias($flagsPath));
-
-        foreach ($flags as $f) {
-            $parts = explode(DIRECTORY_SEPARATOR, $f);
-            $fileName = end($parts);
-            $result[$fileName] = $fileName;
-        }
-
-        return $result;
+    public function getFlagUrl(){
+        return '@web/uploads/language/'.$this->code.'.png';
     }
 
     static $current = null;
@@ -89,16 +78,6 @@ class Languages extends \yii\db\ActiveRecord {
         }
     }
 
-    public function behaviors() {
-        return [
-            'timestamp' => [
-                'class' => 'yii\behaviors\TimestampBehavior',
-                'attributes' => [
-                    \yii\db\ActiveRecord::EVENT_BEFORE_INSERT => ['date_create', 'date_update'],
-                    \yii\db\ActiveRecord::EVENT_BEFORE_UPDATE => ['date_update'],
-                ],
-            ],
-        ];
-    }
+
 
 }

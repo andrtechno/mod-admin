@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'CREATE_LANG'=>'Добавить язык',
     'MODULE_NAME' => 'Админ-панель',
     'SECURITY' => 'Безопасность',
     'LANGUAGES' => 'Языки',
