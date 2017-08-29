@@ -3,17 +3,7 @@
 namespace panix\mod\admin\models;
 
 use Yii;
-/**
- * This is the model class for table "EngineLanguage".
- *
- * The followings are the available columns in table 'EngineLanguage':
- * @property integer $id
- * @property string $name Language name
- * @property string $code Url prefix
- * @property string $locale Language locale
- * @property boolean $default Is lang default
- * @property boolean $flag_name Flag image name
- */
+
 class Languages extends \yii\db\ActiveRecord {
 
     private static $_languages;
@@ -62,6 +52,7 @@ class Languages extends \yii\db\ActiveRecord {
 
         return $result;
     }
+
     static $current = null;
 
 //Получение текущего объекта языка
@@ -97,19 +88,17 @@ class Languages extends \yii\db\ActiveRecord {
             }
         }
     }
-    
-    
-        public function behaviors() {
+
+    public function behaviors() {
         return [
             'timestamp' => [
                 'class' => 'yii\behaviors\TimestampBehavior',
                 'attributes' => [
                     \yii\db\ActiveRecord::EVENT_BEFORE_INSERT => ['date_create', 'date_update'],
                     \yii\db\ActiveRecord::EVENT_BEFORE_UPDATE => ['date_update'],
-            ],
                 ],
+            ],
         ];
     }
 
 }
-
