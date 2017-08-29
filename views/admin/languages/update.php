@@ -15,7 +15,7 @@ use panix\engine\bootstrap\ActiveForm;
 
         <?php
         $form = ActiveForm::begin([
-                    'options' => ['class' => 'form-horizontal', 'enctype' => 'multipart/form-data']
+                    'options' => ['class' => 'form-horizontal']
         ]);
         ?>
 
@@ -23,7 +23,7 @@ use panix\engine\bootstrap\ActiveForm;
         <?= $form->field($model, 'code')->textInput(['maxlength' => 2]) ?>
         <?= $form->field($model, 'locale')->textInput(['maxlength' => 5]) ?>
 
-
+      <?= $form->field($model, 'is_default')->checkbox() ?>
 
 
 

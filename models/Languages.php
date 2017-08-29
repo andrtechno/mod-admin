@@ -3,14 +3,16 @@
 namespace panix\mod\admin\models;
 
 use Yii;
+use panix\mod\admin\models\query\LanguagesQuery;
 
 class Languages extends \panix\engine\WebModel {
     const MODULE_ID = 'admin';
     private static $_languages;
 
-    /**
-     * @return string the associated database table name
-     */
+    public static function find() {
+        return new LanguagesQuery(get_called_class());
+    }
+    
     public static function tableName() {
         return '{{%language}}';
     }
@@ -25,6 +27,14 @@ class Languages extends \panix\engine\WebModel {
         ];
     }
 
+    public function afterSave($insert, $changedAttributes) {
+if($this->is_default){
+        $model = Languages::updateAll(['is_default'=>0],'id!=:id',[':id'=>$this->id]);
+    }
+      //  $this->is_default=1;
+
+        parent::afterSave($insert, $changedAttributes);
+    }
     public function beforeDelete() {
         if ($this->is_default){
             return false;
