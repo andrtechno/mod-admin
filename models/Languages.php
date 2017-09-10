@@ -5,7 +5,7 @@ namespace panix\mod\admin\models;
 use Yii;
 use panix\mod\admin\models\query\LanguagesQuery;
 
-class Languages extends \panix\engine\WebModel {
+class Languages extends \panix\engine\db\ActiveRecord {
     const MODULE_ID = 'admin';
     private static $_languages;
 

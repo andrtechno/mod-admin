@@ -5,7 +5,7 @@ namespace panix\mod\admin\models;
 use Yii;
 use panix\mod\admin\models\query\NotifactionsQuery;
 
-class Notifactions extends \panix\engine\WebModel {
+class Notifactions extends \panix\engine\db\ActiveRecord {
 
     const MODULE_ID = 'admin';
 
