@@ -1,0 +1,113 @@
+ul#cssmenu {
+    list-style: none;
+    margin: 0 0 0 220px;
+    padding: 0;
+}
+
+ul#cssmenu > li {
+    float: left;
+
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+ul#cssmenu > li > a  span{
+    float: none;
+    font-size: 16px;
+    margin-right: 10px;
+    position: relative;
+    top: 3px;
+}
+ul#cssmenu > li > a.active{
+    color:#fff;
+}
+ul#cssmenu > li > a {
+    color: #dedede;
+    display: block;
+    height:49px;
+    line-height: 49px;
+    padding: 0 20px;
+    -webkit-transition: color .15s;
+    -moz-transition: color .15s;
+    -o-transition: color .15s;
+    transition: color .15s;
+}
+ul#cssmenu > li > a:hover {
+    color: #ffffff;
+}
+ul#cssmenu > li > ul {
+    opacity: 0;
+    visibility: hidden;
+    padding: 5px 0 5px 0;
+    background-color: #383838;
+    text-align: left;
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    margin-left: -90px;
+    width: 180px;
+    -webkit-transition: all .3s .1s;
+    -moz-transition: all .3s .1s;
+    -o-transition: all .3s .1s;
+    transition: all .3s .1s;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.4);
+}
+ul#cssmenu > li:hover > ul {
+    opacity: 1;
+    top: 65px;
+    visibility: visible;
+
+}
+ul#cssmenu > li > ul:before {
+    content: '';
+    display: block;
+    border-color: transparent transparent #383838 transparent;
+    border-style: solid;
+    border-width: 5px;
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    margin-left: -5px;
+}
+ul#cssmenu ul > li {
+    position: relative;
+}
+
+ul#cssmenu ul a {
+    color: #dedede;
+    font-size:12px;
+    padding: 5px 8px 7px 35px;
+    display: block;
+    -webkit-transition: background-color 0.1s;
+    -moz-transition: background-color 0.1s;
+    -o-transition: background-color 0.1s;
+    transition: background-color 0.1s;
+}
+ul#cssmenu ul a:hover {
+    background-color: #f0f0f0;
+}
+
+ul#cssmenu ul > li:hover > ul {
+    opacity: 1;
+    left: 190px;
+    visibility: visible;
+}
+ul#cssmenu ul a:hover {
+    background-color: #F0F0F0;
+    color: #282828;
+}
+ul#cssmenu ul > li > ul li{
+    position:relative;
+}
+
+
+ul#cssmenu li.parent > ul li a span[class*="icon-"]{
+    position:absolute;
+    top:7px;
+    left: 11px;
+}

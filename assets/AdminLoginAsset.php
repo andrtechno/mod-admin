@@ -6,7 +6,7 @@ use yii\web\AssetBundle;
 
 class AdminLoginAsset extends AssetBundle {
 
-    public $sourcePath = '@webroot/themes/admin/assets';
+    public $sourcePath = '@admin/assets';
     public $css = [
         'css/bootstrap-theme.css',
         'css/dashboard.css',

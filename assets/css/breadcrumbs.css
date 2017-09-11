@@ -1,0 +1,87 @@
+#page-nav a{
+    color: #666666;
+}
+.breadcrumbs{
+    list-style: none;
+    width: auto;
+    padding: 0;
+    margin: 0;
+}
+.breadcrumbs li{
+    float: left;
+}
+
+.breadcrumbs li a{
+    padding: 5px 15px 5px 25px;
+    float: left;
+    text-decoration: none;
+    font-size: 12px;
+    position: relative;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+    background-color: #ddd;
+    background-image: -webkit-gradient(linear, left top, right bottom, from(#eeeeee), to(#ddd));
+    background-image: -webkit-linear-gradient(left, #eeeeee, #ddd);
+    background-image: -moz-linear-gradient(left, #eeeeee, #ddd);
+    background-image: -ms-linear-gradient(left, #eeeeee, #ddd);
+    background-image: -o-linear-gradient(left, #eeeeee, #ddd);
+    background-image: linear-gradient(to right, #eeeeee, #ddd);  
+}
+
+.breadcrumbs li:first-child a{
+    padding-left: 1em;
+    border-left: 1px solid #c3c3c3;
+}
+
+.breadcrumbs li a:hover{
+
+    background-color: #fff;
+    background-image: -webkit-gradient(linear, left top, right bottom, from(#eeeeee), to(#fff));
+    background-image: -webkit-linear-gradient(left, #eeeeee, #fff);
+    background-image: -moz-linear-gradient(left, #eeeeee, #fff);
+    background-image: -ms-linear-gradient(left, #eeeeee, #fff);
+    background-image: -o-linear-gradient(left, #eeeeee, #fff);
+    background-image: linear-gradient(to right, #eeeeee, #fff); 
+}
+
+.breadcrumbs li a::after,
+.breadcrumbs li a::before{
+    content: "";
+    position: absolute;
+    top: 50%;
+    margin-top: -15px;   
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 14px solid;
+    right: -12px;
+
+}
+
+.breadcrumbs li a::after{ 
+    z-index: 2;
+    border-left-color: #ddd;  
+
+}
+
+.breadcrumbs li a::before{
+    border-left-color: #c3c3c3;  
+    right: -1.1em;
+    z-index: 1; 
+
+}
+
+.breadcrumbs li a:hover::after{
+    border-left-color: #fff;
+}
+
+.breadcrumbs li.active,
+.breadcrumbs li.active:hover{
+
+    background: none;
+    color:#b1b1b1;
+    padding: 5px 15px 5px 25px;
+}
+
+.breadcrumbs li.active::after,
+.breadcrumbs li.active::before{
+    content: normal;  
+}

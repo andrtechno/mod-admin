@@ -35,8 +35,6 @@ class SettingsForm extends SettingsModel {
     public function getThemes() {
         $themes = [];
         $themesList = array_filter(glob('themes/*'), 'is_dir');
-
-        unset($themesList[array_search('themes/admin2', $themesList)]);
         foreach ($themesList as $theme) {
             $themes[basename($theme)] = ucfirst(basename($theme));
         }

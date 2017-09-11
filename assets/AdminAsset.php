@@ -6,7 +6,7 @@ use yii\web\AssetBundle;
 
 class AdminAsset extends AssetBundle {
 
-    public $sourcePath = '@webroot/themes/admin/assets';
+    public $sourcePath = '@admin/assets';
     public $jsOptions = array(
         'position' => \yii\web\View::POS_HEAD
     );

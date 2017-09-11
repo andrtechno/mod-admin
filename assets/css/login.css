@@ -1,0 +1,143 @@
+body {
+    /*  padding-top: 40px;
+      padding-bottom: 40px;*/
+    margin:0;
+    padding:0;
+    background-color: #eee;
+}
+.admin-auth .panel-body{
+    padding:15px;
+}
+.admin-auth .form-horizontal .form-group{
+    border:0;
+    padding-top: 0;
+}
+.auth-logo{
+    position: relative;
+    width:200px;
+    margin: 0 auto;
+
+}
+.auth-logo a{
+    font-family: Corner;
+    color:#777;
+    position: relative;
+    font-size:36px;
+    display: block;
+    line-height: 36px;
+    padding-left: 50px;
+    height: 40px;
+    margin-bottom: 20px;
+}
+.auth-logo a:after{
+    position: absolute;
+    content:"\f002";
+    left:0;
+    top:0;
+    font-size:40px;
+}
+.auth-logo .auth-logo-hint{
+    position: absolute;
+    bottom:-5px;
+    right:0;
+    color:#999;
+    font-size:11px;
+    text-transform: lowercase;
+}
+input[type="radio"], input[type="checkbox"]{
+    margin-top: 0;
+}
+#login-form .radio,
+#login-form .chceckbox{
+    margin-bottom: 0;   
+}
+/*
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+.form-signin .checkbox{
+    margin-top: 0;
+}
+.copyright{
+    font-size:12px;
+    color:#999;
+}
+.form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+}
+.form-signin .form-control:focus {
+    z-index: 2;
+}*/
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+@-webkit-keyframes bounceInDown {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateY(-2000px);
+        transform: translateY(-2000px);
+    }
+
+    60% {
+        opacity: 1;
+        -webkit-transform: translateY(30px);
+        transform: translateY(30px);
+    }
+
+    80% {
+        -webkit-transform: translateY(-10px);
+        transform: translateY(-10px);
+    }
+
+    100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounceInDown {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateY(-2000px);
+        -ms-transform: translateY(-2000px);
+        transform: translateY(-2000px);
+    }
+
+    60% {
+        opacity: 1;
+        -webkit-transform: translateY(30px);
+        -ms-transform: translateY(30px);
+        transform: translateY(30px);
+    }
+
+    80% {
+        -webkit-transform: translateY(-10px);
+        -ms-transform: translateY(-10px);
+        transform: translateY(-10px);
+    }
+
+    100% {
+        -webkit-transform: translateY(0);
+        -ms-transform: translateY(0);
+        transform: translateY(0);
+    }
+}
+
+.bounceInDown {
+    -webkit-animation-name: bounceInDown;
+    animation-name: bounceInDown;
+}
+.panel-body .alert{
+    margin-top:0;
+}

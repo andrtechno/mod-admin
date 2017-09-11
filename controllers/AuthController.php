@@ -8,9 +8,9 @@ use yii\filters\AccessControl;
 
 class AuthController extends AdminController {
 
-    public $layout = '@app/web/themes/admin/views/layouts/auth';
-   public function behaviors()
-    {
+    public $layout = '@admin/views/layouts/auth';
+
+    public function behaviors() {
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -30,6 +30,7 @@ class AuthController extends AdminController {
             ],
         ];
     }
+
     public function actionIndex() {
         $model = Yii::$app->getModule("user")->model("LoginForm");
         if ($model->load(Yii::$app->request->post()) && $model->login(Yii::$app->getModule("user")->loginDuration)) {
@@ -38,10 +39,8 @@ class AuthController extends AdminController {
 
         // render
         return $this->render('login', [
-            'model' => $model,
+                    'model' => $model,
         ]);
-
-
     }
 
 }
