@@ -32,9 +32,12 @@ class AuthController extends AdminController {
     }
 
     public function actionIndex() {
+        if (!Yii::$app->user->isGuest)
+            return $this->redirect(['/admin']);
+                
         $model = Yii::$app->getModule("user")->model("LoginForm");
         if ($model->load(Yii::$app->request->post()) && $model->login(Yii::$app->getModule("user")->loginDuration)) {
-            return $this->goBack(array('/admin'));
+            return $this->goBack(['/admin']);
         }
 
         // render
