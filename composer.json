@@ -3,7 +3,7 @@
     "description": "Module admin",
     "keywords": ["corner-cms", "module", "admin"],
     "homepage": "https://github.com/andrtechno/mod-admin",
-    "type": "module",
+    "type": "yii2-extension",
     "license": "BSD 3-Clause",
     "authors": [
         {

@@ -51,8 +51,12 @@ panix\mod\admin\assets\AdminAsset::register($this);
                             
                             
 
+                            
+                            
+                            
+                            
 use panix\engine\widgets\nav\Nav;
-// Usage with bootstrap nav pills.
+
 echo Nav::widget([
 'options' => ['class' => 'navbar-nav'],
     'items' => [
@@ -86,13 +90,7 @@ echo Nav::widget([
 
 
                             <ul class="nav navbar-nav">
-                                <li class="dropdown"><?= Html::aIconL('icon-user', 'Система <span class="caret"></span>', '#', ['class' => 'dropdown-toggle', 'data-toggle' => "dropdown"]) ?> 
-                                    <ul class="dropdown-menu">
-                                        <?php foreach (Yii::$app->getModule('admin')->nav as $module) { ?>
-                                            <li><?= Html::a('<i class="' . $module['icon'] . '"></i> ' . $module['label'], $module['url']) ?></li>
-                                        <?php } ?>
-                                    </ul>
-                                </li>
+
 
 
                                 <li class="dropdown"><?= Html::a('Модули <span class="caret"></span>', '#', ['class' => 'dropdown-toggle', 'data-toggle' => "dropdown"]) ?> 
@@ -100,7 +98,7 @@ echo Nav::widget([
                                         <?php
                                         foreach (Yii::$app->getModulesInfo() as $info) {
                                             ?>
-                                            <li><?= Html::aIconL($info['icon'], $info['name'], $info['url']) ?></li>
+                                            <li><?= Html::aIconL($info['icon'], $info['label'], $info['url']) ?></li>
                                             <?php
                                             //}
                                         }

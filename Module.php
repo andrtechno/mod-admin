@@ -9,7 +9,6 @@ use panix\engine\WebModule;
 class Module extends WebModule {
 
     //public $controllerNamespace = 'panix\admin\controllers';
-
     //public $routes = [
     //    'admin' => 'admin/default/index',
     //];
@@ -18,9 +17,10 @@ class Module extends WebModule {
     protected function getDefaultModelClasses() {
         return [];
     }
+
     public function getInfo() {
         return [
-            'name' => Yii::t('admin/default', 'MODULE_NAME'),
+            'label' => Yii::t('admin/default', 'MODULE_NAME'),
             'author' => 'dev@corner-cms.com',
             'version' => '1.0',
             'icon' => 'icon-tools',
@@ -28,22 +28,50 @@ class Module extends WebModule {
             'url' => ['/admin/app'],
         ];
     }
+
+    public function getAdminMenu() {
+        return [
+            'system' => [
+                'items' => [
+                    [
+                        'label' => Yii::t('app', 'SETTINGS'),
+                        'url' => ['/admin/app/settings'],
+                        'icon' => 'settings',
+                        'visible' => true
+                    ],
+                    [
+                        'label' => Yii::t('admin/default', 'LANGUAGES'),
+                        'url' => ['/admin/app/languages'],
+                        'icon' => 'language',
+                        'visible' => true
+                    ],
+                    [
+                        'label' => Yii::t('admin/default', 'DATABASE'),
+                        'url' => ['/admin/app/database'],
+                        'icon' => 'database',
+                        'visible' => true
+                    ],
+                ]
+            ]
+        ];
+    }
+
     public function getNav() {
         return [
             [
-                'label' => Yii::t('app','SETTINGS'),
+                'label' => Yii::t('app', 'SETTINGS'),
                 'url' => ['/admin/app/settings'],
                 'icon' => 'icon-settings',
                 'visible' => true
             ],
             [
-                'label' => Yii::t('admin/default','LANGUAGES'),
+                'label' => Yii::t('admin/default', 'LANGUAGES'),
                 'url' => ['/admin/app/languages'],
                 'icon' => 'icon-language',
                 'visible' => true
             ],
             [
-                'label' => Yii::t('admin/default','DATABASE'),
+                'label' => Yii::t('admin/default', 'DATABASE'),
                 'url' => ['/admin/app/database'],
                 'icon' => 'icon-database',
                 'visible' => true

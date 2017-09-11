@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'SYSTEM'=>'Систама',
+    'MODULES'=>'Модули',
     'CREATE_LANG'=>'Добавить язык',
     'MODULE_NAME' => 'Админ-панель',
     'SECURITY' => 'Безопасность',

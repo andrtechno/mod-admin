@@ -216,7 +216,7 @@ class Modules extends \panix\engine\db\ActiveRecord {
     public function getInfo() {
         $mod = Yii::$app->getModule($this->name);
         return (object) array(
-                    'name' => $mod->name,
+                    'label' => $mod->name,
                     'author' => $mod->author,
                     'description' => $mod->description,
                     'icon' => $mod->icon,
