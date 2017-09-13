@@ -5,10 +5,10 @@ namespace panix\mod\admin\models\search;
 use Yii;
 use yii\base\Model;
 use panix\engine\data\ActiveDataProvider;
-use panix\mod\admin\models\Languages;
+use panix\mod\admin\models\Modules;
 
 
-class LanguagesSearch extends Languages {
+class ModulesSearch extends Modules {
 
     /**
      * @inheritdoc
@@ -16,7 +16,7 @@ class LanguagesSearch extends Languages {
     public function rules() {
         return [
             [['id'], 'integer'],
-            [['name','code'], 'safe'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -36,7 +36,7 @@ class LanguagesSearch extends Languages {
      * @return ActiveDataProvider
      */
     public function search($params) {
-        $query = Languages::find();
+        $query = Modules::find();
 
         $dataProvider = new ActiveDataProvider([
                     'query' => $query,

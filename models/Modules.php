@@ -1,9 +1,10 @@
 <?php
 
 namespace panix\mod\admin\models;
-
+use Yii;
+use panix\mod\admin\models\search\ModulesSearch;
 class Modules extends \panix\engine\db\ActiveRecord {
-
+    const MODULE_ID = 'admin';
     /**
      * Cache enabled modules for request
      */
@@ -20,7 +21,9 @@ class Modules extends \panix\engine\db\ActiveRecord {
         'users',
         'main'
     );
-
+  /*  public static function find() {
+        return new ModulesSearch(get_called_class());
+    }*/
     /**
      * @return string the associated database table name
      */
@@ -34,7 +37,7 @@ class Modules extends \panix\engine\db\ActiveRecord {
     public function rules() {
         return [
             [['name', 'switch', 'access'], 'required'],
-            ['switch', 'numerical'],
+           // ['switch', 'numerical'],
             // The following rule is used by search()
             [['name', 'switch', 'access'], 'safe'],
         ];
@@ -121,8 +124,10 @@ class Modules extends \panix\engine\db\ActiveRecord {
      * @return mixed
      */
     public static function loadModuleClass($name) {
-        $class = ucfirst($name) . 'Module';
-        Yii::import("mod.{$name}." . $class);
+        $class = $name;
+       // Yii::import("mod.{$name}." . $class);
+Yii::getAlias('@vendor/panix/*');
+        
         return new $class($name, null);
     }
 
@@ -132,6 +137,7 @@ class Modules extends \panix\engine\db\ActiveRecord {
      * @return array
      */
     public static function loadInfo($name = null) {
+        die($name);
         $mod = self::loadModuleClass($name);
 
         return (object) array(
@@ -149,38 +155,8 @@ class Modules extends \panix\engine\db\ActiveRecord {
         // }
     }
 
-    /**
-     * Load or build if not exists all events file.
-     */
-    public static function loadEventsFile() {
-        $path = self::allEventsFilePath();
 
-        if (YII_DEBUG)
-            self::buildEventsFile();
 
-        if (file_exists($path))
-            require $path;
-        else {
-            self::buildEventsFile();
-            require $path;
-        }
-    }
-
-    /**
-     * Find all events files and saves them in protected/all_events.php
-     */
-    public static function buildEventsFile() {
-        $contents = '<?php ';
-        foreach (self::getEnabled() as $module) {
-            $className = ucfirst($module->name) . 'ModuleEvents';
-            $path = Yii::getAlias('mod.' . $module->name . '.config.' . $className) . '.php';
-            if (file_exists($path)) {
-                $code = file_get_contents($path);
-                $contents .= str_replace('<?php', '', $code);
-            }
-        }
-        file_put_contents(self::allEventsFilePath(), $contents);
-    }
 
     /**
      * @return string
@@ -191,14 +167,29 @@ class Modules extends \panix\engine\db\ActiveRecord {
 
     public function getAvailable() {
         $result = array();
-        $DS = DIRECTORY_SEPARATOR;
-        $files = glob(Yii::getAlias('mod.*') . "{$DS}*{$DS}*Module.php");
-
+        //$DS = DIRECTORY_SEPARATOR;
+      
+        $files = glob(Yii::getAlias('@vendor/panix/*') . DIRECTORY_SEPARATOR."Module.php");
+       // print_r($files);
+        
+        $themesList = array_filter(glob(Yii::getAlias('@vendor/panix/*')), 'is_dir');
+        print_r($files);
+        die;
+        foreach ($themesList as $theme) {
+            if(strpos($theme,'mod-') === true){
+            //echo str_replace('mod-','',basename($theme));
+            //echo '<br>';
+            }
+            ///$themes[basename($theme)] = ucfirst(basename($theme));
+        }
+        
+        
+//die();
         if (!sizeof($files))
             return array();
 
         foreach ($files as $file) {
-            $parts = explode($DS, $file);
+            $parts = explode(DIRECTORY_SEPARATOR, $file);
             $moduleName = $parts[sizeof($parts) - 2];
             if (!self::isModuleInstalled($moduleName)) {
                 if (!in_array($moduleName, self::$denieMods)) {

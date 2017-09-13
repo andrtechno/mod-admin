@@ -19,7 +19,7 @@ GridView::widget([
     'tableOptions' => ['class' => 'table table-striped'],
     'dataProvider' => $dataProvider,
     'filterModel' => $searchModel,
-    'layout' => $this->render('@admin/views/layouts/_grid_layout', ['title' => $this->context->pageName]), //'{items}{pager}{summary}'
+   'layoutOptions' => ['title' => $this->context->pageName],
     'columns' => [
         [
             'format' => 'raw',
