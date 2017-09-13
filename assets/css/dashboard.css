@@ -2401,9 +2401,9 @@ a.asc:after, a.desc:after {
 }
 
 a.asc:after {
-    content: "\f007";
+    content: "\f008";
 }
 
 a.desc:after {
-    content: "\f008";
+    content: "\f007";
 }
