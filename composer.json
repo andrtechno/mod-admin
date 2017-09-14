@@ -4,7 +4,7 @@
     "keywords": ["corner-cms", "module", "admin"],
     "homepage": "https://github.com/andrtechno/mod-admin",
     "type": "yii2-extension",
-    "license": "BSD 3-Clause",
+    "license": "MIT",
     "authors": [
         {
             "name": "CORNER CMS",
@@ -13,7 +13,8 @@
         }
     ],
     "require": {
-        "panix/engine": "*"
+        "panix/engine": "*",
+        "panix/wgt-taginput": "*"
     },
     "autoload": {
         "psr-4": {
