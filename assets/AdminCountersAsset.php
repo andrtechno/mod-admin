@@ -4,26 +4,23 @@ namespace panix\mod\admin\assets;
 
 use yii\web\AssetBundle;
 
-class AdminAsset extends AssetBundle {
+class AdminCountersAsset extends AssetBundle {
 
     public $sourcePath = '@admin/assets';
     public $jsOptions = array(
         'position' => \yii\web\View::POS_HEAD
     );
-    public $css = [
-        'css/bootstrap-theme.css',
-        'css/dashboard.css',
-        'css/breadcrumbs.css',
-    ];
+
     public $js = [
-        'js/translitter.js',
+        'js/jquery.playSound.js',
+        'js/counters.js',
+
     ];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\web\JqueryAsset',
         'yii\bootstrap\BootstrapPluginAsset',
-        'panix\engine\assets\CommonAsset',
-        'panix\mod\admin\assets\AdminCountersAsset',
+        'panix\engine\assets\CommonAsset'
     ];
 
 }

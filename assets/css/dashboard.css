@@ -2247,7 +2247,7 @@ background: #f7f7f7 none repeat scroll 0 0;
     box-shadow:none;
     text-shadow:none;
 }
-.alert{
+#page-content-wrapper .alert{
     padding: 15px 15px 15px 45px;
     position: relative;
 }
@@ -2256,10 +2256,10 @@ background: #f7f7f7 none repeat scroll 0 0;
     background-color: #ffda92;
 
 }
-.alert-info:before,
-.alert-success:before,
-.alert-danger:before,
-.alert-warning:before{
+#page-content-wrapper .alert-info:before,
+#page-content-wrapper .alert-success:before,
+#page-content-wrapper .alert-danger:before,
+#page-content-wrapper .alert-warning:before{
     font-family: Corner;
     font-style: normal;
     line-height: 1;
@@ -2268,14 +2268,14 @@ background: #f7f7f7 none repeat scroll 0 0;
     position: absolute;
     font-size:22px;
 }
-.alert-danger:before,
-.alert-warning:before{
+#page-content-wrapper .alert-danger:before,
+#page-content-wrapper .alert-warning:before{
     content:"\f053";
 }
-.alert-success:before{
+#page-content-wrapper .alert-success:before{
     content:"\f055";
 }
-.alert-info:before{
+#page-content-wrapper .alert-info:before{
     content:"\f054";
 }
 
@@ -2406,4 +2406,10 @@ a.asc:after {
 
 a.desc:after {
     content: "\f007";
+}
+
+.notifaction .progress{
+    margin-bottom: 0;
+    margin-top: 5px;
+    height:5px;
 }
