@@ -59,25 +59,6 @@ use panix\engine\widgets\nav\Nav;
 
 echo Nav::widget([
 'options' => ['class' => 'navbar-nav'],
-    'items' => [
-        ['label' => 'Action', 'url' => '#'],
-        ['label' => 'Submenu 1', 'active'=>true, 'items' => [
-            ['label' => 'Action', 'url' => '#'],
-            ['label' => 'Another action', 'url' => '#'],
-            ['label' => 'Something else here', 'url' => '#'],
-            '<li class="divider"></li>',
-            ['label' => 'Submenu 2', 'items' => [
-                ['label' => 'Action', 'url' => '#'],
-                ['label' => 'Another action', 'url' => '#'],
-                ['label' => 'Something else here', 'url' => '#'],
-                '<li class="divider"></li>',
-                ['label' => 'Separated link', 'url' => '#'],
-            ]],
-        ]],
-        ['label' => 'Something else here', 'url' => '#'],
-        '<li class="divider"></li>',
-        ['label' => 'Separated link', 'url' => '#'],
-    ]
 ]);
 
 
@@ -89,23 +70,6 @@ echo Nav::widget([
 
 
 
-                            <ul class="nav navbar-nav">
-
-
-
-                                <li class="dropdown"><?= Html::a('Модули <span class="caret"></span>', '#', ['class' => 'dropdown-toggle', 'data-toggle' => "dropdown"]) ?> 
-                                    <ul class="dropdown-menu">
-                                        <?php
-                                        foreach (Yii::$app->getModulesInfo() as $info) {
-                                            ?>
-                                            <li><?= Html::aIconL($info['icon'], $info['label'], $info['url']) ?></li>
-                                            <?php
-                                            //}
-                                        }
-                                        ?>
-                                    </ul>
-                                </li>
-                            </ul>
                             <?php //$this->widget('mod.admin.widgets.EngineMainMenu');          ?>
                         </div>
                         <div class="navbar-right">
@@ -124,7 +88,7 @@ echo Nav::widget([
             </nav>
             <?php
             $class = '';
-            $class .= (!isset($this->context->module->nav)) ? ' full-page' : '';
+            $class .= (!isset($this->context->module->adminMenu)) ? ' full-page' : '';
             if (isset($_COOKIE['wrapper'])) {
                 $class .= ($_COOKIE['wrapper'] == 'true') ? ' active' : '';
             }
@@ -135,7 +99,7 @@ echo Nav::widget([
                 <div id="sidebar-wrapper">
 
 
-                    <?php if (isset($this->context->module->nav)) { ?>
+                    <?php if (isset($this->context->module->adminMenu)) { ?>
                         <ul class="sidebar-nav" id="menu">
                             <li class="sidebar-header">
 
@@ -144,9 +108,9 @@ echo Nav::widget([
 
                             </li>
                             <li><?= Html::a('<i class="icon-menu"></i>', '#', ['id' => 'menu-toggle']) ?></li>
-                            <?php foreach ($this->context->module->nav as $nav) { ?>
+                            <?php foreach ($this->context->module->adminMenu as $nav) { ?>
 
-                                <li><?= Html::a($nav['label'] . '1<i class="' . $nav['icon'] . '"></i>', $nav['url'], (isset($nav['options'])) ? $nav['options'] : []) ?></li>
+                                <li><?= Html::a($nav['label'] . '' . Html::icon($nav['icon']), isset($nav['url'])?$nav['url']:'#', (isset($nav['options'])) ? $nav['options'] : []) ?></li>
                             <?php } ?>
                         </ul>
                     <?php } ?>
