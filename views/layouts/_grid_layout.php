@@ -3,7 +3,7 @@ use yii\helpers\Html;
 ?>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <div class="panel-title"><?= $title ?>
+        <div class="panel-title"><?php if(isset($title)) echo $title; ?>
             <?php if (isset($buttons)) { ?>
                 <div id="grid-options" class="dropdown panel-option">
                     <?php
@@ -22,7 +22,7 @@ use yii\helpers\Html;
             <?php } ?>
         </div>
     </div>
-    <div class="panel-body">{items}</div>
+    <div class="panel-body"><div class="table-responsive">{items}</div></div>
     <div class="panel-footer">
         <div class="row">
             <div class="col-md-6">{summary}</div>

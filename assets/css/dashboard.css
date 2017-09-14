@@ -1079,7 +1079,11 @@ h1,
     -ms-transition: background .5s;
     transition: background .5s;
 }
-
+.sidebar-nav li ul{
+    padding:0;
+    margin:0;
+    display:none;
+}
 .sidebar_name {
     padding-top: 25px;
     color: #fff;

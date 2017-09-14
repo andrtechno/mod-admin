@@ -48,29 +48,14 @@ panix\mod\admin\assets\AdminAsset::register($this);
                         </div>
                         <div id="navbar" class="navbar-collapse collapse">
                             <?php
-                            
-                            
 
-                            
-                            
-                            
-                            
-use panix\engine\widgets\nav\Nav;
+                            use panix\engine\widgets\nav\Nav;
 
 echo Nav::widget([
-'options' => ['class' => 'navbar-nav'],
-]);
-
-
-                            
-      
+                                'options' => ['class' => 'navbar-nav'],
+                            ]);
                             ?>
 
-
-
-
-
-                            <?php //$this->widget('mod.admin.widgets.EngineMainMenu');          ?>
                         </div>
                         <div class="navbar-right">
 
@@ -97,23 +82,27 @@ echo Nav::widget([
 
                 <!-- Sidebar -->
                 <div id="sidebar-wrapper">
+                    <li class="sidebar-header">
+
+                        <b><?= Yii::$app->user->displayName ?></b>
 
 
-                    <?php if (isset($this->context->module->adminMenu)) { ?>
-                        <ul class="sidebar-nav" id="menu">
-                            <li class="sidebar-header">
+                    </li>
 
-                                <b><?= Yii::$app->user->displayName ?></b>
+                    <?php
+                    echo \panix\mod\admin\widgets\sidebar\SideBar::widget([
+                        'items' => array_merge([
+                            [
+                                'label' => '',
+                                'url'=>'#',
+                                'icon'=>'menu',
+                                'options' => ['id' => 'menu-toggle']
+                            ]
+                                ], $this->context->module->getAdminSidebar())
+                    ]);
+                    ?>
 
 
-                            </li>
-                            <li><?= Html::a('<i class="icon-menu"></i>', '#', ['id' => 'menu-toggle']) ?></li>
-                            <?php foreach ($this->context->module->adminMenu as $nav) { ?>
-
-                                <li><?= Html::a($nav['label'] . '' . Html::icon($nav['icon']), isset($nav['url'])?$nav['url']:'#', (isset($nav['options'])) ? $nav['options'] : []) ?></li>
-                            <?php } ?>
-                        </ul>
-                    <?php } ?>
                 </div>
                 <!-- /#sidebar-wrapper -->
 
