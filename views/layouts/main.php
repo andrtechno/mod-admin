@@ -90,6 +90,7 @@ echo Nav::widget([
                     </li>
 
                     <?php
+                    if(method_exists($this->context->module, 'getAdminSidebar')){
                     echo \panix\mod\admin\widgets\sidebar\SideBar::widget([
                         'items' => array_merge([
                             [
@@ -100,6 +101,7 @@ echo Nav::widget([
                             ]
                                 ], $this->context->module->getAdminSidebar())
                     ]);
+                    }
                     ?>
 
 
