@@ -4,6 +4,8 @@ use panix\engine\Html;
 use yii\widgets\Breadcrumbs;
 
 panix\mod\admin\assets\AdminAsset::register($this);
+
+$sideBar = (method_exists($this->context->module, 'getAdminSidebar'))?true:false;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -73,14 +75,14 @@ echo Nav::widget([
             </nav>
             <?php
             $class = '';
-            $class .= (!isset($this->context->module->adminMenu)) ? ' full-page' : '';
+            $class .= (!$sideBar) ? ' full-page' : '';
             if (isset($_COOKIE['wrapper'])) {
                 $class .= ($_COOKIE['wrapper'] == 'true') ? ' active' : '';
             }
             ?>
             <div id="wrapper" class="<?= $class ?>">
 
-                <!-- Sidebar -->
+                <?php if ($sideBar) { ?>
                 <div id="sidebar-wrapper">
                     <li class="sidebar-header">
 
@@ -90,23 +92,23 @@ echo Nav::widget([
                     </li>
 
                     <?php
-                    if(method_exists($this->context->module, 'getAdminSidebar')){
-                    echo \panix\mod\admin\widgets\sidebar\SideBar::widget([
-                        'items' => array_merge([
-                            [
-                                'label' => '',
-                                'url'=>'#',
-                                'icon'=>'menu',
-                                'options' => ['id' => 'menu-toggle']
-                            ]
-                                ], $this->context->module->getAdminSidebar())
-                    ]);
-                    }
+        
+                        echo \panix\mod\admin\widgets\sidebar\SideBar::widget([
+                            'items' => array_merge([
+                                [
+                                    'label' => '',
+                                    'url' => '#',
+                                    'icon' => 'menu',
+                                    'options' => ['id' => 'menu-toggle']
+                                ]
+                                    ], $this->context->module->getAdminSidebar())
+                        ]);
+                 
                     ?>
 
 
                 </div>
-                <!-- /#sidebar-wrapper -->
+                <?php } ?>
 
                 <!-- Page Content -->
                 <div id="page-content-wrapper">
