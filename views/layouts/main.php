@@ -5,7 +5,7 @@ use yii\widgets\Breadcrumbs;
 
 panix\mod\admin\assets\AdminAsset::register($this);
 
-$sideBar = (method_exists($this->context->module, 'getAdminSidebar'))?true:false;
+$sideBar = (method_exists($this->context->module, 'getAdminSidebar')) ? true : false;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -20,7 +20,7 @@ $sideBar = (method_exists($this->context->module, 'getAdminSidebar'))?true:false
     <body class="no-radius">
         <?php $this->beginBody() ?>
         <script>
-            $(function () {
+            $(document).ready(function() {
                 $(".panel-heading .grid-toggle").click(function (e) {
                     e.preventDefault();
                     $(this).find('i').toggleClass("fa-chevron-down");
@@ -50,10 +50,7 @@ $sideBar = (method_exists($this->context->module, 'getAdminSidebar'))?true:false
                         </div>
                         <div id="navbar" class="navbar-collapse collapse">
                             <?php
-
-                            use panix\engine\widgets\nav\Nav;
-
-echo Nav::widget([
+                            echo \panix\engine\widgets\nav\Nav::widget([
                                 'options' => ['class' => 'navbar-nav'],
                             ]);
                             ?>
@@ -83,16 +80,15 @@ echo Nav::widget([
             <div id="wrapper" class="<?= $class ?>">
 
                 <?php if ($sideBar) { ?>
-                <div id="sidebar-wrapper">
-                    <li class="sidebar-header">
+                    <div id="sidebar-wrapper">
+                        <li class="sidebar-header">
 
-                        <b><?= Yii::$app->user->displayName ?></b>
+                            <b><?= Yii::$app->user->displayName ?></b>
 
 
-                    </li>
+                        </li>
 
-                    <?php
-        
+                        <?php
                         echo \panix\mod\admin\widgets\sidebar\SideBar::widget([
                             'items' => array_merge([
                                 [
@@ -103,11 +99,10 @@ echo Nav::widget([
                                 ]
                                     ], $this->context->module->getAdminSidebar())
                         ]);
-                 
-                    ?>
+                        ?>
 
 
-                </div>
+                    </div>
                 <?php } ?>
 
                 <!-- Page Content -->
