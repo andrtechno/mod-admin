@@ -1,7 +1,8 @@
 <?php
 use yii\helpers\Html;
 ?>
-<div class="panel panel-default">
+<div class="panel panel-default grid">
+    <div class="grid-loading"></div>
     <div class="panel-heading">
         <div class="panel-title"><?php if(isset($title)) echo $title; ?>
             <?php if (isset($buttons)) { ?>
@@ -22,7 +23,10 @@ use yii\helpers\Html;
             <?php } ?>
         </div>
     </div>
-    <div class="panel-body"><div class="table-responsive">{items}</div></div>
+    <div class="panel-body">
+        <div class="table-responsive">{items}</div>
+            
+    </div>
     <div class="panel-footer">
         <div class="row">
             <div class="col-md-6">{summary}</div>
