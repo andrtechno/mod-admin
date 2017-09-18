@@ -14,6 +14,7 @@ class AdminAsset extends AssetBundle {
         // 'css/bootstrap-theme.css',
         'css/dashboard.css',
         'css/breadcrumbs.css',
+        'css/ui.css',
     ];
     public $js = [
         'js/translitter.js',

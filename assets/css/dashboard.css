@@ -869,7 +869,8 @@ h1,
 }
 .panel .panel-heading,
 .ui-tabs .ui-tabs-nav li,
-.ui-slider .ui-slider-handle{
+.ui-slider .ui-slider-handle,
+.ui-dialog .ui-dialog-titlebar{
     padding: 0;
     color: #636363;
     background: #f8f8f8;
