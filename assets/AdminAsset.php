@@ -19,9 +19,6 @@ class AdminAsset extends AssetBundle {
         'js/translitter.js',
     ];
     public $depends = [
-        'yii\web\YiiAsset',
-        'yii\web\JqueryAsset',
-        'yii\bootstrap\BootstrapPluginAsset',
         'panix\engine\assets\CommonAsset',
         'panix\mod\admin\assets\AdminCountersAsset',
     ];

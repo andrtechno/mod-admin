@@ -4,14 +4,13 @@ namespace panix\mod\admin\controllers;
 
 use Yii;
 use panix\engine\controllers\AdminController;
-
 use panix\mod\admin\models\Notifactions;
 
 class DefaultController extends AdminController {
 
 
     public function actionIndex(){
-
+        $this->breadcrumbs[]=Yii::t('admin/default','SYSTEM');
         return $this->render('index', [
            
         ]);

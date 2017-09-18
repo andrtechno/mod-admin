@@ -203,7 +203,31 @@ $sideBar = (method_exists($this->context->module, 'getAdminSidebar')) ? true : f
                                     </div>
                                 <?php } ?>
 
+<?php
+/*use yii\helpers\FileHelper;
+$files = FileHelper::findFiles(Yii::getAlias('@shop'),[
+    'only'=>['*.md'],
+    'recursive'=>false,
+    'caseSensitive'=>false
+]);
+foreach($files as $file){
+    echo basename($file,'.md');
+}
+print_r($files);*/
 
+
+
+//use yii\helpers\Markdown;
+//$myText = file_get_contents(Yii::getAlias('@shop').DIRECTORY_SEPARATOR.'README.md');
+//$myHtml = Markdown::process($myText); // use original markdown flavor
+//$myHtml = Markdown::process($myText, 'gfm'); // use github flavored markdown
+//$myHtml = Markdown::process($myText, 'extra'); // use markdown extra
+
+
+//echo $myHtml;
+
+
+?>
 
                                 <?= $content ?>
                             </div>

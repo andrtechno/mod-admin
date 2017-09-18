@@ -8,16 +8,6 @@ use panix\engine\WebModule;
 
 class Module extends WebModule {
 
-    //public $controllerNamespace = 'panix\admin\controllers';
-    //public $routes = [
-    //    'admin' => 'admin/default/index',
-    //];
-
-
-    protected function getDefaultModelClasses() {
-        return [];
-    }
-
     public function getInfo() {
         return [
             'label' => Yii::t('admin/default', 'MODULE_NAME'),
@@ -51,32 +41,16 @@ class Module extends WebModule {
                         'icon' => 'database',
                         'visible' => true
                     ],
+                    [
+                        'label' => Yii::t('admin/default', 'MODULES'),
+                        'url' => ['/admin/app/modules'],
+                        'icon' => 'puzzle',
+                        'visible' => true
+                    ],
                 ]
             ]
         ];
     }
 
-    public function getNav() {
-        return [
-            [
-                'label' => Yii::t('app', 'SETTINGS'),
-                'url' => ['/admin/app/settings'],
-                'icon' => 'icon-settings',
-                'visible' => true
-            ],
-            [
-                'label' => Yii::t('admin/default', 'LANGUAGES'),
-                'url' => ['/admin/app/languages'],
-                'icon' => 'icon-language',
-                'visible' => true
-            ],
-            [
-                'label' => Yii::t('admin/default', 'DATABASE'),
-                'url' => ['/admin/app/database'],
-                'icon' => 'icon-database',
-                'visible' => true
-            ],
-        ];
-    }
 
 }
