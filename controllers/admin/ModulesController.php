@@ -29,7 +29,7 @@ class ModulesController extends AdminController {
         if (count($mod->getAvailable())) {
             $this->buttons = array(array(
                     'label' => Yii::t('app', 'INSTALL', array('n' => count($mod->getAvailable()), 0)),
-                    'url' => Yii::$app->urlManager->createUrl('install'),
+                    'url' => ['install'],
                     'options' => array('class' => 'btn btn-success')
             ));
         }
@@ -43,20 +43,24 @@ class ModulesController extends AdminController {
     }
 
     public function actionInstall($name = null) {
-        // if (!isset($_GET['name']) && count(ModulesModel::getAvailable())) {
-        $this->pageName = Yii::t('admin', 'LIST_MODULES');
-        $this->breadcrumbs = array(
-            Yii::t('app', 'MODULES') => $this->createUrl('index'),
-            Yii::t('admin', 'INSTALL', 1),
-        );
-        $mod = $result = new ModulesModel;
+
+
+        $this->pageName = Yii::t('app', 'LIST_MODULES');
+        $this->breadcrumbs = [
+            [
+                'label' => Yii::t('app', 'MODULES'),
+                'url' => ['index']
+            ],
+            Yii::t('app', 'INSTALL', 1)
+        ];
+        $mod = $result = new Modules;
         if ($name) {
-            $result = ModulesModel::install($name);
+            $result = Modules::install($name);
             if ($result) {
-                return $this->redirect(array('index'));
+                return $this->redirect(['index']);
             }
         }
-        return $this->render('install', array('modules' => $mod->getAvailable()));
+        return $this->render('install', ['modules' => $mod->getAvailable()]);
     }
 
     public function actionUpdate() {

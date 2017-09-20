@@ -3,7 +3,6 @@
 namespace panix\mod\admin\models;
 
 use panix\engine\SettingsModel;
-use yii\helpers\FileHelper;
 
 class SettingsForm extends SettingsModel {
 
@@ -24,11 +23,11 @@ class SettingsForm extends SettingsModel {
 
     public function rules() {
         return [
-            [["email", 'sitename', 'pagenum', 'maintenance_allow_users', 'timezone','theme'], "required"],
-            ["email", "email"],
+            [['email', 'sitename', 'pagenum', 'maintenance_allow_users', 'timezone', 'theme'], "required"],
+            ['email', 'email'],
             [['theme', 'censor_words', 'censor_replace', 'maintenance_text', 'maintenance_allow_ips', 'maintenance_allow_users', 'timezone'], "string"],
             [['maintenance', 'censor'], 'boolean'],
-            ["email", "filter", "filter" => "trim"],
+            ['email', 'filter', 'filter' => 'trim'],
         ];
     }
 

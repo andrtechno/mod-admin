@@ -1,10 +1,14 @@
 <?php
 
 namespace panix\mod\admin\models;
+
 use Yii;
 use panix\mod\admin\models\search\ModulesSearch;
+
 class Modules extends \panix\engine\db\ActiveRecord {
+
     const MODULE_ID = 'admin';
+
     /**
      * Cache enabled modules for request
      */
@@ -19,11 +23,12 @@ class Modules extends \panix\engine\db\ActiveRecord {
         'install',
         'seo',
         'users',
-        'main'
     );
-  /*  public static function find() {
-        return new ModulesSearch(get_called_class());
-    }*/
+
+    /*  public static function find() {
+      return new ModulesSearch(get_called_class());
+      } */
+
     /**
      * @return string the associated database table name
      */
@@ -36,8 +41,8 @@ class Modules extends \panix\engine\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['name', 'switch', 'access'], 'required'],
-           // ['switch', 'numerical'],
+            [['name'], 'required'],
+            // ['switch', 'numerical'],
             // The following rule is used by search()
             [['name', 'switch', 'access'], 'safe'],
         ];
@@ -60,10 +65,10 @@ class Modules extends \panix\engine\db\ActiveRecord {
             return self::$cache;
 
         self::$cache = self::find()
-                ->select(['name', 'access', 'namespace'])
+                ->select(['name', 'access'])
                 ->all();
 
-        
+
         return self::$cache;
     }
 
@@ -77,6 +82,14 @@ class Modules extends \panix\engine\db\ActiveRecord {
     }
 
     /**
+     * @param $name
+     * @return mixed
+     */
+    public static function loadModuleClass($name) {
+        return new \panix\engine\WebModule($name);
+    }
+
+    /**
      * Install module
      * @param string $name module name
      * @return boolean
@@ -84,20 +97,21 @@ class Modules extends \panix\engine\db\ActiveRecord {
     public static function install($name) {
 
         if (self::loadModuleClass($name)->afterInstall()) {
-            $model = new ModulesModel;
+
+            $model = new Modules;
             $model->name = $name;
             $model->access = 0; //Устанавливаем модуль с доступом "Все посетители"
             if ($model->save()) {
-                $modname = ucfirst($name);
-                Yii::app()->user->setFlash('success', Yii::t('admin', 'SUCCESS_INSTALL_MODULE', array('{name}' => Yii::t("{$modname}Module.default", 'MODULE_NAME'))));
+
+                Yii::$app->session->addFlash('success', Yii::t('admin/default', 'SUCCESS_INSTALL_MODULE', ['name' => Yii::t("{$name}/default", 'MODULE_NAME')]));
             }
         } else {
-            Yii::app()->user->setFlash('error', Yii::t('admin', 'ERROR_INSTALL_MODULE'));
+            Yii::$app->session->addFlash('error', Yii::t('admin/default', 'ERROR_INSTALL_MODULE'));
             // Yii::app()->controller->setFlashMessage(Yii::t('admin', 'ERROR_INSTALL_MODULE'));
             return false;
         }
         self::deleteCaches();
-        self::buildEventsFile();
+        // self::buildEventsFile();
 
         return true;
     }
@@ -108,7 +122,7 @@ class Modules extends \panix\engine\db\ActiveRecord {
     public function afterDelete() {
         self::loadModuleClass($this->name)->afterUninstall();
         self::deleteCaches();
-        self::buildEventsFile();
+        // self::buildEventsFile();
         return parent::afterDelete();
     }
 
@@ -120,79 +134,39 @@ class Modules extends \panix\engine\db\ActiveRecord {
     }
 
     /**
-     * @param $name
-     * @return mixed
-     */
-    public static function loadModuleClass($name) {
-        $class = $name;
-       // Yii::import("mod.{$name}." . $class);
-Yii::getAlias('@vendor/panix/*');
-        
-        return new $class($name, null);
-    }
-
-    /**
      * Load module description file
      * @param string $name module name
      * @return array
      */
     public static function loadInfo($name = null) {
-        die($name);
-        $mod = self::loadModuleClass($name);
-
-        return (object) array(
-                    'name' => $mod->name,
-                    'author' => $mod->author,
-                    'description' => $mod->description,
-                    'icon' => $mod->icon,
-                    'version' => $mod->version,
-                    'adminHomeUrl' => $mod->adminHomeUrl,
-        );
-        //if (isset($module->info)) {
-        //    return $module->info;
-        //} else {
-        //    return false;
-        // }
-    }
-
-
-
-
-    /**
-     * @return string
-     */
-    public static function allEventsFilePath() {
-        return Yii::getAlias('application.runtime.all_events') . '.php';
+        if ($name) {
+            $mod = self::loadModuleClass($name);
+            return (object) [
+                        'name' => $mod->name,
+                        'author' => $mod->author,
+                        'description' => $mod->description,
+                        'icon' => $mod->icon,
+                        'version' => $mod->version,
+            ];
+        }
     }
 
     public function getAvailable() {
         $result = array();
-        //$DS = DIRECTORY_SEPARATOR;
-      
-        $files = glob(Yii::getAlias('@vendor/panix/*') . DIRECTORY_SEPARATOR."Module.php");
-       // print_r($files);
-        
-        $themesList = array_filter(glob(Yii::getAlias('@vendor/panix/*')), 'is_dir');
-        print_r($files);
-        die;
-        foreach ($themesList as $theme) {
-            if(strpos($theme,'mod-') === true){
-            //echo str_replace('mod-','',basename($theme));
-            //echo '<br>';
-            }
-            ///$themes[basename($theme)] = ucfirst(basename($theme));
-        }
-        
-        
-//die();
+
+
+        $files = glob(Yii::getAlias('@app/modules/*') . DIRECTORY_SEPARATOR . "Module.php");
+
         if (!sizeof($files))
             return array();
 
         foreach ($files as $file) {
             $parts = explode(DIRECTORY_SEPARATOR, $file);
-            $moduleName = $parts[sizeof($parts) - 2];
+            $moduleName = basename($parts[sizeof($parts) - 2]);
+
             if (!self::isModuleInstalled($moduleName)) {
                 if (!in_array($moduleName, self::$denieMods)) {
+
                     $result[$moduleName] = self::loadInfo($moduleName);
                 }
             }
@@ -212,16 +186,14 @@ Yii::getAlias('@vendor/panix/*');
                     'description' => $mod->description,
                     'icon' => $mod->icon,
                     'version' => $mod->version,
-                    'adminHomeUrl' => $mod->adminHomeUrl,
         );
     }
 
     public static function getModules($remove = array()) {
         $modules = array();
-        $criteria = new CDbCriteria;
-        $criteria->addNotInCondition('name', CMap::mergeArray(self::$denieMods, $remove));
-        foreach (self::find()->published()->findAll($criteria) as $mod) {
-            Yii::import('mod.' . $mod->name . '.' . ucfirst($mod->name) . 'Module');
+
+        foreach (self::find()->published()->where(['NOT IN', 'name', CMap::mergeArray(self::$denieMods, $remove)])->all() as $mod) {
+            //Yii::import('mod.' . $mod->name . '.' . ucfirst($mod->name) . 'Module');
             $modules[$mod->name] = Yii::t($mod->name . '/default', 'MODULE_NAME');
         }
         return $modules;

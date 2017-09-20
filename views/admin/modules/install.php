@@ -1,5 +1,5 @@
 <?php
-Yii::app()->tpl->openWidget(array('title' => $this->pageName));
+use panix\engine\Html;
 if (!empty($modules)) {
     ?>
     <table class="table table-bordered table-striped">
@@ -16,19 +16,19 @@ if (!empty($modules)) {
         <tbody>
             <?php foreach ($modules as $module => $info) { ?>
                 <tr>
-                    <td class="text-center"><?= Html::icon($info->icon, array('class' => 'size-x3')) ?></td>
+                    <td class="text-center"><?=$info->icon?><?= Html::icon($info->icon, array('class' => 'size-x3')) ?></td>
                     <td><?= Html::encode($info->name) ?></td>
                     <td><?= $info->description ?></td>
                     <td class="text-center"><?= $info->version ?></td>
-                    <td class="text-center"><?= Html::link($info->author, 'mailto:' . $info->author) ?></td>
-                    <td class="text-center"><?= Html::link(Yii::t('admin', 'INSTALLED'), $this->createUrl('install', array('name' => $module)), array('class' => 'btn btn-success')) ?></td>
+                    <td class="text-center"><?= Html::a($info->author, 'mailto:' . $info->author) ?></td>
+                    <td class="text-center"><?= Html::a(Yii::t('app', 'INSTALLED'), ['install', 'name' => $module], array('class' => 'btn btn-success')) ?></td>
                 </tr>
             <?php } ?>
         </tbody></table>
 <?php } else { ?>
-    <?php Yii::t('admin', 'NO_MODULES_INSTALL') ?>
+    <?php Yii::t('app', 'NO_MODULES_INSTALL') ?>
 <?php } ?>
 
-<?php Yii::app()->tpl->closeWidget(); ?>
+
 
 
