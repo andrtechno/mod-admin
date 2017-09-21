@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use panix\engine\grid\GridView;
-use yii\widgets\Pjax;
+use panix\engine\widgets\Pjax;
 ?>
 
 

@@ -12,7 +12,7 @@ class ModulesController extends AdminController {
     public $icon = 'icon-puzzle';
 
     public function actionIndex() {
-        $this->pageName = Yii::t('app', 'MODULES');
+        $this->pageName = Yii::t('admin/default', 'MODULES');
         $this->breadcrumbs[] = [
             'label' => Yii::t('app', 'SYSTEM'),
             'url' => ['admin/default']
@@ -28,7 +28,7 @@ class ModulesController extends AdminController {
         $mod = new Modules; //пересмотреть
         if (count($mod->getAvailable())) {
             $this->buttons = array(array(
-                    'label' => Yii::t('app', 'INSTALL', array('n' => count($mod->getAvailable()), 0)),
+                    'label' => Yii::t('admin/default', 'INSTALL', array('n' => count($mod->getAvailable()), 0)),
                     'url' => ['install'],
                     'options' => array('class' => 'btn btn-success')
             ));
@@ -45,13 +45,13 @@ class ModulesController extends AdminController {
     public function actionInstall($name = null) {
 
 
-        $this->pageName = Yii::t('app', 'LIST_MODULES');
+        $this->pageName = Yii::t('admin/default', 'LIST_MODULES');
         $this->breadcrumbs = [
             [
-                'label' => Yii::t('app', 'MODULES'),
+                'label' => Yii::t('admin/default', 'MODULES'),
                 'url' => ['index']
             ],
-            Yii::t('app', 'INSTALL', 1)
+            Yii::t('admin/default', 'INSTALL', 1)
         ];
         $mod = $result = new Modules;
         if ($name) {

@@ -21,12 +21,12 @@ if (!empty($modules)) {
                     <td><?= $info->description ?></td>
                     <td class="text-center"><?= $info->version ?></td>
                     <td class="text-center"><?= Html::a($info->author, 'mailto:' . $info->author) ?></td>
-                    <td class="text-center"><?= Html::a(Yii::t('app', 'INSTALLED'), ['install', 'name' => $module], array('class' => 'btn btn-success')) ?></td>
+                    <td class="text-center"><?= Html::a(Yii::t('admin/default', 'INSTALLED'), ['install', 'name' => $module], array('class' => 'btn btn-success')) ?></td>
                 </tr>
             <?php } ?>
         </tbody></table>
 <?php } else { ?>
-    <?php Yii::t('app', 'NO_MODULES_INSTALL') ?>
+    <?php Yii::t('admin/default', 'NO_MODULES_INSTALL') ?>
 <?php } ?>
 
 
