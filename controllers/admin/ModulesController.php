@@ -14,7 +14,7 @@ class ModulesController extends AdminController {
     public function actionIndex() {
         $this->pageName = Yii::t('admin/default', 'MODULES');
         $this->breadcrumbs[] = [
-            'label' => Yii::t('app', 'SYSTEM'),
+            'label' => Yii::t('admin/default', 'SYSTEM'),
             'url' => ['admin/default']
         ];
 
@@ -51,7 +51,7 @@ class ModulesController extends AdminController {
                 'label' => Yii::t('admin/default', 'MODULES'),
                 'url' => ['index']
             ],
-            Yii::t('admin/default', 'INSTALL', 1)
+            Yii::t('admin/default', 'INSTALLED')
         ];
         $mod = $result = new Modules;
         if ($name) {
@@ -92,7 +92,6 @@ class ModulesController extends AdminController {
     public function actionDelete() {
         if (Yii::$app->request->isPost) {
             $model = Modules::findOne($_GET['id']);
-            $modname = $model->name;
             if ($model) {
                 $model->delete();
                 Yii::$app->cache->flush();
@@ -106,7 +105,7 @@ class ModulesController extends AdminController {
     public function actionInsertSql() {
         $model = Modules::find(['name' => $_GET['mod']])->one();
         if ($model) {
-            Yii::$app->database->import($model->name, 'insert.sql');
+            Yii::$app->db->import($model->name, 'insert.sql');
             Yii::$app->user->setFlash('success', 'База данных успешно импортирована.');
             return $this->redirect(array('/admin/app/modules'));
         } else {
