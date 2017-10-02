@@ -32,10 +32,8 @@ GridView::widget([
         [
             'class' => 'panix\engine\grid\columns\AdminBooleanColumn',
             'attribute' => 'is_default',
-        ],[
-            'class' => 'panix\engine\grid\columns\ActionColumn',
-            'template' => '{update} {switch} {delete}',
-        ]
+        ],
+            ['class' => 'panix\engine\grid\columns\ActionColumn']
     ]
 ]);
 

@@ -4,7 +4,7 @@ namespace panix\mod\admin\models;
 use panix\engine\SettingsModel;
 class SettingsDatabaseForm extends SettingsModel {
 
-
+    const NAME = 'db';
     protected $module = 'admin';
     protected $category = 'db';
 

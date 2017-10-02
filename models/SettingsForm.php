@@ -5,7 +5,7 @@ namespace panix\mod\admin\models;
 use panix\engine\SettingsModel;
 
 class SettingsForm extends SettingsModel {
-
+    const NAME = 'app';
     protected $module = 'admin';
     protected $category = 'app';
     public $sitename;

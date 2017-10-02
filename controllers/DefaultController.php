@@ -16,6 +16,12 @@ class DefaultController extends AdminController {
         ]);
     }
 
+    public function actionSendChat() {
+        if (!empty($_POST)) {
+            echo \panix\mod\admin\models\chat\ChatRoom::sendChat($_POST);
+        }
+    }
+
     public function actionAjaxCounters() {
 
         $notifactions = Notifactions::find()->read(0)->all();

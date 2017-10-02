@@ -18,6 +18,7 @@ class AdminAsset extends AssetBundle {
     ];
     public $js = [
         'js/translitter.js',
+       // 'js/chat.js'
     ];
     public $depends = [
         'panix\engine\assets\CommonAsset',

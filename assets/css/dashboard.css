@@ -1,3 +1,6 @@
+.huge {
+  font-size: 40px;
+}
 .attachments{
     margin-top: 30px;
 }
@@ -835,7 +838,7 @@ h1,
 .panel-default{
     background: #f7f7f7;
 }
-.panel .panel-footer{
+.panel-default .panel-footer{
     border-top: 1px solid #fff;
 }
 .panel-default .panel-heading {
@@ -857,7 +860,7 @@ h1,
 
 }
 .panel-default .panel-heading .btn-xs{
-    margin: 8px 6px 0 0;
+    margin: 0px 10px 0 0;
 }
 .panel-default .panel-heading .label{
     display: inline-block;
@@ -867,7 +870,7 @@ h1,
 .panel .panel-heading h3{
     padding: 10px 15px;
 }
-.panel .panel-heading,
+.panel-default .panel-heading,
 .ui-tabs .ui-tabs-nav li,
 .ui-slider .ui-slider-handle,
 .ui-dialog .ui-dialog-titlebar{
@@ -1169,26 +1172,7 @@ h1,
     margin-bottom:0;
 }
 
-/**NO BORDER RADIUS**/
-.no-radius .tab-container .ui-tabs-nav,
-.no-radius .tab-container .ui-tabs-nav li,
-.no-radius .panel,
-.no-radius .panel-group .panel,
-.no-radius .panel.with-nav-tabs .nav-tabs > li > a,
-.no-radius .dropdown-menu,
-.no-radius .list-group,
-.no-radius .list-group-item:last-child,
-.no-radius .list-group-item:first-child,
-.no-radius .form-control,
-.no-radius .btn,
-.no-radius .alert,
-.no-radius .progress,
-.no-radius .img-thumbnail,
-.no-radius .input-group-addon{
-    border-radius: 0;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-}
+
 
 
 .content-header {
@@ -2433,4 +2417,108 @@ a.desc:after {
     margin-bottom: 0;
     margin-top: 5px;
     height:5px;
+}
+.panel-green {
+  border-color: #5cb85c;
+}
+.panel-green > .panel-heading {
+  border-color: #5cb85c;
+  color: white;
+  background-color: #5cb85c;
+}
+.panel-green > a {
+  color: #5cb85c;
+}
+.panel-green > a:hover {
+  color: #3d8b3d;
+}
+.panel-red {
+  border-color: #d9534f;
+}
+.panel-red > .panel-heading {
+  border-color: #d9534f;
+  color: white;
+  background-color: #d9534f;
+}
+.panel-red > a {
+  color: #d9534f;
+}
+.panel-red > a:hover {
+  color: #b52b27;
+}
+.panel-yellow {
+  border-color: #f0ad4e;
+}
+.panel-yellow > .panel-heading {
+  border-color: #f0ad4e;
+  color: white;
+  background-color: #f0ad4e;
+}
+.panel-yellow > a {
+  color: #f0ad4e;
+}
+.panel-yellow > a:hover {
+  color: #df8a13;
+}
+/**NO BORDER RADIUS**/
+.no-radius .tab-container .ui-tabs-nav,
+.no-radius .tab-container .ui-tabs-nav li,
+.no-radius .panel,
+.no-radius .panel-group .panel,
+.no-radius .panel.with-nav-tabs .nav-tabs > li > a,
+.no-radius .dropdown-menu,
+.no-radius .list-group,
+.no-radius .list-group-item:last-child,
+.no-radius .list-group-item:first-child,
+.no-radius .form-control,
+.no-radius .btn,
+.no-radius .alert,
+.no-radius .progress,
+.no-radius .img-thumbnail,
+.no-radius .input-group-addon,
+.no-radius .panel-heading,
+.no-radius .thumbnail{
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-top-left-radius:0;
+    border-top-right-radius:0;
+}
+
+/*Chat panel*/
+.chat {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.chat li {
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px dotted #999999;
+}
+.chat li.left .chat-body {
+  margin-left: 60px;
+}
+.chat li.right .chat-body {
+  margin-right: 60px;
+}
+.chat li .chat-body p {
+  margin: 0;
+}
+
+.chat-panel .panel-body {
+  height: 350px;
+  overflow-y: scroll;
+  padding:15px;
+}
+.login-panel {
+  margin-top: 25%;
+}
+.flot-chart {
+  display: block;
+  height: 400px;
+}
+.flot-chart-content {
+  width: 100%;
+  height: 100%;
 }
