@@ -1,10 +1,11 @@
 <?php
+
 use yii\helpers\Html;
 ?>
 <div class="panel panel-default grid">
     <div class="grid-loading"></div>
     <div class="panel-heading">
-        <div class="panel-title"><?php if(isset($title)) echo $title; ?>
+        <div class="panel-title"><?php if (isset($title)) echo $title; ?>
             <?php if (isset($buttons)) { ?>
                 <div id="grid-options" class="dropdown panel-option">
                     <?php
@@ -16,7 +17,7 @@ use yii\helpers\Html;
                     <ul class="dropdown-menu dropup pull-right">
                         <li>
                             <a onclick="return grid.editcolums('orderproduct-grid', 'OrderProduct', 'cart');" href="javascript:void(0);">
-                                <i class="icon-grid"></i>Изменить столбцы таблицы</a>
+                                <i class="icon-table"></i> <?= Yii::t('app/admin', 'EDIT_GRID_TABLE'); ?></a>
                         </li>
                     </ul>
                 </div>
@@ -25,7 +26,7 @@ use yii\helpers\Html;
     </div>
     <div class="panel-body">
         <div class="table-responsive">{items}</div>
-            
+
     </div>
     <div class="panel-footer">
         <div class="row">
