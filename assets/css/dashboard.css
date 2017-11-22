@@ -317,7 +317,6 @@ html {
 }
 
 body {
-
     background: #e8e8e8;
     color: #5f5f5f;
     font-size: 12px;
@@ -2252,7 +2251,8 @@ background: #f7f7f7 none repeat scroll 0 0;
     box-shadow:none;
     text-shadow:none;
 }
-#page-content-wrapper .alert{
+#page-content-wrapper .alert,
+.ui-dialog .alert{
     padding: 15px 15px 15px 45px;
     position: relative;
 }
@@ -2264,7 +2264,11 @@ background: #f7f7f7 none repeat scroll 0 0;
 #page-content-wrapper .alert-info:before,
 #page-content-wrapper .alert-success:before,
 #page-content-wrapper .alert-danger:before,
-#page-content-wrapper .alert-warning:before{
+#page-content-wrapper .alert-warning:before,
+.ui-dialog .alert-info:before,
+.ui-dialog .alert-success:before,
+.ui-dialog .alert-danger:before,
+.ui-dialog .alert-warning:before{
     font-family: Corner;
     font-style: normal;
     line-height: 1;
@@ -2274,7 +2278,9 @@ background: #f7f7f7 none repeat scroll 0 0;
     font-size:22px;
 }
 #page-content-wrapper .alert-danger:before,
-#page-content-wrapper .alert-warning:before{
+#page-content-wrapper .alert-warning:before,
+.ui-dialog .alert-danger:before,
+.ui-dialog .alert-warning:before{
     content:"\f053";
 }
 #page-content-wrapper .alert-success:before{

@@ -20,7 +20,7 @@ $sideBar = (method_exists($this->context->module, 'getAdminSidebar')) ? true : f
     <body class="no-radius">
         <?php $this->beginBody() ?>
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $(".panel-heading .grid-toggle").click(function (e) {
                     e.preventDefault();
                     $(this).find('i').toggleClass("fa-chevron-down");
@@ -203,17 +203,25 @@ $sideBar = (method_exists($this->context->module, 'getAdminSidebar')) ? true : f
                                     </div>
                                 <?php } ?>
 
-<?php
-/*use yii\helpers\FileHelper;
-$files = FileHelper::findFiles(Yii::getAlias('@shop'),[
-    'only'=>['*.md'],
-    'recursive'=>false,
-    'caseSensitive'=>false
-]);
-foreach($files as $file){
-    echo basename($file,'.md');
+                                <?php
+                                
+                                
+if (extension_loaded('intl')) {
+    echo "intl true";
+} else {
+    echo "intl false";
 }
-print_r($files);*/
+
+                                /* use yii\helpers\FileHelper;
+                                  $files = FileHelper::findFiles(Yii::getAlias('@shop'),[
+                                  'only'=>['*.md'],
+                                  'recursive'=>false,
+                                  'caseSensitive'=>false
+                                  ]);
+                                  foreach($files as $file){
+                                  echo basename($file,'.md');
+                                  }
+                                  print_r($files); */
 
 
 
@@ -222,12 +230,8 @@ print_r($files);*/
 //$myHtml = Markdown::process($myText); // use original markdown flavor
 //$myHtml = Markdown::process($myText, 'gfm'); // use github flavored markdown
 //$myHtml = Markdown::process($myText, 'extra'); // use markdown extra
-
-
 //echo $myHtml;
-
-
-?>
+                                ?>
 
                                 <?= $content ?>
                             </div>
@@ -242,6 +246,8 @@ print_r($files);*/
                 <p class="col-md-12 text-center">
                     <?= Yii::$app->powered() ?> - 
                     <?= Yii::$app->version ?>
+                    <br/>
+                    <?= Yii::$app->pageGen() ?>
                 </p>
             </footer>
 
