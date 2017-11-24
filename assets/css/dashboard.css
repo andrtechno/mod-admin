@@ -453,9 +453,10 @@ div.help-block{
     color: #a94442;
 }
 input.loading{
-    background-position: right center;
+    background-position: right 5px center;
     background-repeat: no-repeat;
     background-image: url(../images/ajax.gif);
+    background-size: auto 90%;
 }
 .ajax-loading{
     position: fixed;
