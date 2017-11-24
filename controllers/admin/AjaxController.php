@@ -92,6 +92,7 @@ class AjaxController extends \panix\engine\controllers\AdminController {
             $url = $request->post('alias');
             $pk = $request->post('pk');
             $attribute_slug = $request->post('attribute_slug');
+            $message = $request->post('successMessage');
 
             if (!empty($pk)) {
                 $check = $model::find()
@@ -105,9 +106,9 @@ class AjaxController extends \panix\engine\controllers\AdminController {
             }
 
             if (isset($check))
-                echo Json::encode(['result' => true, 'message' => 'URL занят']);
+                echo Json::encode(['result' => true, 'message' => $message]);
             else
-                echo Json::encode(['result' => false, 'message' => 'URL свободен']);
+                echo Json::encode(['result' => false]);
             Yii::$app->end();
         }else {
             throw new \yii\web\ForbiddenHttpException('denied');
