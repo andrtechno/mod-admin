@@ -91,15 +91,16 @@ class AjaxController extends \panix\engine\controllers\AdminController {
             $model = str_replace('/', DIRECTORY_SEPARATOR, $request->post('model'));
             $url = $request->post('alias');
             $pk = $request->post('pk');
+            $attribute_slug = $request->post('attribute_slug');
 
             if (!empty($pk)) {
                 $check = $model::find()
-                        ->where(['seo_alias' => $url])
+                        ->where([$attribute_slug => $url])
                         ->andWhere(['!=', 'id', $pk])
                         ->one();
             } else {
                 $check = $model::find()
-                        ->where(['seo_alias' => $url])
+                        ->where([$attribute_slug => $url])
                         ->one();
             }
 

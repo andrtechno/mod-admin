@@ -251,6 +251,9 @@ div.required label:after {
 label{
     display: inline;
 }
+select.form-control{
+    width:auto;
+}
 .has-success .form-control,
 .has-success .form-control:focus,
 .has-error .form-control:focus,
