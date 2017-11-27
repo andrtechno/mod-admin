@@ -21,6 +21,7 @@ class AdminAsset extends AssetBundle {
     ];
     public $depends = [
         'panix\engine\assets\CommonAsset',
+        'panix\engine\assets\ClipboardAsset',
         'panix\mod\admin\assets\AdminCountersAsset',
     ];
 

@@ -146,6 +146,9 @@ $sideBar = (method_exists($this->context->module, 'getAdminSidebar')) ? true : f
                                                     } else {
                                                         $icon = '';
                                                     }
+                                                    if (!isset($button['options']['class'])) {
+                                                        $button['options']['class'] = ['btn btn-default'];
+                                                    }
                                                     echo Html::a($icon . $button['label'], $button['url'], $button['options']);
                                                 }
                                                 if (count($this->context->buttons) > 1) {
@@ -181,36 +184,44 @@ $sideBar = (method_exists($this->context->module, 'getAdminSidebar')) ? true : f
                             </div>
 
                             <div class="col-lg-12">
-                                <?php if (Yii::$app->session->hasFlash('success')) { ?>
-                                    <div class="alert alert-success fadeOut-time" role="alert">
-                                        <i class="fa fa-check-circle fa-2x"></i>
-                                        <?php
-                                        foreach (Yii::$app->session->getFlash('success') as $flash) {
-                                            echo $flash;
-                                        }
-                                        ?>
+                               
+                                
+                                <?php if (Yii::$app->session->allFlashes) { ?>
+                                    <?php foreach (Yii::$app->session->allFlashes as $key => $message) { ?>
+                                        <div class="alert alert-<?= $key ?> fadeOut-time">
+                                            <i class="fa fa-check-circle fa-2x"></i> <?= $message ?></div>
+                                    <?php } ?>
+                                <?php } ?>
 
-                                    </div>
-                                <?php } ?>
-                                <?php if (Yii::$app->session->hasFlash('error')) { ?>
-                                    <div class="alert alert-danger fadeOut-time" role="alert">
-                                        <i class="fa fa-times-circle fa-2x"></i>
-                                        <?php
-                                        foreach (Yii::$app->session->getFlash('error') as $flash) {
-                                            echo $flash;
-                                        }
-                                        ?>
-                                    </div>
-                                <?php } ?>
 
                                 <?php
-                                
-                                
-if (extension_loaded('intl')) {
-    echo "intl true";
-} else {
-    echo "intl false";
-}
+                                /*
+                                  if (extension_loaded('intl')) {
+                                  echo "intl true";
+                                  } else {
+                                  echo "intl false";
+                                  } */
+
+
+
+
+
+                                /*
+                                  use panix\hosting\Api;
+
+                                  $api = new Api('hosting_database','info');
+
+
+                                  print_r($api); */
+
+
+
+
+
+
+
+
+
 
                                 /* use yii\helpers\FileHelper;
                                   $files = FileHelper::findFiles(Yii::getAlias('@shop'),[
