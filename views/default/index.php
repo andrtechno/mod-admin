@@ -1,6 +1,7 @@
 <?php
 
 use panix\engine\Html;
+use yii\helpers\Url;
 ?>
 
 <div class="row">
@@ -48,6 +49,7 @@ use panix\engine\Html;
             </a>
         </div>
     </div>
+    <?php if(Yii::$app->hasModule('stats')){ ?>
     <div class="col-md-3 col-xs-6">
         <div class="panel panel-yellow">
             <div class="panel-heading">
@@ -61,15 +63,16 @@ use panix\engine\Html;
                     </div>
                 </div>
             </div>
-            <a href="#">
-                <div class="panel-footer">
+            <a href="<?= Url::to(['/admin/stats']);?>">
+                <span class="panel-footer" style="display:block;">
                     <span class="pull-left">Подробней</span>
                     <span class="pull-right"><i class="icon-arrow-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
+                    <span class="clearfix"></span>
+                </span>
             </a>
         </div>
     </div>
+    <?php } ?>
     <div class="col-md-3 col-xs-6">
         <div class="panel panel-green">
             <div class="panel-heading">

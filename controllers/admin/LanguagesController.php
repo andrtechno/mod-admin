@@ -9,7 +9,14 @@ use panix\mod\admin\models\search\LanguagesSearch;
 
 class LanguagesController extends AdminController {
 
-
+    public function actions() {
+        return [
+            'switch' => [
+                'class' => 'panix\engine\actions\SwitchAction',
+                'modelClass' => LanguagesSearch::className(),
+            ],
+        ];
+    }
     public function actionIndex() {
         $this->pageName = Yii::t('admin/default', 'LANGUAGES');
         $this->buttons = [

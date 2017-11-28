@@ -73,7 +73,7 @@ GridView::widget([
     'tableOptions' => ['class' => 'table table-striped'],
     'dataProvider' => $data_db,
     'filterModel' => $searchModel,
-    'layout' => $this->render('@admin/views/layouts/_grid_layout', ['title' => $this->context->pageName]), //'{items}{pager}{summary}'
+    'layoutOptions' => ['title' => $this->context->pageName],
     'columns' => [
         [
             'attribute' => 'filename',
