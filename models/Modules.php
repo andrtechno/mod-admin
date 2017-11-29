@@ -65,7 +65,7 @@ class Modules extends \panix\engine\db\ActiveRecord {
             return self::$cache;
 
         self::$cache = self::find()
-                ->select(['name', 'access'])
+                ->select(['name', 'access','className'])
                 ->all();
 
 
