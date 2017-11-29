@@ -36,6 +36,12 @@ class Module extends WebModule {
                         'visible' => true
                     ],
                     [
+                        'label' => Yii::t('admin/default', 'EDIT_FILES'),
+                        'url' => ['/admin/app/editorfile'],
+                        'icon' => 'file',
+                        'visible' => true
+                    ],
+                    [
                         'label' => Yii::t('admin/default', 'DATABASE'),
                         'url' => ['/admin/app/database'],
                         'icon' => 'database',
