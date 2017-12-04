@@ -16,7 +16,7 @@ class SideBar extends \yii\widgets\Menu {
 
             return strtr($template, [
                 '{url}' => Html::encode(Url::to($item['url'])),
-                '{label}' => Html::icon($item['icon']) . ' ' . $item['label'],
+                '{label}' => (isset($item['icon'])) ? Html::icon($item['icon']) . ' ' . $item['label'] : $item['label'],
             ]);
         }
 

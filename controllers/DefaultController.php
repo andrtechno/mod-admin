@@ -55,29 +55,26 @@ class DefaultController extends AdminController {
             $modelClass = $request->post('modelClass');
             $gridId = $request->post('grid');
             $runClass = new $modelClass;
+            $post_columns = $request->post('GridColumns');
 
-
-
-            if (isset($_POST['GridColumns'])) {
+            if ($post_columns) {
                 GridColumns::deleteAll(['modelClass' => $modelClass]);
-                foreach ($_POST['GridColumns']['check'] as $key => $post) {
+                foreach ($post_columns['check'] as $key => $post) {
                     $model = new GridColumns;
                     $model->modelClass = $modelClass;
-                    $model->ordern = $_POST['GridColumns']['ordern'][$key];
-                    $model->key = $key;
+                    $model->ordern = $post_columns['ordern'][$key];
+                    $model->column_key = $key;
                     $model->save(false);
                 }
             }
-
-
 
             $data = array();
 
             $model = GridColumns::find()->where(['modelClass' => $modelClass])->all();
             $m = array();
             foreach ($model as $r) {
-                $m[$r->key]['ordern'] = $r->ordern;
-                $m[$r->key]['key'] = $r->key;
+                $m[$r->column_key]['ordern'] = $r->ordern;
+                $m[$r->column_key]['key'] = $r->column_key;
             }
 
 

@@ -2,14 +2,8 @@
 
 namespace panix\mod\admin\controllers\admin;
 
-use Yii;
-use panix\engine\controllers\AdminController;
-use panix\mod\admin\models\SettingsDatabaseForm;
-use panix\engine\CMS;
-use yii\helpers\Html;
 
-class DefaultController extends AdminController {
-
+class DefaultController extends \panix\engine\controllers\AdminController {
 
     public $icon = 'icon-app';
 
