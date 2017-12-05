@@ -21,8 +21,8 @@ class DatabaseController extends AdminController {
         $this->pageName = Yii::t('admin/default', 'DATABASE');
         $this->breadcrumbs = [
             [
-                'label' => $this->module->info['name'],
-                'url' => $this->module->info['url'],
+                'label' => Yii::t('admin/default', 'DATABASE'),
+                'url' => [],
             ],
             $this->pageName
         ];

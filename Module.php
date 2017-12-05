@@ -58,5 +58,9 @@ class Module extends WebModule {
         ];
     }
 
+    public function getAdminSidebar() {
+        $items = $this->getAdminMenu();
+        return $items['system']['items'];
+    }
 
 }

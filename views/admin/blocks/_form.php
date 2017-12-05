@@ -15,8 +15,9 @@ use panix\mod\admin\models\Block;
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
     <?= $form->field($model, 'format')->dropDownList(Block::getFormatsList()); ?>
+    <?= $form->field($model, 'widget')->dropDownList(['test'=>'trest']); ?>
     <?= $form->field($model, 'active')->checkbox() ?>
-
+<div id="payment_configuration"></div>
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('blocks', 'Create') : Yii::t('blocks', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
@@ -24,3 +25,12 @@ use panix\mod\admin\models\Block;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<script>
+    $(document).ready(function(){
+        $('#BlocksModel_widget').change(function(){
+            $('#payment_configuration').load('/admin/app/blocks/configuration-form/system?='+$(this).val());
+        });
+        $('#BlocksModel_widget').change();
+    });
+</script>

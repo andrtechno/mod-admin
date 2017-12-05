@@ -19,7 +19,7 @@ use yii\i18n\Formatter;
  * @property integer $created_at
  * @property integer $updated_at
  */
-class Block extends \yii\db\ActiveRecord {
+class Block extends \panix\engine\db\ActiveRecord {
 
     const FORMAT_TEXT = 'text';
     const FORMAT_HTML = 'html';
@@ -38,7 +38,15 @@ class Block extends \yii\db\ActiveRecord {
     public static function tableName() {
         return '{{%block}}';
     }
-
+    public function getPaymentSystemsArray() {
+        Yii::import('app.blocks_settings.*');
+        $result = array();
+        $systems = new WidgetSystemManager;
+        foreach ($systems->getSystems() as $system) {
+            $result[(string) $system->id] = $system->name;
+        }
+        return $result;
+    }
     protected function initFormatter() {
         if ($this->formatter === null) {
             $this->formatter = Yii::$app->getFormatter();
@@ -90,7 +98,7 @@ class Block extends \yii\db\ActiveRecord {
     public function rules() {
         return [
             [['format'], 'required'],
-            [['content'], 'string'],
+            [['content','widget'], 'string'],
             [['active', 'created_at', 'updated_at'], 'integer'],
             [['title', 'format'], 'string', 'max' => 255]
         ];
