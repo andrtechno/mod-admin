@@ -73,9 +73,9 @@
     border-left-color: #fff;
 }
 
+
 .breadcrumbs li.active,
 .breadcrumbs li.active:hover{
-
     background: none;
     color:#b1b1b1;
     padding: 5px 15px 5px 25px;

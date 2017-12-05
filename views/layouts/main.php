@@ -1,7 +1,7 @@
 <?php
 
 use panix\engine\Html;
-use yii\widgets\Breadcrumbs;
+use panix\engine\widgets\Breadcrumbs;
 
 panix\mod\admin\assets\AdminAsset::register($this);
 
@@ -172,6 +172,7 @@ $sideBar = (method_exists($this->context->module, 'getAdminSidebar')) ? true : f
                                             'label' => Yii::t('yii', 'Home'),
                                             'url' => ['/admin']
                                         ],
+                                        'scheme'=>false,
                                         'links' => $this->context->breadcrumbs,
                                         'options' => ['class' => 'breadcrumbs pull-left']
                                     ]);
