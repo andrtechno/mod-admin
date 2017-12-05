@@ -203,13 +203,19 @@ class WidgetsController extends \panix\engine\controllers\AdminController {
         }
 
 
-        if (Yii::$app->request->isPost) {
+       // if (Yii::$app->request->isPost) {
             if ($system) {
-                $system->attributes = $_POST[get_class($system)];
-                if ($system->validate()) {
-                    $system->saveSettings($alias, $_POST);
-                    Yii::$app->session->setFlash('success', Yii::t('app', 'SUCCESS_UPDATE'));
+                //die(basename(get_class($system)));
+                //$system->attributes = $_POST[basename(get_class($system))];
+$post = Yii::$app->request->post();
+if($post){
+
+                if ($system->load($post) && $system->validate()) {
+
+                    $system->saveSettings($alias, $post);
+                    Yii::$app->session->setFlash('success', Yii::t('app', 'SUCCESS_UPDATE1'));
                 } else {
+                    print_r($system->getErrors());die;
                     Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_UPDATE'));
                 }
             }
