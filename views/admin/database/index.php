@@ -22,7 +22,7 @@ $type = Yii::$app->request->post('type');
 <?php
 if (!$db->checkLimit()) {
 
-    echo yii\bootstrap\Alert::widget([
+    echo panix\engine\bootstrap\Alert::widget([
         'closeButton'=>false,
         'options' => [
             'class' => 'alert-danger',

@@ -19,7 +19,7 @@ class AdminCountersAsset extends AssetBundle {
     public $depends = [
         'yii\web\YiiAsset',
         'yii\web\JqueryAsset',
-        'yii\bootstrap\BootstrapPluginAsset',
+        'yii\bootstrap4\BootstrapPluginAsset',
         'panix\engine\assets\CommonAsset'
     ];
 

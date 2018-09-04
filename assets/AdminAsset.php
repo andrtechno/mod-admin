@@ -11,10 +11,10 @@ class AdminAsset extends AssetBundle {
         'position' => \yii\web\View::POS_HEAD
     );
     public $css = [
-        // 'css/bootstrap-theme.css',
         'css/dashboard.css',
         'css/breadcrumbs.css',
-        'css/ui.css',
+        'css/dark.css',
+       // 'css/ui.css',
     ];
     public $js = [
 

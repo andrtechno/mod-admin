@@ -61,7 +61,7 @@ $sideBar = (method_exists($this->context->module, 'getAdminSidebar')) ? true : f
                         </div>
                         <div id="navbar" class="navbar-collapse collapse">
                             <?php
-                            echo \panix\engine\widgets\nav\Nav::widget([
+                            echo \panix\engine\bootstrap\Nav::widget([
                                 'options' => ['class' => 'navbar-nav'],
                             ]);
                             ?>

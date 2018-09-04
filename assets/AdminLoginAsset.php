@@ -8,14 +8,13 @@ class AdminLoginAsset extends AssetBundle {
 
     public $sourcePath = '@admin/assets';
     public $css = [
-        'css/bootstrap-theme.css',
         'css/dashboard.css',
         'css/login.css',
     ];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\web\JqueryAsset',
-        'yii\bootstrap\BootstrapPluginAsset',
+        'yii\bootstrap4\BootstrapPluginAsset',
         'panix\engine\assets\CommonAsset'
     ];
 
