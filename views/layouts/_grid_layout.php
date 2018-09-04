@@ -2,10 +2,10 @@
 
 use yii\helpers\Html;
 ?>
-<div class="panel panel-default grid">
+<div class="card card-light grid">
     <div class="grid-loading"></div>
-    <div class="panel-heading">
-        <div class="panel-title"><?php if (isset($title)) echo $title; ?>
+    <div class="card-header">
+        <h5 class="panel-title"><?php if (isset($title)) echo $title; ?>
             <?php if (isset($buttons)) { ?>
                 <div id="grid-options" class="dropdown panel-option">
                     <?php
@@ -22,13 +22,13 @@ use yii\helpers\Html;
                     </ul>
                 </div>
             <?php } ?>
-        </div>
+        </h5>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         <div class="table-responsive">{items}</div>
 
     </div>
-    <div class="panel-footer">
+    <div class="card-footer">
         <div class="row">
             <div class="col-md-6">{summary}</div>
             <div class="col-md-6 text-right">{pager}</div>

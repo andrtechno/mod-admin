@@ -19,7 +19,7 @@ class BlocksController extends \panix\engine\controllers\AdminController {
     public function behaviors() {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],

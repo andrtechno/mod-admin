@@ -24,14 +24,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             'id',
             [
-                'class' => \yii\grid\DataColumn::className(),
+                'class' => \yii\grid\DataColumn::class,
                 'label' => Yii::t('blocks', 'System name'),
                 'value' => function ($model) {
                     return $model->getSystemName();
                 }
             ],
             [
-                'class' => \yii\grid\DataColumn::className(),
+                'class' => \yii\grid\DataColumn::class,
                 'label' => Yii::t('blocks', 'Variable for template'),
                 'format'=>'raw',
                 'value' => function ($model) {

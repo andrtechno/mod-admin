@@ -13,7 +13,7 @@ class LanguagesController extends AdminController {
         return [
             'switch' => [
                 'class' => 'panix\engine\actions\SwitchAction',
-                'modelClass' => LanguagesSearch::className(),
+                'modelClass' => LanguagesSearch::class,
             ],
         ];
     }

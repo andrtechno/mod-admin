@@ -107,7 +107,7 @@ class Block extends \panix\engine\db\ActiveRecord {
     public function behaviors() {
         return [
             'timestampable' => [
-                'class' => TimestampBehavior::className(),
+                'class' => TimestampBehavior::class,
             ]
         ];
     }
