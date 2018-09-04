@@ -243,6 +243,20 @@ $sideBar = (method_exists($this->context->module, 'getAdminSidebar')) ? true : f
 //$myHtml = Markdown::process($myText, 'gfm'); // use github flavored markdown
 //$myHtml = Markdown::process($myText, 'extra'); // use markdown extra
 //echo $myHtml;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                 ?>
 
                                 <?= $content ?>
@@ -262,8 +276,9 @@ $sideBar = (method_exists($this->context->module, 'getAdminSidebar')) ? true : f
                     <?= Yii::$app->pageGen() ?>
                 </p>
             </footer>
-
+            <?php echo \panix\engine\widgets\scrollTop\ScrollTop::widget(); ?>
         </div>
+
         <?php $this->endBody() ?>
     </body>
 </html>

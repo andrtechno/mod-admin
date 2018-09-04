@@ -2,15 +2,40 @@
 
 namespace panix\mod\admin\controllers\admin;
 
+
 use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use panix\engine\CMS;
+
+
 
 class AjaxController extends \panix\engine\controllers\AdminController {
 
     public function actionSetHashstate() {
         Yii::$app->user->setState('redirectTabsHash', $_POST['hash']);
     }
+
+
+
+
+
+    public function beforeAction($action) {
+        if($action->id === 'viber'){
+            Yii::$app->controller->enableCsrfValidation = false;
+        }
+        return parent::beforeAction($action);
+    }
+
+
+
+
+
+
+
+
+
 
     public function actionGeo($ip) {
         // die($ip);

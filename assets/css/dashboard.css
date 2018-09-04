@@ -611,11 +611,8 @@ a.thumbnail:hover{
 .panel-option > a.btn-link{
     border-left: 1px solid #cdcdcd;
     display: block;
-    padding: 5px 10px;
-    height: 40px;
+    height: 39px;
     line-height: 28px;
-
-
 }
 .panel-option.open > a.btn-link{
     background: #f8f8f8;
@@ -678,7 +675,7 @@ td.ui-sortable-handle{
     box-shadow: 0 1px 0 #fff, 0 1px 0 #fff inset;
     -webkit-box-shadow: 0 1px 0 #fff, 0 1px 0 #fff inset;
     -moz-box-shadow: 0 1px 0 #fff, 0 1px 0 #fff inset;
-    background: #eee url(../images/breadcrumbs.png) repeat-x;
+    background: #eee;
     border-top: 1px solid #c3c3c3;
     border-bottom: 1px solid #c3c3c3;
 }

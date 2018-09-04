@@ -1,15 +1,15 @@
 {
     "name": "panix/mod-admin",
     "description": "Module admin",
-    "keywords": ["corner-cms", "module", "admin"],
+    "keywords": ["pixelion-cms", "module", "admin"],
     "homepage": "https://github.com/andrtechno/mod-admin",
     "type": "yii2-extension",
     "license": "MIT",
     "authors": [
         {
-            "name": "CORNER CMS",
-            "email": "dev@corner-cms.com",
-            "homepage": "http://www.corner-cms.com/"
+            "name": "PIXELION CMS",
+            "email": "dev@pixelion.com.ua",
+            "homepage": "https://pixelion.com.ua"
         }
     ],
     "require": {

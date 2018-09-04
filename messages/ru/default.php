@@ -7,6 +7,7 @@ return [
     'MODULE_NAME' => 'Админ-панель',
     'SECURITY' => 'Безопасность',
     'LANGUAGES' => 'Языки',
+    'WIDGETS'=>'Виджеты',
     'DATABASE' => 'База данных',
     'OPTIMIZE_DB' => 'Оптимизация базы данных',
     'OVERHEAD' => 'Накладные расходы',
@@ -21,4 +22,5 @@ return [
     'INSTALLED' => 'Установить',
     'LIST_MODULES' => 'Список доступных модулей',
     'INSTALL' => 'Установить ({n})',
+    'WIDGETS_UPDATE'=>'Редактирование виджета'
 ];

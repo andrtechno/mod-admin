@@ -49,29 +49,29 @@ use yii\helpers\Url;
             </a>
         </div>
     </div>
-    <?php if(Yii::$app->hasModule('stats')){ ?>
-    <div class="col-md-3 col-xs-6">
-        <div class="panel panel-yellow">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="icon-stats icon-x5"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge">47</div>
-                        <div>Посетило</div>
+    <?php if (Yii::$app->hasModule('stats')) { ?>
+        <div class="col-md-3 col-xs-6">
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="icon-stats icon-x5"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">47</div>
+                            <div>Посетило</div>
+                        </div>
                     </div>
                 </div>
+                <a href="<?= Url::to(['/admin/stats']); ?>">
+                    <span class="panel-footer" style="display:block;">
+                        <span class="pull-left">Подробней</span>
+                        <span class="pull-right"><i class="icon-arrow-right"></i></span>
+                        <span class="clearfix"></span>
+                    </span>
+                </a>
             </div>
-            <a href="<?= Url::to(['/admin/stats']);?>">
-                <span class="panel-footer" style="display:block;">
-                    <span class="pull-left">Подробней</span>
-                    <span class="pull-right"><i class="icon-arrow-right"></i></span>
-                    <span class="clearfix"></span>
-                </span>
-            </a>
         </div>
-    </div>
     <?php } ?>
     <div class="col-md-3 col-xs-6">
         <div class="panel panel-green">
@@ -100,15 +100,13 @@ use yii\helpers\Url;
 
 <div class="row">
     <div class="col-md-3">
-        
-        
+
+
         <?php
+        echo \panix\mod\admin\models\chat\ChatRoom::widget(['url' => '/admin/default/send-chat']);
+        ?>
 
-echo \panix\mod\admin\models\chat\ChatRoom::widget(['url'=>'/admin/default/send-chat']);
 
-?>
-        
-        
 
     </div>
 </div>
@@ -136,5 +134,9 @@ echo \panix\mod\admin\models\chat\ChatRoom::widget(['url'=>'/admin/default/send-
     </div>
     <div class="col-sm-6">
         <?php echo \panix\mod\admin\blocks\sysinfo\SysinfoWidget::widget([]); ?>
+
+        <?php echo panix\mod\admin\blocks\hosting\Hosting::widget(); ?>
+        <?php echo panix\mod\admin\blocks\openweathermap\OpenWeatherMap::widget(); ?>
+
     </div>
 </div>

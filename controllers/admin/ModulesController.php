@@ -65,7 +65,7 @@ class ModulesController extends AdminController {
 
     public function actionUpdate() {
         $model = Modules::findOne($_GET['id']);
-        $this->pageName = Yii::t('app', 'MODULES');
+        $this->pageName = Yii::t('admin/default', 'MODULES');
 
         $this->breadcrumbs[] = [
             'label' => $this->pageName,

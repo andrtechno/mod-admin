@@ -1,0 +1,33 @@
+.wind{
+    background-image:url(../images/wind.png);
+    background-repeat: no-repeat;
+    width: 17px;
+    height: 20px;
+}
+.wind0{
+    background-position: 100% -120px;
+}
+.wind1{
+    background-position: 100% -160px;
+}
+.wind2{
+    background-position: 100% -320px;
+}
+.wind3{
+    background-position: 100% -240px;
+}
+.wind4{
+    background-position: 100% -440px;
+}
+.wind5{
+    background-position: 100% -200px;
+}
+.wind6{
+    background-position: 100% -400px;
+}
+.wind7{
+    background-position: 100% -280px;
+}
+.wind8{
+    background-position: 100% -360px;
+}

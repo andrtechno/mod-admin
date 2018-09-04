@@ -678,7 +678,7 @@ td.ui-sortable-handle{
     box-shadow: 0 1px 0 #fff, 0 1px 0 #fff inset;
     -webkit-box-shadow: 0 1px 0 #fff, 0 1px 0 #fff inset;
     -moz-box-shadow: 0 1px 0 #fff, 0 1px 0 #fff inset;
-    background: #eee url(../images/breadcrumbs.png) repeat-x;
+    background: #eee;
     border-top: 1px solid #c3c3c3;
     border-bottom: 1px solid #c3c3c3;
 }

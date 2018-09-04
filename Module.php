@@ -11,7 +11,7 @@ class Module extends WebModule {
     public function getInfo() {
         return [
             'label' => Yii::t('admin/default', 'MODULE_NAME'),
-            'author' => 'dev@corner-cms.com',
+            'author' => 'dev@pixelion.com.ua',
             'version' => '1.0',
             'icon' => 'icon-tools',
             'description' => Yii::t('admin/default', 'MODULE_DESC'),
@@ -39,6 +39,12 @@ class Module extends WebModule {
                         'label' => Yii::t('admin/default', 'EDIT_FILES'),
                         'url' => ['/admin/app/editorfile'],
                         'icon' => 'file',
+                        'visible' => true
+                    ],
+                    [
+                        'label' => Yii::t('admin/default', 'WIDGETS'),
+                        'url' => ['/admin/app/widgets'],
+                        'icon' => 'chip',
                         'visible' => true
                     ],
                     [

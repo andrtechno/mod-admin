@@ -15,7 +15,7 @@ class WidgetsController extends \panix\engine\controllers\AdminController {
 
     public function actionIndex() {
 
-        $this->pageName = Yii::t('app', 'WIDGETS');
+        $this->pageName = Yii::t('admin/default', 'WIDGETS');
         $this->breadcrumbs = array($this->pageName);
 
 
@@ -193,7 +193,20 @@ class WidgetsController extends \panix\engine\controllers\AdminController {
         if (empty($alias)) {
             return $this->redirect(['index']);
         }
+
+
+        $this->pageName = Yii::t('admin/default', 'WIDGETS_UPDATE');
+        $this->breadcrumbs = [
+            [
+                'label'=>Yii::t('admin/default', 'WIDGETS'),
+                'url'=>['/admin/app/widgets']
+            ],
+            $this->pageName
+        ];
+
         $manager = new WidgetSystemManager;
+        //$alias = str_replace('.','\\',$alias);
+
         $system = $manager->getSystemClass($alias);
 
         if (!$system) {
@@ -203,26 +216,24 @@ class WidgetsController extends \panix\engine\controllers\AdminController {
         }
 
 
-       // if (Yii::$app->request->isPost) {
-            if ($system) {
-                //die(basename(get_class($system)));
-                //$system->attributes = $_POST[basename(get_class($system))];
-$post = Yii::$app->request->post();
-if($post){
+        // if (Yii::$app->request->isPost) {
+        if ($system) {
+            //die(basename(get_class($system)));
+            //$system->attributes = $_POST[basename(get_class($system))];
+            $post = Yii::$app->request->post();
+            if ($post) {
 
                 if ($system->load($post) && $system->validate()) {
-
                     $system->saveSettings($alias, $post);
-                    Yii::$app->session->setFlash('success', Yii::t('app', 'SUCCESS_UPDATE1'));
+                    Yii::$app->session->setFlash('success', Yii::t('app', 'SUCCESS_UPDATE'));
                 } else {
-                    print_r($system->getErrors());die;
                     Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_UPDATE'));
                 }
             }
         }
         return $this->render('update', array(
-            'form' => $system->getConfigurationFormHtml($alias),
-                //  'title'=>Yii::t(str_replace('Form','',get_class($system)).'.default','TITLE')
+                    'form' => $system->getConfigurationFormHtml($alias),
+                        //  'title'=>Yii::t(str_replace('Form','',get_class($system)).'.default','TITLE')
         ));
     }
 

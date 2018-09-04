@@ -1,79 +1,116 @@
 <?php
+
 use panix\engine\Html;
+use panix\engine\CMS;
+
+
 ?>
+<style>
+    .progress {
+        position: relative;
+        border: 1px solid #cdcdcd;
+        /*-webkit-box-shadow: inset 0px 0px 10px 0px rgba(0,0,0,0.3);
+        -moz-box-shadow: inset 0px 0px 10px 0px rgba(0,0,0,0.3);
+        box-shadow: inset 0px 0px 10px 0px rgba(0,0,0,0.3);*/
+    }
+
+    .progress .progress-value {
+        font-style: normal;
+        margin: 0 auto;
+        display: block;
+        position: absolute;
+        color: #000;
+        text-align: center;
+        line-height: 20px;
+        width: 100%;
+    }
+
+    .progress-bar {
+        text-align: left;
+        transition: margin 3s;
+
+        box-shadow: none;
+        position: absolute;
+        width: 100%;
+        background-color: #f7f7f7;
+    }
+
+</style>
+<script>
+    /* $(document).ready(function () {
+     var dataval = parseInt($('.progress').attr("data-amount"));
+     if (dataval < 100) {
+     $('.progress .amount').css("width", 100 - dataval + "%");
+     }
 
 
-<table class="table table-striped">
-    <tr>
-        <td width="50%">CORNER / Framework: <span class="pull-right"><?= $cms_ver; ?> <?= $yii_ver; ?></span></td>
-        <td width="50%">PDO extension: <span class="pull-right"><?= $pdo ?></td>
-    </tr>
-    <tr>
-        <td>PHP version <span class="pull-right"><?= $php ?></span></td>
-        <td>MySQL: <span class="pull-right"><?= Yii::$app->db->pdo->getAttribute(PDO::ATTR_SERVER_VERSION);?></span></td>
-    </tr>
-    <tr>
-        <td>Upload_max_filesize <span class="pull-right"><?= $u_max ?></span></td>
-        <td>Register_globals <span class="pull-right"><?= $globals ?></span></td>
-    </tr>
-    <tr>
-        <td>Memory_limit <span class="pull-right"><?= $m_max ?></span></td>
-        <td>Magic_quotes_gpc <span class="pull-right"><?= $magic_quotes ?></span></td>
-    </tr>
-    <tr>
-        <td>Post_max_size <span class="pull-right"><?= $p_max ?></span></td>
-        <td>Libery GD <span class="pull-right"><?= $gd ?></span></td>
-    </tr>
-    <tr>
-        <td>System TimeZone <span class="pull-right"><?= $timezone ?></span></td>
-        <td>OS: <span class="pull-right"><?= $os ?></span></td>
-    </tr>
-    <tr>
-        <td>Backup dir size <span class="pull-right"><?= $backup_dir_size ?></span></td>
-        <td>Uplaods dir size <span class="pull-right"><?= $uploads_dir_size ?></span></td>
-    </tr>
-    <tr>
-        <td>Assets dir size <span class="pull-right"><?= $assets_dir_size ?></span></td>
-        <td>Cache dir size <span class="pull-right"><?= $cache_dir_size ?></span></td>
-    </tr>
+     function modifyProgressVal(type) {
+     dataval = parseInt($('.progress').attr("data-amount"));
+     if (type == 1)
+     dataval = Math.min(100, dataval + 10)
+     else if (type == -1)
+     dataval = Math.max(0, dataval - 10);
+     $('.progress .amount').css("width", 100 - dataval + "%");
+     $('.progress').attr("data-amount", dataval);
+     }
+     });*/
+    $(document).ready(function () {
+        function progressBar(id) {
+            $(id).animate({
+                width: "+=" + 100 - $(id).attr("aria-valuenow") + "%",
+                marginLeft: "+=" + $(id).attr("aria-valuenow") + "%",
+            }, 500);
+        }
 
-</table>
+        progressBar('#pb1');
+        progressBar('#pb2');
 
+    });
+</script>
 
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title"><?= Yii::t('wgt_Hosting/default', 'HOSTING') ?></h3>
+        <div class="panel-option">
+            <?= Html::a(Html::icon('settings'), ['/admin/app/widgets/update', 'alias' => get_class($this->context)], ['class' => 'btn btn-link']); ?>
 
-<?= Html::beginForm('', 'post', array('class' => 'form-horizontal')) ?>
-<div class="form-group">
-    <div class="col-sm-3">
-        <label class="control-label">Кэш:</label>
+        </div>
+
     </div>
-    <div class="col-sm-5">
+    <div class="panel-body" style="padding:15px;">
 
-        <?php
+        <?php if ($result->status == 'success') {
 
-        echo Html::dropDownList('cache_id', null, [
-                     'cached_settings' => 'settings',
-                'cached_widgets' => 'cached_widgets',
-                'url_manager_urls' => 'url_manager_urls'
-        ],['prompt'=>Yii::t('app', 'EMPTY_LIST')])
+            $size = $this->context->ssdProcentLimit();
+            $size2 = $this->context->ssdProcentLimit2();
+            ?>
+
+            <div class="progress">
+                <div id="pb1" class="progress-bar" role="progressbar" aria-valuenow="<?= round($size, 2); ?>"
+                     aria-valuemin="0"
+                     aria-valuemax="100">
+                </div>
+                <span class="progress-value">Файлов <?= $result->data->used->inode ?>
+                    из <?= $result->data->limit->inode ?> заполнено <?= round($size, 2); ?>%</span>
+            </div>
+            <br>
+
+            <div class="progress">
+                <div id="pb2" class="progress-bar progress-gradient" role="progressbar"
+                     aria-valuenow="<?= round($size2, 2); ?>"
+                     aria-valuemin="0" aria-valuemax="100">
+                </div>
+                <span class="progress-value">SSD заполнено <?= round($size2, 2); ?>%</span>
+            </div>
+
+
+            <?php
+            //print_r($result);
+            ?>
+            <?php
+        } else {
+            $this->theme->alert('danger', $result->message, false);
+        }
         ?>
-
-
     </div>
-    <div class="col-sm-4">
-        <input class="btn btn-sm btn-success pull-right" type="submit" value="<?= Yii::t('app', 'CLEAR'); ?>"> 
-    </div>
-
 </div>
-
-<div class="form-group">
-    <div class="col-sm-4"><label class="control-label">Активы (/assets):</label></div>
-    <div class="col-sm-8">
-        <?= Html::hiddenInput('clear_assets', 1, array('class' => 'form-control')); ?>
-        <input class="btn btn-sm btn-success pull-right" style="margin-left:10px;" type="submit" value="<?= Yii::t('app', 'CLEAR'); ?>"> 
-    </div>
-
-</div>
-<?= Html::endForm(); ?>
-    <?php
-
-

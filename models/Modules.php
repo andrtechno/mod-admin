@@ -5,7 +5,8 @@ namespace panix\mod\admin\models;
 use Yii;
 use panix\mod\admin\models\search\ModulesSearch;
 
-class Modules extends \panix\engine\db\ActiveRecord {
+class Modules extends \panix\engine\db\ActiveRecord
+{
 
     const MODULE_ID = 'admin';
 
@@ -32,14 +33,16 @@ class Modules extends \panix\engine\db\ActiveRecord {
     /**
      * @return string the associated database table name
      */
-    public static function tableName() {
+    public static function tableName()
+    {
         return '{{%modules}}';
     }
 
     /**
      * @return array validation rules for model attributes.
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             [['name'], 'required'],
             // ['switch', 'numerical'],
@@ -48,7 +51,8 @@ class Modules extends \panix\engine\db\ActiveRecord {
         ];
     }
 
-    public function getIsInsertSql() {
+    public function getIsInsertSql()
+    {
         if (file_exists(Yii::getAlias("mod.{$this->name}.sql") . DS . 'insert.sql')) {
             return true;
         } else {
@@ -60,13 +64,14 @@ class Modules extends \panix\engine\db\ActiveRecord {
      * Load enabled modules and cache for current request
      * @return array Enabled modules
      */
-    public static function getEnabled() {
+    public static function getEnabled()
+    {
         if (self::$cache)
             return self::$cache;
 
         self::$cache = self::find()
-                ->select(['name', 'access','className'])
-                ->all();
+            ->select(['name', 'access', 'className'])
+            ->all();
 
 
         return self::$cache;
@@ -77,15 +82,17 @@ class Modules extends \panix\engine\db\ActiveRecord {
      * @param string $name
      * @return boolean
      */
-    public static function isModuleInstalled($name) {
-        return (boolean) self::find()->where(['name' => $name])->count();
+    public static function isModuleInstalled($name)
+    {
+        return (boolean)self::find()->where(['name' => $name])->count();
     }
 
     /**
      * @param $name
      * @return mixed
      */
-    public static function loadModuleClass($name) {
+    public static function loadModuleClass($name)
+    {
         return new \panix\engine\WebModule($name);
     }
 
@@ -94,7 +101,8 @@ class Modules extends \panix\engine\db\ActiveRecord {
      * @param string $name module name
      * @return boolean
      */
-    public static function install($name) {
+    public static function install($name)
+    {
 
         if (self::loadModuleClass($name)->afterInstall()) {
 
@@ -119,7 +127,8 @@ class Modules extends \panix\engine\db\ActiveRecord {
     /**
      * After delete module
      */
-    public function afterDelete() {
+    public function afterDelete()
+    {
         self::loadModuleClass($this->name)->afterUninstall();
         self::deleteCaches();
         // self::buildEventsFile();
@@ -129,7 +138,8 @@ class Modules extends \panix\engine\db\ActiveRecord {
     /**
      * Deletes cache
      */
-    public static function deleteCaches() {
+    public static function deleteCaches()
+    {
         Yii::$app->cache->delete('url_manager_urls');
     }
 
@@ -138,20 +148,22 @@ class Modules extends \panix\engine\db\ActiveRecord {
      * @param string $name module name
      * @return array
      */
-    public static function loadInfo($name = null) {
+    public static function loadInfo($name = null)
+    {
         if ($name) {
             $mod = self::loadModuleClass($name);
-            return (object) [
-                        'name' => $mod->name,
-                        'author' => $mod->author,
-                        'description' => $mod->description,
-                        'icon' => $mod->icon,
-                        'version' => $mod->version,
+            return (object)[
+                'name' => $mod->name,
+                'author' => $mod->author,
+                'description' => $mod->description,
+                'icon' => $mod->icon,
+                'version' => $mod->version,
             ];
         }
     }
 
-    public function getAvailable() {
+    public function getAvailable()
+    {
         $result = array();
 
 
@@ -178,18 +190,20 @@ class Modules extends \panix\engine\db\ActiveRecord {
      * Get module info
      * @return string
      */
-    public function getInfo() {
+    public function getInfo()
+    {
         $mod = Yii::$app->getModule($this->name);
-        return (object) array(
-                    'label' => $mod->name,
-                    'author' => $mod->author,
-                    'description' => $mod->description,
-                    'icon' => $mod->icon,
-                    'version' => $mod->version,
+        return (object)array(
+            'label' => $mod->name,
+            'author' => $mod->author,
+            'description' => $mod->description,
+            'icon' => $mod->icon,
+            'version' => $mod->version,
         );
     }
 
-    public static function getModules($remove = array()) {
+    public static function getModules($remove = array())
+    {
         $modules = array();
 
         foreach (self::find()->published()->where(['NOT IN', 'name', CMap::mergeArray(self::$denieMods, $remove)])->all() as $mod) {
@@ -199,4 +213,12 @@ class Modules extends \panix\engine\db\ActiveRecord {
         return $modules;
     }
 
+    public static function getAccessList()
+    {
+        return [
+            0 => 'Все посетители',
+            1 => 'Пользователи',
+            2 => 'Только администраторы'
+        ];
+    }
 }

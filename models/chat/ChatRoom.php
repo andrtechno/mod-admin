@@ -15,11 +15,11 @@ use panix\mod\admin\models\chat\Chat;
 /**
  * @author Andy Fitria <sintret@gmail.com>
  */
-class ChatRoom extends Widget {
+class ChatRoom extends Widget
+{
 
     public $sourcePath = '@admin/assets';
-    public $css = [
-    ];
+    public $css = [];
     public $js = [ // Configured conditionally (source/minified) during init()
         'js/chat.js',
     ];
@@ -33,7 +33,8 @@ class ChatRoom extends Widget {
     public $model;
     public $loadingImage;
 
-    public function init() {
+    public function init()
+    {
         $this->model = new Chat();
         if ($this->userModel === NULL) {
             $this->userModel = Yii::$app->getUser()->identityClass;
@@ -52,7 +53,8 @@ class ChatRoom extends Widget {
         parent::init();
     }
 
-    public function run() {
+    public function run()
+    {
         parent::init();
         ChatJs::register($this->view);
         $model = new Chat();
@@ -60,15 +62,16 @@ class ChatRoom extends Widget {
         $model->userField = $this->userField;
         $data = $model->data();
         return $this->render('index', [
-                    'data' => $data,
-                    'url' => $this->url,
-                    'userModel' => $this->userModel,
-                    'userField' => $this->userField,
-                    'loading' => $this->loadingImage
+            'data' => $data,
+            'url' => $this->url,
+            'userModel' => $this->userModel,
+            'userField' => $this->userField,
+            'loading' => $this->loadingImage
         ]);
     }
 
-    public static function sendChat($post) {
+    public static function sendChat($post)
+    {
         if (isset($post['message']))
             $message = $post['message'];
         if (isset($post['userfield']))
