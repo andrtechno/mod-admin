@@ -12,7 +12,7 @@ class Module extends WebModule {
         return [
             'label' => Yii::t('admin/default', 'MODULE_NAME'),
             'author' => 'dev@pixelion.com.ua',
-            'version' => '1.0.0',
+            'version' => '1.0',
             'icon' => 'icon-tools',
             'description' => Yii::t('admin/default', 'MODULE_DESC'),
             'url' => ['/admin/app'],
