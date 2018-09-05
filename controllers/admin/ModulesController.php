@@ -69,7 +69,7 @@ class ModulesController extends AdminController {
 
         $this->breadcrumbs[] = [
             'label' => $this->pageName,
-            'url' => ['admin/app/modules']
+            'url' => ['/admin/app/modules']
         ];
 
         $this->breadcrumbs[] = Yii::t('app', 'UPDATE');
