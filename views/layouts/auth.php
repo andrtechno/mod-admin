@@ -53,7 +53,7 @@ panix\mod\admin\assets\AdminLoginAsset::register($this);
 
                     </div>                       
                 </div> 
-                <div class="text-center copyright">{copyright}</div>
+                <div class="text-center copyright"><?= Yii::$app->powered() ?></div>
             </div>
         </div>
         </div>
