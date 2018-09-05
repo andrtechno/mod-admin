@@ -9,7 +9,7 @@ use panix\mod\admin\models\Modules;
 
 class ModulesController extends AdminController {
 
-    public $icon = 'icon-puzzle';
+    public $icon = 'puzzle';
 
     public function actionIndex() {
         $this->pageName = Yii::t('admin/default', 'MODULES');

@@ -8,7 +8,7 @@ use panix\mod\admin\models\SettingsForm;
 
 class SettingsController extends AdminController {
 
-
+    public $icon = 'settings';
 
     public function actionIndex(){
         $this->pageName = Yii::t('app', 'SETTINGS');

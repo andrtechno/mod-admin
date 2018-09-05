@@ -102,26 +102,23 @@ $sideBar = (method_exists($this->context->module, 'getAdminSidebar')) ? true : f
                     <div class="container-fluid">
 
                         <div class="row">
-                            <div class="col-lg-12 module-header">
-                                <div class="pull-left">
 
-                                    <h1 class="hidden-xs">
+
+                            <div class="col-lg-12 clearfix module-header">
+                                <div class="float-left">
+                                    <h1 class="d-none d-md-block d-sm-block d-lg-block">
                                         <?php
                                         if (isset($this->context->icon)) {
-                                            echo '<i class="' . $this->context->icon . '"></i>';
+                                            echo Html::icon($this->context->icon);
                                         } else {
-                                            echo '<i class="' . $this->context->module->info['icon'] . '"></i>';
+                                            echo Html::icon($this->context->module->info['icon']);
                                         }
                                         ?>
-
-
                                         <?= Html::encode($this->context->pageName) ?>
                                     </h1>
                                 </div>
 
-
-                                <div class="pull-right">
-
+                                <div class="float-right">
                                     <?php
                                     if (!isset($this->context->buttons)) {
                                         echo Html::a(Yii::t('app', 'CREATE'), ['create'], ['title' => Yii::t('app', 'CREATE'), 'class' => 'btn btn-success']);
@@ -151,9 +148,10 @@ $sideBar = (method_exists($this->context->module, 'getAdminSidebar')) ? true : f
                                     }
                                     ?>
                                 </div>
-                                <div class="clearfix"></div>
-
                             </div>
+                            <?php echo $this->render('partials/_breadcrumbs'); ?>
+
+
 
                             <div class="clearfix"></div>
                             <?php if (isset($this->context->breadcrumbs)) { ?>

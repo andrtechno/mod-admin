@@ -11,7 +11,7 @@ use yii\helpers\Html;
 class DatabaseController extends AdminController {
 
 
-    public $icon = 'icon-database';
+    public $icon = 'database';
 
     public function actionIndex() {
         $db = Yii::$app->db;
