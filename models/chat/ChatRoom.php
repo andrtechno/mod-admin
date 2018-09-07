@@ -11,6 +11,7 @@ namespace panix\mod\admin\models\chat;
 use Yii;
 use yii\base\Widget;
 use panix\mod\admin\models\chat\Chat;
+use yii\web\Response;
 
 /**
  * @author Andy Fitria <sintret@gmail.com>
@@ -91,13 +92,17 @@ class ChatRoom extends Widget
             $model->user_id = Yii::$app->user->id;
 
             if ($model->save()) {
-                echo $model->data();
+                \Yii::$app->response->format = Response::FORMAT_JSON;
+                \Yii::$app->response->data = $model->data();
+               // return $model->data();
             } else {
                 print_r($model->getErrors());
                 exit(0);
             }
         } else {
-            echo $model->data();
+            \Yii::$app->response->format = Response::FORMAT_JSON;
+            \Yii::$app->response->data = $model->data();
+
         }
     }
 

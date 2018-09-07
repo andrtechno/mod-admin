@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 ?>
-<div class="card card-light grid">
+<div class="card bg-light grid">
     <div class="grid-loading"></div>
     <div class="card-header">
         <h5 class="panel-title"><?php if (isset($title)) echo $title; ?>

@@ -74,8 +74,8 @@ class SysinfoWidget extends \panix\engine\data\Widget {
         ));
     }
 
-    private function labelHtml($value, $class = 'default') {
-        return '<span class="label label-' . $class . '">' . $value . '</span>';
+    private function labelHtml($value, $class = 'secondary') {
+        return '<span class="badge badge-' . $class . '">' . $value . '</span>';
     }
 
 }

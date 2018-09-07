@@ -19,8 +19,8 @@ $bundle = \panix\engine\emoji\EmojiPickerAsset::register($this);
 
 </script>
 
-<div class="chat-panel panel panel-default">
-    <div class="panel-heading">
+<div class="chat-panel card">
+    <div class="card-header">
         <div class="panel-title">
             <i class="icon-comments"></i> Чат
             <div class="btn-group pull-right hidden">
@@ -37,12 +37,12 @@ $bundle = \panix\engine\emoji\EmojiPickerAsset::register($this);
             </div>
         </div>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         <ul class="chat" id="chat-box">
             <?= $data; ?>
         </ul>
     </div>  
-    <div class="panel-footer">
+    <div class="card-footer">
         <div class="emoji-picker-container">
             <textarea name="Chat[message]" id="chat_message" data-emojiable="true" placeholder="Сообщение..." class="form-control" rows="1" style="width:100%;resize:none;"></textarea>
 
