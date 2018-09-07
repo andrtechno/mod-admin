@@ -1,0 +1,406 @@
+@import "base";
+@import "mixins";
+
+body {
+  background: $bg-color;
+
+}
+
+body,
+a,
+.nav-tabs .nav-link,
+.table > thead > tr > th {
+  color: $link_color;
+}
+
+a:hover {
+  color: lighten($link_color, 30%);
+}
+
+.pagination > li.page-item.active > a.page-link,
+.pagination > li.page-item.active > a.page-link:hover {
+  background: #b5bcbf;
+  color: #fff;
+  @include box-shadow(rgba(0, 0, 0, 0.125), true);
+}
+
+.pagination > li.page-item > a.page-link {
+  border-color: $block-border;
+  color: $primary_color;
+  &:hover {
+    @include box-shadow($block-border, true);
+    //@include gradient-x(#f6f6f6, #e8e8e8);
+    background: #e8e8e8;
+  }
+}
+
+.navbar {
+  border-bottom: 1px solid darken($primary_color, 10%);
+  @if $navbar-gradient {
+    @include gradient-y($primary_color, lighten($primary_color, 8%));
+  } @else {
+    background-color: $primary_color;
+  }
+}
+
+.navbar .navbar-right > li > a:hover,
+.navbar .navbar-right > li > a:focus {
+  background: darken($primary_color, 2%);
+}
+
+#sidebar-wrapper,
+#sidebar_menu li a,
+.sidebar-nav li a {
+  background-color: $primary_color;
+}
+
+.navbar-nav .nav-link,
+.navbar-brand,
+#sidebar_menu li a,
+.sidebar-nav li a,
+.navbar .navbar-right > li > a {
+  color: $primary_text_color;
+}
+
+.form-control {
+  border: 1px solid $block-border;
+}
+
+#wrapper #menu-toggle {
+  color: #fff;
+  background: darken($primary_color, 5%);
+}
+
+.nav-tabs .nav-item {
+
+  .nav-link {
+    border-right: 0;
+    border-left: 0;
+    border-bottom: 1px solid $block-border;
+    border-top: 1px solid lighten($block-border, 12%);
+    color: $tabs-text-color;
+
+    @if $tabs-gradient {
+      @include gradient-x(#f6f6f6, #e8e8e8);
+    } @else {
+      background-color: red;
+    }
+
+    &.active,
+    &.active:hover,
+    &.active:focus {
+      /*border-top: 0;*/
+      /*border-top: 1px solid $tabs-text-color-hover;*/
+      border-left: 0;
+      border-right: 0;
+      color: #909090;
+      background: $card-bg;
+    }
+    &:hover {
+      background: $tabs-text-color-hover;
+      border-bottom: 1px solid $block-border;
+
+    }
+
+    @media (min-width: 768px) {
+      border: 0;
+      border-top: 1px solid #fff;
+      border-bottom: 1px solid $block-border;
+      border-right: 1px solid $block-border;
+      &.active,
+      &.active:hover,
+      &.active:focus {
+        border-right: 1px solid $block-border;
+        border-bottom: 1px solid $card-bg;
+      }
+    }
+  }
+  &:last-child .nav-link,
+  &:last-child:hover .nav-link,
+  &:last-child .nav-link.active{
+    border-right: 0;
+  }
+}
+
+.footer {
+  color: lighten($primary_color, 20%);
+  font-size: 12px;
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid lighten($block-border, 10%);
+}
+
+.table > tbody > tr:hover td {
+  background-color: lighten($primary_color, 68%);
+}
+
+.table > thead > tr > th {
+  background: lighten($bg-color, 4%);
+  border-bottom: 0;
+}
+
+.table > thead > tr > td.active,
+.table > tbody > tr > td.active,
+.table > tfoot > tr > td.active,
+.table > thead > tr > th.active,
+.table > tbody > tr > th.active,
+.table > tfoot > tr > th.active,
+.table > thead > tr.active > td,
+.table > tbody > tr.active > td,
+.table > tfoot > tr.active > td,
+.table > thead > tr.active > th,
+.table > tbody > tr.active > th,
+.table > tfoot > tr.active > th {
+  background-color: lighten(#d1ecf1, 10%);
+}
+
+.table-striped > tbody > tr {
+  background-color: lighten($bg-color, 4%);;
+  &:nth-of-type(odd) {
+    background-color: lighten($bg-color, 6%);
+  }
+}
+
+#page-nav {
+  border-top: 1px solid $block-border;
+  border-bottom: 1px solid $block-border;
+  > .nav > li {
+    border-right: 1px solid $block-border;
+    &:first-child {
+      border-left: 1px solid $block-border;
+    }
+  }
+}
+
+// Content dropdown menu
+.dropdown-menu {
+  border: 1px solid darken($dropdown-menu-border, 10%);
+  background: #FDFDFD;
+  .nav-item {
+    border-bottom: 1px solid darken($dropdown-menu-border, 10%);
+    a {
+      color: $primary_color;
+      //@include gradient-x(lighten($primary_text_color, 30%), lighten($primary_text_color,22%));
+      background: #fff;
+      &:hover, &:focus {
+        //@include gradient-x(lighten($primary_text_color,20%),lighten($primary_text_color, 30%));
+        background: lighten($bg-color, 8%);
+      }
+    }
+
+  }
+  &.show a {
+    color: $primary_color;
+  }
+}
+
+/*
+.dropdown-menu > .nav-item:hover > a {
+  background: $primary_text_color;
+}*/
+
+.navbar-nav > li {
+
+  @media (min-width: 992px) {
+    border-right: 1px solid $primary_border_color;
+    &:first-child {
+      border-left: 1px solid $primary_border_color;
+    }
+  }
+}
+
+.navbar-nav .dropdown-menu,
+.navbar-right .dropdown-menu {
+  border: 0;
+  background: $primary_color;
+  .nav-item {
+    border-bottom: 1px solid $primary_border_color;
+    a {
+      color: $primary_text_color;
+      background: $primary_color;
+    }
+    &:hover a {
+      color: lighten($primary_text_color, 15%);
+      background-color: darken($primary_color, 2%);
+    }
+    &:last-child {
+      border-bottom: 0;
+    }
+    &:first-child {
+      border-top: 0;
+    }
+  }
+
+  @media (min-width: 992px) {
+    border-top: 0;
+    border-left: 1px solid $primary_border_color;
+    border-right: 1px solid $primary_border_color;
+    border-bottom: 1px solid $primary_border_color;
+    &.show a {
+      color: $primary_text_color;
+      background-color: darken($primary_color, 2%);
+    }
+  }
+
+}
+
+.sidebar-nav li:hover a,
+.sidebar-nav li:focus a,
+.sidebar-nav li.active a,
+.navbar-nav > li:hover > a,
+.navbar-nav > li.show > a,
+.navbar-right > li:hover > a,
+.navbar-right > li:focus > a {
+  color: lighten($primary_text_color, 15%);
+  background-color: darken($primary_color, 2%);
+}
+
+.sidebar-nav li.active a:hover i,
+.sidebar-nav li a:focus i {
+  color: $primary_text_color;
+}
+
+.sidebar-nav li.active a {
+  @include box-shadow(rgba(0, 0, 0, 0.500), true);
+}
+
+#sidebar_menu li a,
+.sidebar-nav li a {
+  border-bottom: 1px solid $primary_border_color;
+}
+
+.card-option > a.btn-link {
+  border-left: 1px solid $block-border;
+  > i {
+    color: $primary_color;
+  }
+  &:hover,
+  &:focus {
+    border-left: 1px solid $block-border;
+    @include box-shadow($block-border, true);
+  }
+}
+
+.breadcrumbs li {
+  .active,
+  .active:hover {
+    color: #b1b1b1;
+  }
+  a {
+    @if $breadcrumb-item-gradient {
+      @include gradient-y($breadcrumb-item-color-start, $breadcrumb-item-color-end);
+    } @else {
+      background-color: $breadcrumb-item-color-start;
+    }
+    &:hover {
+      @if $breadcrumb-item-gradient {
+        @include gradient-y($breadcrumb-item-color-hover-end, $breadcrumb-item-color-hover-start);
+      } @else {
+        background-color: $breadcrumb-item-color-hover-end;
+      }
+    }
+    &:after {
+      @if $breadcrumb-item-gradient {
+        border-left-color: $breadcrumb-item-color-end;
+      } @else {
+        border-left-color: $breadcrumb-item-color-start;
+      }
+    }
+    &:before {
+      border-left-color: $block-border;
+    }
+    &:hover:after {
+      @if $breadcrumb-item-gradient {
+        border-left-color: $breadcrumb-item-color-hover-start;
+      } @else {
+        border-left-color: $breadcrumb-item-color-hover-end;
+      }
+    }
+  }
+}
+
+/* navbar-toggler */
+.navbar-toggler {
+
+  span {
+    background-color: $toggler-color;
+    display: block;
+    height: 2px;
+    width: 30px;
+    margin: 8px 0;
+    transition-duration: .3s;
+    transition-delay: 0s, 0s, 0s, 0s;
+    -webkit-transform: translateY(0) rotate(0);
+    -ms-transform: translateY(0) rotate(0);
+    transform: translateY(0) rotate(0);
+    &:nth-child(1) {
+      -webkit-transform: translateY(10px) rotate(45deg);
+      -ms-transform: translateY(10px) rotate(45deg);
+      transform: translateY(10px) rotate(45deg)
+    }
+    &:nth-child(2) {
+      opacity: 0
+    }
+    &:nth-child(3) {
+      -webkit-transform: translateY(-10px) rotate(-45deg);
+      -ms-transform: translateY(-10px) rotate(-45deg);
+      transform: translateY(-10px) rotate(-45deg)
+    }
+  }
+  &.collapsed span:nth-child(2) {
+    opacity: 1
+  }
+  &.collapsed span:nth-child(1),
+  &.collapsed span:nth-child(3) {
+    -webkit-transform: translateY(0) rotate(0);
+    -ms-transform: translateY(0) rotate(0);
+    transform: translateY(0) rotate(0)
+  }
+
+}
+
+.card {
+  &.bg-light {
+    border: 1px solid $block-border;
+    .card-body{
+      background: $card-bg;
+    }
+  }
+  .card-header {
+    @include gradient-x(#f8f8f8, #e8e8e8);
+  }
+}
+
+.ui-tabs .ui-tabs-nav li,
+.ui-slider .ui-slider-handle,
+.pagination > li.page-item > a.page-link,
+#page-nav {
+  //@include gradient-x(#f8f8f8, #e8e8e8);
+  background: $breadcrumb-bg;
+}
+
+.small-thumbnail {
+  border: 1px solid $block-border;
+}
+
+.breadLinks > ul > li {
+  border-right: 1px solid $block-border;
+  &:first-child {
+    border-left: 1px solid $block-border;
+  }
+}
+
+form .form-group {
+  border-bottom: 1px solid $block-border;
+  border-top: 1px solid lighten($block-border, 40%);
+}
+
+.form-error .nav-tabs {
+  border-top: 1px solid $primary_border_color;
+}
+
+/*
+ * Jquery UI
+ */

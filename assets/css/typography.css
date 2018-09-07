@@ -1,0 +1,63 @@
+@charset "UTF-8";
+body {
+  color: #292d32;
+}
+
+h1,
+.h1 {
+  font-size: 32.5px;
+}
+
+h2,
+.h2 {
+  font-size: 29.25px;
+}
+
+h3,
+.h3 {
+  font-size: 26px;
+}
+
+h4,
+.h4 {
+  font-size: 22.75px;
+}
+
+h5,
+.h5 {
+  font-size: 19.5px;
+}
+
+h6,
+.h6 {
+  font-size: 16.25px;
+}
+
+code {
+  padding: 10px;
+  background-color: red;
+}
+
+blockquote {
+  border: 1px dashed #dbdfe2;
+  border-left: 5px solid #555f69;
+  padding: 10px;
+  color: #555f69;
+  margin: 0;
+  position: relative;
+}
+blockquote:before {
+  position: absolute;
+  top: -25px;
+  right: 5px;
+  line-height: 0;
+  font-family: Georgia, sans-serif;
+  font-size: 120px;
+  content: ' „ ';
+  color: rgba(0, 0, 0, 0.2);
+}
+blockquote p {
+  margin: 0;
+}
+
+/*# sourceMappingURL=typography.css.map */
