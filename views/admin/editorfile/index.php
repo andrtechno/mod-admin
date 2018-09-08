@@ -11,39 +11,76 @@ if ($htaccessmess)
 
 if (!$robotsmess && !$htaccessmess) {
 
+    if(Yii::$app->session->hasFlash('success')){
+        echo Yii::$app->session->getFlash('success');
+    }
+
+
     echo Html::beginForm();
     ?>
     <div class="container-fluid">
         <div class="row">
-            <div class="panel panel-default" style="margin: 0;">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#htaccess">.htaccess</a>
-                    </h4>
-                </div>
-                <div id="htaccess" class="panel-collapse collapse in">
-                    <?= Html::textArea('htaccess', $htaccess, array('class' => 'form-control', 'rows' => 20, 'style' => 'resize:none;border:0;')); ?>
-                 <?= Html::checkBox('htaccess_reset', 0, array()); ?>
-                </div>
-            </div>
-            <div class="panel panel-default" style="margin: 0;">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#robots">robots.txt</a>
-                    </h4>
-                </div>
-                <div id="robots" class="panel-collapse collapse">
-                    <?= Html::textArea('robots', $robots, array('class' => 'form-control', 'rows' => 20, 'style' => 'resize:none;border:0;')); ?>
-                    <?= Html::checkBox('robots_reset', 0, array()); ?>
-                </div>
-            </div>
-            <?php
-            echo Html::submitButton(Yii::t('app', 'SAVE'), array('class' => 'btn btn-success'));
-            echo Html::endForm();
-        }
-        ?>
 
+            <div class="col">
+                <div class="accordion" id="accordionExample">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse"
+                                        data-target="#collapseOne"
+                                        aria-expanded="true" aria-controls="collapseOne">
+                                    Collapsible Group Item #1
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                             data-parent="#accordionExample">
+                            <div class="card-body">
+                                <?= Html::textArea('htaccess', $htaccess, array('class' => 'form-control', 'rows' => 20, 'style' => 'resize:none;border:0;')); ?>
+                                <?= Html::checkBox('htaccess_reset', 0, array()); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingTwo">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                        data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Collapsible Group Item #2
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                             data-parent="#accordionExample">
+                            <div class="card-body">
+                                <?= Html::textArea('robots', $robots, array('class' => 'form-control', 'rows' => 20, 'style' => 'resize:none;border:0;')); ?>
+
+
+                                <div class="custom-control custom-checkbox">
+
+                                    <?= Html::checkBox('robots_reset', 0, ['class'=>'custom-control-input','id'=>'customCheck1']); ?>
+                                    <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <?php
+                 echo Html::submitButton(Yii::t('app', 'SAVE'), array('class' => 'btn btn-success'));
+
+
+                ?>
+            </div>
+        </div>
     </div>
-</div>
+    <?php
+    echo Html::endForm();
+}
+?>
 
 

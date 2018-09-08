@@ -2,7 +2,9 @@
 
 namespace panix\mod\admin\controllers\admin;
 
+use panix\engine\CMS;
 use Yii;
+use yii\helpers\ArrayHelper;
 
 class EditorfileController extends \panix\engine\controllers\AdminController {
 
@@ -49,10 +51,18 @@ class EditorfileController extends \panix\engine\controllers\AdminController {
             Yii::$app->session->setFlash('success', 'Success! default');
             return $this->redirect(['/admin/app/editorfile']);
         }
-        if ($request->post('robots') && $request->post('htaccess')) {
+
+
+
+
+        $contentRobots = $request->post('robots');
+        if ($contentRobots && $request->post('htaccess')) {
+
+
+
 
             $robots_h = fopen($this->path_robots, "wb");
-            fwrite($robots_h, $request->post('robots'));
+            fwrite($robots_h, CMS::textReplace($contentRobots));
             fclose($robots_h);
 
             $htaccess_h = fopen($this->path_htaccess, "wb");
@@ -66,7 +76,7 @@ class EditorfileController extends \panix\engine\controllers\AdminController {
 
         return $this->render('index', array(
                     'htaccess' => $htaccess,
-                    'robots' => $robots
+                    'robots' => CMS::textReplace($robots,[],true)
         ));
     }
 
