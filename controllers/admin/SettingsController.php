@@ -6,11 +6,13 @@ use Yii;
 use panix\engine\controllers\AdminController;
 use panix\mod\admin\models\SettingsForm;
 
-class SettingsController extends AdminController {
+class SettingsController extends AdminController
+{
 
     public $icon = 'settings';
 
-    public function actionIndex(){
+    public function actionIndex()
+    {
         $this->pageName = Yii::t('app', 'SETTINGS');
         $this->breadcrumbs = [
             [
@@ -19,15 +21,19 @@ class SettingsController extends AdminController {
             ],
             $this->pageName
         ];
-        
+
         $model = new SettingsForm();
         //Yii::$app->request->post()
         if ($model->load(Yii::$app->request->post())) {
-            $model->save();
+            if ($model->validate()) {
+                if ($model->save()) {
+                    return $this->redirect(['/admin/app/settings']);
+                }
+            }
 
         }
         return $this->render('index', [
-            'model'=>$model
+            'model' => $model
         ]);
     }
 

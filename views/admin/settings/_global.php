@@ -1,6 +1,6 @@
 <?php
 
-use panix\engine\helpers\TimeZoneHelper
+use panix\engine\helpers\TimeZoneHelper;
 ?>
 
 <?= $form->field($model, 'sitename') ?>

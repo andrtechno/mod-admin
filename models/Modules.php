@@ -105,7 +105,6 @@ class Modules extends \panix\engine\db\ActiveRecord
     {
 
         if (self::loadModuleClass($name)->afterInstall()) {
-
             $model = new Modules;
             $model->name = $name;
             $model->access = 0; //Устанавливаем модуль с доступом "Все посетители"
