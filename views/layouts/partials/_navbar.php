@@ -6,7 +6,7 @@ use panix\engine\widgets\langSwitcher\LangSwitcher;
 ?>
 <nav class="navbar navbar-expand-lg fixed-top">
 
-    <a class="navbar-brand" href="/admin"><span class="d-none d-md-block">PIXELION</span></a>
+    <a class="navbar-brand" href="/admin"><span class="d-none d-md-block"><?= strtoupper(Yii::$app->name); ?></span></a>
 
     <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbar2">
         <span></span>
@@ -21,10 +21,8 @@ use panix\engine\widgets\langSwitcher\LangSwitcher;
         ?>
     </div>
     <ul class="navbar-right">
-        <li><a href="/"><i class="icon-home"></i></a></li>
-        <li><?= Html::a('<i class="icon-locked"></i>', ['/user/logout'], ['data-method' => "post"]) ?></li>
-        <li><?= LangSwitcher::Widget() ?></li>
-        <li><?= Html::a(Html::icon('icon-home'), '/', array('target' => '_blank', 'class' => 'nav-link')) ?></li>
-        <li><?= Html::a(Html::icon('icon-locked'), array('/users/logout'), array('class' => 'nav-link')) ?></li>
+        <li><?= Html::a(Html::icon('home'), '/', array('target' => '_blank', 'class' => 'nav-link')) ?></li>
+        <li><?= Html::a(Html::icon('locked'), ['/user/logout'], ['data-method' => "post"]) ?></li>
+        <li><?= LangSwitcher::widget() ?></li>
     </ul>
 </nav>
