@@ -156,8 +156,7 @@ $sideBar = (method_exists($this->context->module, 'getAdminSidebar')) ? true : f
                                 
                                 <?php if (Yii::$app->session->allFlashes) { ?>
                                     <?php foreach (Yii::$app->session->allFlashes as $key => $message) { ?>
-                                        <div class="alert alert-<?= $key ?> fadeOut-time">
-                                            <i class="fa fa-check-circle fa-2x"></i> <?= $message ?></div>
+                                        <div class="alert alert-<?= $key ?> fadeOut-time"><?= $message ?></div>
                                     <?php } ?>
                                 <?php } ?>
 
