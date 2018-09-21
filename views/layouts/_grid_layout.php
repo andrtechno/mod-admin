@@ -1,28 +1,30 @@
 <?php
 
-use yii\helpers\Html;
+use panix\engine\Html;
 ?>
 <div class="card bg-light grid">
     <div class="grid-loading"></div>
     <div class="card-header">
-        <h5 class="panel-title"><?php if (isset($title)) echo $title; ?>
+        <h5 class="clearfix">
+
+            <span class="float-left"><?php if (isset($title)) echo $title; ?></span>
+
             <?php if (isset($buttons)) { ?>
-                <div id="grid-options" class="dropdown panel-option">
+                <span class="float-right">
                     <?php
                     foreach ($buttons as $btn) {
-                        echo Html::a($btn['label'], $btn['url'], isset($btn['options']) ? $btn['options'] : []);
+                        $icon='';
+                        if(isset($btn['icon'])){
+                            $icon = Html::icon($btn['icon']);
+                        }
+                        echo Html::a($icon.' '.$btn['label'], $btn['url'], isset($btn['options']) ? $btn['options'] : ['class'=>'btn btn-sm btn-success']);
                     }
                     ?>
-                    <a class="dropdown-toggle btn btn-link" href="javascript:void(0);" data-toggle="dropdown" aria-expanded="true"><i class="icon-settings"></i></a>
-                    <ul class="dropdown-menu dropup pull-right">
-                        <li>
-                            <a onclick="return grid.editcolums('orderproduct-grid', 'OrderProduct', 'cart');" href="javascript:void(0);">
-                                <i class="icon-table"></i> <?= Yii::t('app/admin', 'EDIT_GRID_TABLE'); ?></a>
-                        </li>
-                    </ul>
-                </div>
+                </span>
             <?php } ?>
         </h5>
+
+
     </div>
     <div class="card-body">
         <div class="table-responsive">{items}</div>
