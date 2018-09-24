@@ -1,8 +1,9 @@
 <?php
 use panix\engine\Html;
 
- $menu = isset(Yii::$app->controller->addonsMenu) ? Yii::$app->controller->addonsMenu : array();
- if (isset($menu)) { ?>
+ $menu = isset(Yii::$app->controller->addonsMenu) ? Yii::$app->controller->addonsMenu : false;
+
+ if ($menu) { ?>
     <div class="breadLinks">
         <ul>
             <?php
