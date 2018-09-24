@@ -260,10 +260,6 @@
   color: #636363;
 }
 
-a {
-  text-decoration: underline;
-}
-
 .bootstrap-select .btn-light {
   border-color: #c9c9c9;
   background-color: #fff;
@@ -272,6 +268,12 @@ a {
 .bootstrap-select.show .btn-light {
   border-color: red;
   background-color: #fff;
+}
+
+tr.sortable-column-placeholder,
+tr.sortable-column-placeholder td {
+  height: 130px;
+  background: rgba(0, 123, 255, 0.25);
 }
 
 a.btn,
