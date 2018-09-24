@@ -130,7 +130,6 @@ $sideBar = (method_exists($this->context->module, 'getAdminSidebar')) ? true : f
                         <div id="page-nav">
                             <?php echo $this->render('partials/_breadcrumbs', ['breadcrumbs' => $this->context->breadcrumbs]); ?>
                             <?php echo $this->render('partials/_addonsMenu'); ?>
-                            <div class="clearfix"></div>
                         </div>
 
                         <div class="col-lg-12">
