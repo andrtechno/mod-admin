@@ -24,7 +24,7 @@ $bundle = \panix\engine\emoji\EmojiPickerAsset::register($this);
         <div class="panel-title">
             <i class="icon-comments"></i> Чат
             <div class="btn-group pull-right hidden">
-                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                <button type="button" class="btn btn-secondary btn-xs dropdown-toggle" data-toggle="dropdown">
                     <i class="icon-arrow-down"></i>
                 </button>
                 <ul class="dropdown-menu slidedown">

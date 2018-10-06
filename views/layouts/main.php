@@ -113,7 +113,7 @@ $sideBar = (method_exists($this->context->module, 'getAdminSidebar')) ? true : f
                                                     $icon = '';
                                                 }
                                                 if (!isset($button['options']['class'])) {
-                                                    $button['options']['class'] = ['btn btn-default'];
+                                                    $button['options']['class'] = ['btn btn-secondary'];
                                                 }
                                                 echo Html::a($icon . $button['label'], $button['url'], $button['options']);
                                             }

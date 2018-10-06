@@ -65,7 +65,7 @@ class WidgetsController extends \panix\engine\controllers\AdminController {
               'title' => $class->getTitle(),
               'alias' => "ext.blocks.{$classDir}.{$className}",
               'category' => 'ext',
-              'edit' => ($edit) ? Html::link('<i class="icon-edit"></i>', array('/admin/app/widgets/update', 'alias' => "ext.blocks.{$classDir}.{$className}"), array('class' => 'btn btn-default')) : ''
+              'edit' => ($edit) ? Html::link('<i class="icon-edit"></i>', array('/admin/app/widgets/update', 'alias' => "ext.blocks.{$classDir}.{$className}"), array('class' => 'btn btn-secondary')) : ''
               );
               }
               }
@@ -111,7 +111,7 @@ class WidgetsController extends \panix\engine\controllers\AdminController {
                                 'title' => $class->getTitle() . $fileName,
                                 'alias' => $classNamespace,
                                 'category' => 'module',
-                                'edit' => ($edit) ? Html::a('<i class="icon-edit"></i>', ['/admin/app/widgets/update', 'alias' => $classNamespace], ['class' => 'btn btn-default']) : ''
+                                'edit' => ($edit) ? Html::a(Html::icon('edit'), ['/admin/app/widgets/update', 'alias' => $classNamespace], ['class' => 'btn btn-secondary']) : ''
                             );
                         }
                     }
@@ -153,7 +153,7 @@ class WidgetsController extends \panix\engine\controllers\AdminController {
                   'title' => $class->getTitle(),
                   'alias' => "mod.{$mod}.blocks.{$classDir}.{$className}",
                   'category' => 'module',
-                  'edit' => ($edit) ? Html::link('<i class="icon-edit"></i>', array('/admin/app/widgets/update', 'alias' => "mod.{$mod}.blocks.{$classDir}.{$className}"), array('class' => 'btn btn-default')) : ''
+                  'edit' => ($edit) ? Html::link('<i class="icon-edit"></i>', array('/admin/app/widgets/update', 'alias' => "mod.{$mod}.blocks.{$classDir}.{$className}"), array('class' => 'btn btn-secondary')) : ''
                   );
                   }
                   }
