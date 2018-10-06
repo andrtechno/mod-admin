@@ -73,6 +73,15 @@ class WidgetsController extends \panix\engine\controllers\AdminController
               } */
 
 
+
+
+
+
+
+
+
+
+
             /* start modules widget parse */
             foreach (Yii::$app->getModules() as $mod => $module) {
                 $reflect = new \ReflectionClass($module);
