@@ -7,13 +7,15 @@ use yii\helpers\FileHelper;
 use panix\engine\Html;
 use panix\engine\blocks_settings\WidgetSystemManager;
 
-class WidgetsController extends \panix\engine\controllers\AdminController {
+class WidgetsController extends \panix\engine\controllers\AdminController
+{
 
     public $icon = 'icon-chip';
 
     const CHACHEID = 'widgets_cache';
 
-    public function actionIndex() {
+    public function actionIndex()
+    {
 
         $this->pageName = Yii::t('admin/default', 'WIDGETS');
         $this->breadcrumbs = array($this->pageName);
@@ -31,7 +33,6 @@ class WidgetsController extends \panix\engine\controllers\AdminController {
               ));
               echo \yii\helpers\VarDumper::dump($files,10, true);
               die; */
-
 
 
             //Yii::import('app.blocks_settings.*');
@@ -70,8 +71,6 @@ class WidgetsController extends \panix\engine\controllers\AdminController {
               }
               }
               } */
-
-
 
 
             /* start modules widget parse */
@@ -169,9 +168,8 @@ class WidgetsController extends \panix\engine\controllers\AdminController {
             'pagination' => [
                 'pageSize' => 10,
             ],
-                // 'sort' => $sort,
+            // 'sort' => $sort,
         ]);
-
 
 
         /* $data_db = new CArrayDataProvider($result, array(
@@ -188,7 +186,8 @@ class WidgetsController extends \panix\engine\controllers\AdminController {
         return $this->render('index', ['dataProvider' => $dataProvider]);
     }
 
-    public function actionUpdate($alias) {
+    public function actionUpdate($alias)
+    {
 
         if (empty($alias)) {
             return $this->redirect(['index']);
@@ -198,8 +197,8 @@ class WidgetsController extends \panix\engine\controllers\AdminController {
         $this->pageName = Yii::t('admin/default', 'WIDGETS_UPDATE');
         $this->breadcrumbs = [
             [
-                'label'=>Yii::t('admin/default', 'WIDGETS'),
-                'url'=>['/admin/app/widgets']
+                'label' => Yii::t('admin/default', 'WIDGETS'),
+                'url' => ['/admin/app/widgets']
             ],
             $this->pageName
         ];
@@ -232,8 +231,8 @@ class WidgetsController extends \panix\engine\controllers\AdminController {
             }
         }
         return $this->render('update', array(
-                    'form' => $system->getConfigurationFormHtml($alias),
-                        //  'title'=>Yii::t(str_replace('Form','',get_class($system)).'.default','TITLE')
+            'form' => $system->getConfigurationFormHtml($alias),
+            //  'title'=>Yii::t(str_replace('Form','',get_class($system)).'.default','TITLE')
         ));
     }
 
