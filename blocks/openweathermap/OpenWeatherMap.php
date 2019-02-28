@@ -27,7 +27,7 @@ class OpenWeatherMap extends Widget {
                     ),
                 );
 
-                $connect = $curl->run('http://api.openweathermap.org/data/2.5/weather?lat=' . $this->config['lat'] . '&lon=' . $this->config['lon'] . '&units=' . $this->config['units'] . '&cnt=10&lang=' . Yii::$app->language . '&appid=' . $this->config['apikey']);
+                $connect = $curl->run('http://api.openweathermap.org/data/2.5/weather?lat=' . $this->config->lat . '&lon=' . $this->config->lon . '&units=' . $this->config->units . '&cnt=10&lang=' . Yii::$app->language . '&appid=' . $this->config->apikey);
                 if (!$connect->hasErrors()) {
                     $result = Json::decode($connect->getData(), false);
                 } else {
@@ -55,7 +55,7 @@ class OpenWeatherMap extends Widget {
     }
 
     public function getDeg() {
-        return ($this->config['units'] == 'metric') ? '&deg;C' : '&deg;F';
+        return ($this->config->units == 'metric') ? '&deg;C' : '&deg;F';
     }
 
 }

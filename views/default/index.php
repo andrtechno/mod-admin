@@ -124,7 +124,7 @@ use yii\helpers\Url;
         <?php echo \panix\mod\admin\blocks\sysinfo\SysinfoWidget::widget([]); ?>
 
         <?php //echo panix\mod\admin\blocks\hosting\Hosting::widget(); ?>
-        <?php echo panix\mod\admin\blocks\openweathermap\OpenWeatherMap::widget(); ?>
+        <?php //echo panix\mod\admin\blocks\openweathermap\OpenWeatherMap::widget(); ?>
 
     </div>
 </div>

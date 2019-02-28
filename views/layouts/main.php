@@ -2,7 +2,11 @@
 
 use panix\engine\Html;
 use panix\engine\widgets\Breadcrumbs;
+use Viber\Bot;
+use Viber\Api\Sender;
 
+
+use Viber\Client;
 panix\mod\admin\assets\AdminAsset::register($this);
 
 $sideBar = (method_exists($this->context->module, 'getAdminSidebar')) ? true : false;
@@ -37,7 +41,21 @@ $sideBar = (method_exists($this->context->module, 'getAdminSidebar')) ? true : f
     <div id="wrapper-tpl">
         <?php echo $this->render('partials/_navbar'); ?>
 
+        <?php
 
+
+        $apiKey = '48ac2da20027d4dc-e81fc2486fe80d0d-e99790255b8e5e0b';
+        $webhookUrl = 'https://pixelion.com.ua/page/bot'; // for exmaple https://my.com/bot.php
+
+        try {
+            $client = new Client([ 'token' => $apiKey ]);
+            $result = $client->setWebhook($webhookUrl);
+            echo "Success!\n";
+        } catch (Exception $e) {
+            echo "Error: ". $e->getMessage() ."\n";
+        }
+
+        ?>
 
         <?php
         $class = '';
@@ -58,7 +76,7 @@ $sideBar = (method_exists($this->context->module, 'getAdminSidebar')) ? true : f
                     </li>
 
                     <?php
-                    echo \panix\mod\admin\widgets\sidebar\SideBar::widget([
+                    /*echo \panix\mod\admin\widgets\sidebar\SideBar::widget([
                         'items' => array_merge([
                             [
                                 'label' => '',
@@ -67,7 +85,7 @@ $sideBar = (method_exists($this->context->module, 'getAdminSidebar')) ? true : f
                                 'options' => ['class' => 'sidebar-nav', 'id' => 'menu-toggle']
                             ]
                         ], $this->context->module->getAdminSidebar())
-                    ]);
+                    ]);*/
                     ?>
 
 

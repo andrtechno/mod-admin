@@ -13,7 +13,7 @@ use panix\engine\Html;
                     if (isset($param['items'])) {
                         $htmlOptionsLi = (isset($param['icon'])) ? array('class' => 'dropdown has has-icon') : array('class' => 'dropdown has');
                         echo Html::beginTag('li', $htmlOptionsLi); //Обязательный класс has.
-                        echo Html::a($param['icon'] . ' ' . $param['label'] . '<span class="caret"></span>', 'javascript:void(0)', isset($param['linkOptions']) ? $param['linkOptions'] : array(
+                        echo Html::a($param['icon'] . ' ' . $param['label'] . '<span class="caret"></span>', '#', isset($param['linkOptions']) ? $param['linkOptions'] : array(
                                     'data-toggle' => "dropdown",
                                     'aria-haspopup' => "true",
                                     'aria-expanded' => "false"));

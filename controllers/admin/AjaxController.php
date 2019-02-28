@@ -20,7 +20,6 @@ class AjaxController extends \panix\engine\controllers\AdminController {
 
 
 
-
     public function beforeAction($action) {
         if($action->id === 'viber'){
             Yii::$app->controller->enableCsrfValidation = false;

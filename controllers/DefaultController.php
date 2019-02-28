@@ -12,6 +12,7 @@ use panix\mod\admin\models\GridColumns;
 class DefaultController extends AdminController
 {
 
+
     public function actionIndex()
     {
         $this->pageName = Yii::t('app/admin', 'CMS');
@@ -44,8 +45,9 @@ class DefaultController extends AdminController
                 'type' => $notify->type
             ];
         }
-
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         return \yii\helpers\Json::encode($result);
+
     }
 
     public function actionAjaxReadNotifaction($id)
@@ -55,7 +57,7 @@ class DefaultController extends AdminController
         $notifactions = Notifactions::findOne($id);
         $notifactions->is_read = 1;
         $notifactions->save(false);
-
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         return \yii\helpers\Json::encode(['ok']);
     }
 

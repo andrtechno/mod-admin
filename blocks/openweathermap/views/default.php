@@ -23,7 +23,7 @@ if (!isset($result->hasError)) {
 
     </div>
     <table class="table table-striped">
-        <?php if ($this->context->config['enable_wind']) { ?>
+        <?php if ($this->context->config->enable_wind) { ?>
             <tr>
                 <td><?= Yii::t('wgt_OpenWeatherMap/default', 'WIND') ?></td>
                 <td>
@@ -32,19 +32,19 @@ if (!isset($result->hasError)) {
                 </td>
             </tr>
         <?php } ?>
-        <?php if ($this->context->config['enable_pressure']) { ?>
+        <?php if ($this->context->config->enable_pressure) { ?>
             <tr>
                 <td><?= Yii::t('wgt_OpenWeatherMap/default', 'PRESSURE') ?></td>
                 <td><?= $result->main->pressure ?> гПа</td>
             </tr>
         <?php } ?>
-        <?php if ($this->context->config['enable_humidity']) { ?>
+        <?php if ($this->context->config->enable_humidity) { ?>
             <tr>
                 <td><?= Yii::t('wgt_OpenWeatherMap/default', 'HUMIDITY') ?></td>
                 <td><?= $result->main->humidity ?>%</td>
             </tr>
         <?php } ?>
-        <?php if ($this->context->config['enable_sunrise']) { ?>
+        <?php if ($this->context->config->enable_sunrise) { ?>
             <tr>
                 <td><?= Yii::t('wgt_OpenWeatherMap/default', 'SUNRISE') ?></td>
                 <td><?php
@@ -54,7 +54,7 @@ if (!isset($result->hasError)) {
                     ?></td>
             </tr>
         <?php } ?>
-        <?php if ($this->context->config['enable_sunset']) { ?>
+        <?php if ($this->context->config->enable_sunset) { ?>
             <tr>
                 <td><?= Yii::t('wgt_OpenWeatherMap/default', 'SUNSET') ?></td>
                 <td><?php
