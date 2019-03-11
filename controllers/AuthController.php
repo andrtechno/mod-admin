@@ -4,9 +4,9 @@ namespace panix\mod\admin\controllers;
 
 use Yii;
 use panix\engine\controllers\AdminController;
-use yii2mod\rbac\filters\AccessControl;
+//use yii2mod\rbac\filters\AccessControl;
 
-//use yii\filters\AccessControl;
+use yii\filters\AccessControl;
 
 class AuthController extends AdminController {
 

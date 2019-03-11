@@ -44,7 +44,7 @@ $sideBar = (method_exists($this->context->module, 'getAdminSidebar')) ? true : f
         <?php
 
 
-        $apiKey = '48ac2da20027d4dc-e81fc2486fe80d0d-e99790255b8e5e0b';
+        /*$apiKey = '48ac2da20027d4dc-e81fc2486fe80d0d-e99790255b8e5e0b';
         $webhookUrl = 'https://pixelion.com.ua/page/bot'; // for exmaple https://my.com/bot.php
 
         try {
@@ -53,7 +53,7 @@ $sideBar = (method_exists($this->context->module, 'getAdminSidebar')) ? true : f
             echo "Success!\n";
         } catch (Exception $e) {
             echo "Error: ". $e->getMessage() ."\n";
-        }
+        }*/
 
         ?>
 
