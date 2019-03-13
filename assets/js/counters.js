@@ -1,3 +1,4 @@
+var xhr_notify;
 $(function () {
 
     setInterval(function () {
@@ -7,8 +8,11 @@ $(function () {
     function reloadCounters() {
         var notifaction_list = [];
         console.log(notifaction_list.length);
+
+        if(xhr_notify !== undefined)
+            xhr_notify.abort();
         //   if (notifaction_list.length === 0) {
-        $.getJSON('/admin/default/ajax-counters?' + Math.random(), function (data) {
+        xhr_notify = $.getJSON('/admin/default/ajax-counters', function (data) { //'/admin/default/ajax-counters?' + Math.random()
             $.each(data.count, function (i, c) {
 
                 if (c > 0) {
@@ -18,10 +22,10 @@ $(function () {
                 }
             });
             //console.log(Object.keys(data.notify));
-            $.each(data.notify, function (id, notifaction) {
+            $.each(data.notify, function (id, notification) {
 
-                notifaction_list[id] = $.notify({message: notifaction.text}, {
-                    type: notifaction.type,
+                notifaction_list[id] = $.notify({message: notification.text}, {
+                    type: notification.type,
                     showProgressbar: true,
                     allow_duplicates: false,
                     timer: 1000,
@@ -35,11 +39,11 @@ $(function () {
                         align: "left"
                     },
                     onShow: function () {
-                        $.playSound('http://' + window.location.hostname + '/uploads/notifaction.mp3');
+                        $.playSound('http://' + window.location.hostname + '/uploads/notification.mp3');
                     },
                     onClose: function (s) {
                         console.log(s);
-                        $.getJSON('/admin/default/ajax-read-notifaction', {id: id}, function (data) {
+                            $.getJSON('/admin/default/ajax-read-notification', {id: id}, function (data) {
 
                         });
                         $.stopSound();

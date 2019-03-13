@@ -2,12 +2,15 @@
 
 namespace panix\mod\admin\controllers;
 
-use panix\engine\FileSystem;
+
 use Yii;
+use yii\web\HttpException;
+use yii\web\Response;
 use panix\engine\controllers\AdminController;
-use panix\mod\admin\models\Notifactions;
+use panix\mod\admin\models\Notifications;
 use panix\engine\Html;
 use panix\mod\admin\models\GridColumns;
+use panix\engine\FileSystem;
 
 class DefaultController extends AdminController
 {
@@ -34,31 +37,30 @@ class DefaultController extends AdminController
     public function actionAjaxCounters()
     {
 
-        $notifactions = Notifactions::find()->read(0)->all();
+        $notifications = Notifications::find()->read(0)->all();
         $result = [];
         $result['count']['cart'] = 5;
         $result['count']['comments'] = 10;
         $result['notify'] = [];
-        foreach ($notifactions as $notify) {
+        foreach ($notifications as $notify) {
             $result['notify'][$notify->id] = [
                 'text' => $notify->text,
                 'type' => $notify->type
             ];
         }
-        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        return \yii\helpers\Json::encode($result);
-
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return $result;
     }
 
-    public function actionAjaxReadNotifaction($id)
+    public function actionAjaxReadNotification($id)
     {
-
         //$notifactions = Notifactions::find()->where(['id'=>$id])->one();
-        $notifactions = Notifactions::findOne($id);
-        $notifactions->is_read = 1;
-        $notifactions->save(false);
-        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        return \yii\helpers\Json::encode(['ok']);
+        $notifications = Notifications::findOne($id);
+        $notifications->is_read = 1;
+        $notifications->save(false);
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return ['ok'];
     }
 
     public function actionGetGrid()
@@ -137,7 +139,7 @@ class DefaultController extends AdminController
                   'module' => $mod */
             ]);
         } else {
-            throw new \yii\web\HttpException(401, Yii::t('app/error', '401'));
+            throw new HttpException(401, Yii::t('app/error', '401'));
         }
     }
 
