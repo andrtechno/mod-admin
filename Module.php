@@ -15,7 +15,7 @@ class Module extends WebModule {
             'version' => '1.0',
             'icon' => 'icon-tools',
             'description' => Yii::t('admin/default', 'MODULE_DESC'),
-            'url' => ['/admin/app'],
+            'url' => ['/app'],
         ];
     }
 
@@ -25,37 +25,37 @@ class Module extends WebModule {
                 'items' => [
                     [
                         'label' => Yii::t('app', 'SETTINGS'),
-                        'url' => ['/admin/app/settings'],
+                        'url' => ['/app/settings'],
                         'icon' => 'settings',
                         'visible' => true
                     ],
                     [
                         'label' => Yii::t('admin/default', 'LANGUAGES'),
-                        'url' => ['/admin/app/languages'],
+                        'url' => ['/app/languages'],
                         'icon' => 'language',
                         'visible' => true
                     ],
                     [
                         'label' => Yii::t('admin/default', 'EDIT_FILES'),
-                        'url' => ['/admin/app/editorfile'],
+                        'url' => ['/app/editorfile'],
                         'icon' => 'file',
                         'visible' => true
                     ],
                     [
                         'label' => Yii::t('admin/default', 'WIDGETS'),
-                        'url' => ['/admin/app/widgets'],
+                        'url' => ['/app/widgets'],
                         'icon' => 'chip',
                         'visible' => true
                     ],
                     [
                         'label' => Yii::t('admin/default', 'DATABASE'),
-                        'url' => ['/admin/app/database'],
+                        'url' => ['/app/database'],
                         'icon' => 'database',
                         'visible' => true
                     ],
                     [
                         'label' => Yii::t('admin/default', 'MODULES'),
-                        'url' => ['/admin/app/modules'],
+                        'url' => ['/app/modules'],
                         'icon' => 'puzzle',
                         'visible' => true
                     ],

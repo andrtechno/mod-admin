@@ -2,7 +2,8 @@ var xhr_notify;
 $(function () {
 
     setInterval(function () {
-        reloadCounters();
+        if(xhr_notify === undefined)
+            reloadCounters();
     }, 10000); //10000
 
     function reloadCounters() {
@@ -12,7 +13,7 @@ $(function () {
         if(xhr_notify !== undefined)
             xhr_notify.abort();
         //   if (notifaction_list.length === 0) {
-        xhr_notify = $.getJSON('/admin/default/ajax-counters', function (data) { //'/admin/default/ajax-counters?' + Math.random()
+        xhr_notify = $.getJSON('/admin/app/default/ajax-counters', function (data) { //'/admin/default/ajax-counters?' + Math.random()
             $.each(data.count, function (i, c) {
 
                 if (c > 0) {
@@ -43,7 +44,7 @@ $(function () {
                     },
                     onClose: function (s) {
                         console.log(s);
-                            $.getJSON('/admin/default/ajax-read-notification', {id: id}, function (data) {
+                            $.getJSON('/admin/app/default/ajax-read-notification', {id: id}, function (data) {
 
                         });
                         $.stopSound();

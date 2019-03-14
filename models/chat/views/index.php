@@ -8,7 +8,7 @@ $bundle = \panix\engine\emoji\EmojiPickerAsset::register($this);
         window.emojiPicker = new EmojiPicker({
             emojiable_selector: '[data-emojiable=true]',
             assetsPath: '<?= $bundle->baseUrl ?>/images',
-            popupButtonClasses: 'icon-emoji'
+            popupButtonClasses: 'icon-delete'
         });
         // Finds all elements with `emojiable_selector` and converts them to rich emoji input fields
         // You may want to delay this step if you have dynamically created input fields that appear later in the loading process
