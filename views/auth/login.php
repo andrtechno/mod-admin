@@ -41,7 +41,7 @@ $form = ActiveForm::begin([
 <?= $form->field($model, 'password', [
     'parts' => ['{icon}' => 'key'],
 ])
-    ->textInput(['class' => 'form-control', 'placeholder' => $model->getAttributeLabel('password')])
+    ->passwordInput(['class' => 'form-control', 'placeholder' => $model->getAttributeLabel('password')])
     ->label(false);
 ?>
 
