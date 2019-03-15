@@ -42,14 +42,14 @@ if($this->is_default){
         return parent::beforeDelete();
     }
 
-    public static function getArrayLanguage() {
+    public function getArrayLanguage() {
         if ($this->is_default)
             return false;
         return parent::beforeDelete();
     }
 
     public function getFlagUrl(){
-        return '@web/uploads/language/'.$this->code.'.png';
+        return '/uploads/language/'.$this->code.'.png';
     }
 
     static $current = null;
