@@ -846,17 +846,17 @@ td.ui-sortable-handle {
   width: 30px;
 }
 
-#page-nav {
+#container-breadcrumbs {
   width: 100%;
   margin-bottom: 1rem;
 }
-#page-nav .nav li {
+#container-breadcrumbs .nav li {
   float: left;
 }
-#page-nav .nav li a {
+#container-breadcrumbs .nav li a {
   padding: 5px 15px;
 }
-#page-nav .dropdown-menu {
+#container-breadcrumbs .dropdown-menu {
   margin: 0 -1px 0 0;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
 }
