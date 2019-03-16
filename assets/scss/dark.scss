@@ -163,7 +163,7 @@ a:hover {
   }
 }
 
-#page-nav {
+#container-breadcrumbs {
   border-top: 1px solid $block-border;
   border-bottom: 1px solid $block-border;
   > .nav > li {
@@ -376,7 +376,7 @@ a:hover {
 .ui-tabs .ui-tabs-nav li,
 .ui-slider .ui-slider-handle,
 .pagination > li.page-item > a.page-link,
-#page-nav {
+#container-breadcrumbs {
   //@include gradient-x(#f8f8f8, #e8e8e8);
   background: $breadcrumb-bg;
 }

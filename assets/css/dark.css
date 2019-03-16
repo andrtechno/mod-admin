@@ -151,14 +151,14 @@ a:hover {
   background-color: #f7f7f7;
 }
 
-#page-nav {
+#container-breadcrumbs {
   border-top: 1px solid #c9c9c9;
   border-bottom: 1px solid #c9c9c9;
 }
-#page-nav > .nav > li {
+#container-breadcrumbs > .nav > li {
   border-right: 1px solid #c9c9c9;
 }
-#page-nav > .nav > li:first-child {
+#container-breadcrumbs > .nav > li:first-child {
   border-left: 1px solid #c9c9c9;
 }
 
@@ -367,7 +367,7 @@ a:hover {
 .ui-tabs .ui-tabs-nav li,
 .ui-slider .ui-slider-handle,
 .pagination > li.page-item > a.page-link,
-#page-nav {
+#container-breadcrumbs {
   background: #f2f2f2;
 }
 
