@@ -1,16 +1,10 @@
 <?php
 
-/**
- * @link https://github.com/sintret/yii2-chat-adminlte
- * @copyright Copyright (c) 2015 Andy fitria <sintret@gmail.com>
- * @license MIT
- */
 
 namespace panix\mod\admin\models\chat;
 
 use Yii;
 use yii\base\Widget;
-use panix\mod\admin\models\chat\Chat;
 use yii\web\Response;
 
 /**
@@ -48,8 +42,12 @@ class ChatRoom extends Widget
         }
 
         $this->model->userField = $this->userField;
-        Yii::$app->assetManager->publish("@admin/assets/images/chat/loadingAnimation.gif");
-        $this->loadingImage = Yii::$app->assetManager->getPublishedUrl("@admin/assets/images/chat/loadingAnimation.gif");
+
+
+
+        //Yii::$app->assetManager->publish("@admin/assets/images/chat/loadingAnimation.gif");
+        //$this->loadingImage = Yii::$app->assetManager->getPublishedUrl("@admin/assets/images/chat/loadingAnimation.gif");
+        $this->loadingImage = Yii::$app->controller->assetUrl.'/images/s-loading.gif';
 
         parent::init();
     }

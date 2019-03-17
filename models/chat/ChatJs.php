@@ -1,18 +1,13 @@
 <?php
 
-/**
- * @link https://github.com/sintret/yii2-chat-adminlte
- * @copyright Copyright (c) 2014 Andy fitria 
- * @license MIT
- */
-
 namespace panix\mod\admin\models\chat;
 
 use Yii;
 use yii\web\AssetBundle;
 
 /**
- * @author Andy Fitria <sintret@gmail.com>
+ * Class ChatJs
+ * @package panix\mod\admin\models\chat
  */
 class ChatJs extends AssetBundle {
 

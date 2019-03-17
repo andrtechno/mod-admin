@@ -39,7 +39,10 @@ $form = ActiveForm::begin([
 
 
 <?= $form->field($model, 'password', [
-    'parts' => ['{icon}' => 'key'],
+    'parts' => ['{icon}' => 'key', '{switch}' => '<a href="#" data-target="#loginform-password" class="input-group-text bg-transparent" onclick="common.switchInputPass(\'loginform-password\');"><i class="icon-eye"></i></a>'],
+    'template' => "<div class=\"col\"><div class=\"input-group\"><div class=\"input-group-prepend\">
+                    <span class=\"input-group-text\"><i class=\"icon-{icon}\"></i></span>
+                </div>{label}{input}<div class=\"input-group-append\">{switch}</div>{hint}{error}</div></div>"
 ])
     ->passwordInput(['class' => 'form-control', 'placeholder' => $model->getAttributeLabel('password')])
     ->label(false);
