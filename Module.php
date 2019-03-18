@@ -6,6 +6,10 @@ use Yii;
 //use yii\base\BootstrapInterface; // implements BootstrapInterface
 use panix\engine\WebModule;
 
+/**
+ * Class Module
+ * @package panix\mod\admin
+ */
 class Module extends WebModule {
 
     public function getInfo() {

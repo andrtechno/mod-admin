@@ -3,8 +3,9 @@
 namespace panix\mod\admin\blocks\hosting\form;
 
 use Yii;
+use panix\engine\blocks_settings\WidgetModel;
 
-class HostingForm extends \panix\engine\blocks_settings\WidgetFormModel {
+class HostingForm extends WidgetModel {
 
     public $auth_login;
     public $auth_token;

@@ -4,9 +4,9 @@ namespace panix\mod\admin\blocks\hosting;
 
 use Yii;
 use yii\helpers\Json;
-use yii\web\HttpException;
+use panix\engine\data\Widget;
 
-class Hosting extends \panix\engine\data\Widget {
+class Hosting extends Widget {
 
     protected $result;
 

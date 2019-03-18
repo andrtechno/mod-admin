@@ -3,11 +3,12 @@
 namespace panix\mod\admin\controllers\admin;
 
 use Yii;
-use yii\helpers\FileHelper;
 use panix\engine\Html;
 use panix\engine\blocks_settings\WidgetSystemManager;
+use panix\engine\controllers\AdminController;
+use yii\helpers\FileHelper;
 
-class WidgetsController extends \panix\engine\controllers\AdminController
+class WidgetsController extends AdminController
 {
 
     public $icon = 'icon-chip';
@@ -21,155 +22,54 @@ class WidgetsController extends \panix\engine\controllers\AdminController
         $this->breadcrumbs = array($this->pageName);
 
 
-        $result = Yii::$app->cache->get(self::CHACHEID);
-        if ($result === false) {
-            $result = array();
-
-            /* $extPath = Yii::getAlias("@admin/blocks");
-              $files = FileHelper::findFiles($extPath, array(
-              'fileTypes' => array('php'),
-              'caseSensitive' => true,
-              'recursive' => false,
-              ));
-              echo \yii\helpers\VarDumper::dump($files,10, true);
-              die; */
+        // $result = Yii::$app->cache->get(self::CHACHEID);
+        // if ($result === false) {
+        $result = array();
 
 
-            //Yii::import('app.blocks_settings.*');
-            $manager = new WidgetSystemManager;
-            /* foreach ($files as $k => $obj) {
+        $manager = new WidgetSystemManager;
 
-              $obj = explode(DIRECTORY_SEPARATOR, $obj);
+        foreach (Yii::$app->getModules() as $mod => $module) {
+            $reflect = new \ReflectionClass($module);
+            $path = dirname($reflect->getFileName()) . DIRECTORY_SEPARATOR . 'blocks';
+            if (file_exists($path)) {
+                $namespace = $reflect->getNamespaceName();
+                $modulesfile = array_filter(glob($path . DIRECTORY_SEPARATOR . '*' . DIRECTORY_SEPARATOR . '*'), 'is_file');
 
-
-              $className = str_replace('.php', '', $obj[1]);
-              $classDir = $obj[0];
-
-              if (file_exists(Yii::getPathOfAlias("ext.blocks.{$classDir}") . DS . $obj[1])) {
-              Yii::import("ext.blocks.{$classDir}.{$className}");
-              if (new $className instanceof BlockWidget) {
-              $class = new $className;
-
-              Yii::import('app.blocks_settings.*');
-              $manager = new WidgetSystemManager;
-
-              $system = $manager->getClass("ext.blocks.{$classDir}", $className);
-
-              if (!$system) {
-              $edit = false;
-              } else {
-              $edit = true;
-              }
+                foreach ($modulesfile as $obj) {
+                    if (file_exists(dirname($obj))) {
+                        $fileName = basename($obj, '.php');
+                        $fileDir = basename(dirname($obj));
 
 
-              $result[] = array(
-              'title' => $class->getTitle(),
-              'alias' => "ext.blocks.{$classDir}.{$className}",
-              'category' => 'ext',
-              'edit' => ($edit) ? Html::link('<i class="icon-edit"></i>', array('/admin/app/widgets/update', 'alias' => "ext.blocks.{$classDir}.{$className}"), array('class' => 'btn btn-secondary')) : ''
-              );
-              }
-              }
-              } */
-
-
-
-
-
-
-
-
-
-
-
-            /* start modules widget parse */
-            foreach (Yii::$app->getModules() as $mod => $module) {
-                $reflect = new \ReflectionClass($module);
-                // print_r(dirname($reflect->name));
-                //  echo dirname($reflect->getFileName());
-                $path = dirname($reflect->getFileName()) . DIRECTORY_SEPARATOR . 'blocks';
-                if (file_exists($path)) {
-
-                    $namespace = $reflect->getNamespaceName();
-
-                    $modulesfile = array_filter(glob($path . DIRECTORY_SEPARATOR . '*' . DIRECTORY_SEPARATOR . '*'), 'is_file');
-                    foreach ($modulesfile as $obj) {
-                        if (file_exists(dirname($obj))) {
-                            $fileName = basename($obj, '.php');
-                            $fileDir = basename(dirname($obj));
-
-                            //   print_r(dirname($obj));die;
-
-                            $classNamespace = $namespace . '\\blocks\\' . $fileDir . '\\' . $fileName;
-                            $class = new $classNamespace;
-                            if ($class instanceof \panix\engine\data\Widget) {
-                                //  echo 'pok';
-                            }
-
-                            $edit = false;
-                            //if (file_exists(dirname($obj) . DIRECTORY_SEPARATOR . 'form')) {
-                            $system = $manager->getClass($classNamespace);
-                            if ($system) {
-                                $edit = true;
-                            }
-                            //}
-
-
-                            $result[] = array(
-                                'title' => $class->getTitle() . $fileName,
-                                'alias' => $classNamespace,
-                                'category' => 'module',
-                                'edit' => ($edit) ? Html::a(Html::icon('edit'), ['/admin/app/widgets/update', 'alias' => $classNamespace], ['class' => 'btn btn-secondary']) : ''
-                            );
+                        $classNamespace = $namespace . '\\blocks\\' . $fileDir . '\\' . $fileName;
+                        $class = new $classNamespace;
+                        if ($class instanceof \panix\engine\data\Widget) {
+                            //  echo 'pok';
                         }
+
+                        $edit = false;
+                        //if (file_exists(dirname($obj) . DIRECTORY_SEPARATOR . 'form')) {
+                        $system = $manager->getClass($classNamespace);
+                        if ($system) {
+                            $edit = true;
+                        }
+                        //}
+
+
+                        $result[] = array(
+                            'title' => $class->getTitle() . $fileName,
+                            'alias' => $classNamespace,
+                            'category' => 'module',
+                            'edit' => ($edit) ? Html::a(Html::icon('edit'), ['update', 'alias' => $classNamespace], ['class' => 'btn btn-secondary']) : ''
+                        );
                     }
                 }
-                //
-                /* if (file_exists(Yii::getPathOfAlias("mod.{$mod}.blocks"))) {
-                  $modulesfile = CFileHelper::findFiles(Yii::getPathOfAlias("mod.{$mod}.blocks"), array(
-                  'fileTypes' => array('php'),
-                  'level' => 1,
-                  'absolutePaths' => false
-                  ));
-                  } */
-
-                /* foreach ($modulesfile as $obj) {
-
-                  $obj = explode(DIRECTORY_SEPARATOR, $obj);
-
-
-                  $className = str_replace('.php', '', $obj[1]);
-                  $classDir = $obj[0];
-                  if (file_exists(Yii::getPathOfAlias("mod.{$mod}.blocks"))) {
-                  if (file_exists(Yii::getPathOfAlias("mod.{$mod}.blocks.{$classDir}") . DS . $obj[1])) {
-                  Yii::import("mod.{$mod}.blocks.{$classDir}.{$className}");
-                  if (new $className instanceof BlockWidget) {
-                  $class = new $className;
-
-
-
-                  $system = $manager->getClass("mod.{$mod}.blocks.{$classDir}", $className);
-
-                  if (!$system) {
-                  $edit = false;
-                  } else {
-                  $edit = true;
-                  }
-
-
-                  $result[] = array(
-                  'title' => $class->getTitle(),
-                  'alias' => "mod.{$mod}.blocks.{$classDir}.{$className}",
-                  'category' => 'module',
-                  'edit' => ($edit) ? Html::link('<i class="icon-edit"></i>', array('/admin/app/widgets/update', 'alias' => "mod.{$mod}.blocks.{$classDir}.{$className}"), array('class' => 'btn btn-secondary')) : ''
-                  );
-                  }
-                  }
-                  }
-                  } */
             }
-            Yii::$app->cache->set(self::CHACHEID, $result, 0); //3600 * 12
+
         }
+        //    Yii::$app->cache->set(self::CHACHEID, $result, 0); //3600 * 12
+        // }
 
 
         $dataProvider = new \yii\data\ArrayDataProvider([
@@ -207,7 +107,7 @@ class WidgetsController extends \panix\engine\controllers\AdminController
         $this->breadcrumbs = [
             [
                 'label' => Yii::t('admin/default', 'WIDGETS'),
-                'url' => ['/admin/app/widgets']
+                'url' => ['/app/widgets']
             ],
             $this->pageName
         ];

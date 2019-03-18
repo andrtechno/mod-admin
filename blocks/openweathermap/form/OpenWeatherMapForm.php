@@ -3,8 +3,9 @@
 namespace panix\mod\admin\blocks\openweathermap\form;
 
 use Yii;
+use panix\engine\blocks_settings\WidgetModel;
 
-class OpenWeatherMapForm extends \panix\engine\blocks_settings\WidgetFormModel
+class OpenWeatherMapForm extends WidgetModel
 {
 
     public $lat;
