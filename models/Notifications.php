@@ -4,8 +4,9 @@ namespace panix\mod\admin\models;
 
 use Yii;
 use panix\mod\admin\models\query\NotificationsQuery;
+use panix\engine\db\ActiveRecord;
 
-class Notifications extends \panix\engine\db\ActiveRecord {
+class Notifications extends ActiveRecord {
 
     const MODULE_ID = 'admin';
 
