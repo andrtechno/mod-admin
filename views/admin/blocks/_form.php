@@ -29,7 +29,7 @@ use panix\mod\admin\models\Block;
 <script>
     $(document).ready(function(){
         $('#BlocksModel_widget').change(function(){
-            $('#payment_configuration').load('/admin/app/blocks/configuration-form/system?='+$(this).val());
+            $('#payment_configuration').load('/app/blocks/configuration-form/system?='+$(this).val());
         });
         $('#BlocksModel_widget').change();
     });

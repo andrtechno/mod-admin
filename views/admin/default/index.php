@@ -57,7 +57,7 @@ use yii\helpers\Url;
                         </div>
                     </div>
                 </div>
-                <a href="<?= Url::to(['/admin/stats']); ?>" class="card-footer z-1">
+                <a href="<?= Url::to(['/stats']); ?>" class="card-footer z-1">
                     <span class="float-left">Подробней</span>
                     <span class="float-right"><i class="icon-arrow-right"></i></span>
                 </a>
@@ -91,7 +91,7 @@ use yii\helpers\Url;
 
 
         <?php
-        echo \panix\mod\admin\models\chat\ChatRoom::widget(['url' => '/admin/default/send-chat']);
+        echo \panix\mod\admin\models\chat\ChatRoom::widget(['url' => '/default/send-chat']);
         ?>
 
 

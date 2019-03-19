@@ -78,9 +78,9 @@ class LanguagesController extends AdminController {
 
             Yii::$app->session->addFlash('success', \Yii::t('app', 'SUCCESS_CREATE'));
             if ($model->isNewRecord) {
-                return Yii::$app->getResponse()->redirect(['/admin/app/languages']);
+                return Yii::$app->getResponse()->redirect(['/app/languages']);
             } else {
-                return Yii::$app->getResponse()->redirect(['/admin/app/languages/update', 'id' => $model->id]);
+                return Yii::$app->getResponse()->redirect(['/app/languages/update', 'id' => $model->id]);
             }
         }
 
