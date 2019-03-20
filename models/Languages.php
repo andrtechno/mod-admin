@@ -87,7 +87,71 @@ if($this->is_default){
             }
         }
     }
+    /**
+     * Locale {@link http://lh.2xlibre.net/locales} helper
+     * @return array
+     */
+    public static function langListArray()
+    {
+        return array(
+            array('en', array('id'=>'en','name' => 'English', 'image' => 'en.png', 'locale' => 'en_US')),
+            array('uk', array('id'=>'ua','name' => 'Ukrainian', 'image' => 'ua.png', 'locale' => 'uk_UA')),
+            array('ru', array('id'=>'ru','name' => 'Russian', 'image' => 'ru.png', 'locale' => 'ru_RU')),
+            array('ar', array('id'=>'ar','name' => 'Arabic', 'image' => 'ps.png', 'locale' => 'ar_AE')),
+            array('hy', array('id'=>'hy','name' => 'Armenian', 'image' => 'am.png', 'locale' => 'hy_AM')),
+            array('sq', array('id'=>'sq','name' => 'Albanian', 'image' => 'al.png', 'locale' => 'sq_AL')),
+            array('az', array('id'=>'az','name' => 'Azerbaijani', 'image' => 'az.png', 'locale' => 'az_AZ')),
+            array('be', array('id'=>'be','name' => 'Belarusian', 'image' => 'by.png', 'locale' => 'be_BY')),
+            array('bg', array('id'=>'bg','name' => 'Bulgarian', 'image' => 'bg.png', 'locale' => 'bg_BG')),
+            array('bs', array('id'=>'bs','name' => 'Bosnian', 'image' => 'ba.png', 'locale' => 'bs_BA')),
+            array('ca', array('id'=>'ca','name' => 'Catalan', 'image' => 'catalonia.png', 'locale' => 'ca_ES')),
+            array('cs', array('id'=>'cs','name' => 'Czech', 'image' => 'cz.png', 'locale' => 'cs_CZ')),
+            array('hr', array('id'=>'hr','name' => 'Croatian', 'image' => 'hr.png', 'locale' => 'hr_HR')),
+            array('zh', array('id'=>'zh','name' => 'Chinese', 'image' => 'cn.png', 'locale' => 'zh_CN')),
+            array('da', array('id'=>'da','name' => 'Danish', 'image' => 'dk.png', 'locale' => 'da_DK')),
+            array('nl', array('id'=>'nl','name' => 'Dutch', 'image' => 'nl.png', 'locale' => 'nl_AW')),
+            array('de', array('id'=>'de','name' => 'German', 'image' => 'de.png', 'locale' => 'de_DE')),
+            array('el', array('id'=>'el','name' => 'Greek', 'image' => 'gr.png', 'locale' => 'el_GR')),
+            array('ka', array('id'=>'ka','name' => 'Georgian', 'image' => 'ge.png', 'locale' => 'ka_GE')),
+            array('et', array('id'=>'et','name' => 'Estonian', 'image' => 'ee.png', 'locale' => 'et_EE')),
+            array('fi', array('id'=>'fi','name' => 'Finnish', 'image' => 'fi.png', 'locale' => 'fi_FI')),
+            array('fr', array('id'=>'fr','name' => 'French', 'image' => 'fr.png', 'locale' => 'fr_FR')),
+            array('he', array('id'=>'he','name' => 'Hebrew', 'image' => 'hn.png', 'locale' => 'he_IL')),
+            array('hu', array('id'=>'hu','name' => 'Hungarian', 'image' => 'hu.png', 'locale' => 'hu_HU')),
+            array('id', array('id'=>'id','name' => 'Indonesian', 'image' => 'id.png', 'locale' => 'id_ID')),
+            array('is', array('id'=>'is','name' => 'Icelandic', 'image' => 'is.png', 'locale' => 'is_IS')),
+            array('it', array('id'=>'it','name' => 'Italian', 'image' => 'ie.png', 'locale' => 'it_IT')),
+            array('lt', array('id'=>'lt','name' => 'Lithuanian', 'image' => 'lt.png', 'locale' => 'lt_LT')),
+            array('lv', array('id'=>'lv','name' => 'Latvian', 'image' => 'lv.png', 'locale' => 'lv_LV')),
+            array('mk', array('id'=>'mk','name' => 'Macedonian', 'image' => 'mk.png', 'locale' => 'mk_MK')),
+            array('ms', array('id'=>'ms','name' => 'Malay', 'image' => 'my.png', 'locale' => 'ms_MY')),
+            array('mt', array('id'=>'mt','name' => 'Maltese', 'image' => 'mt.png', 'locale' => 'mt_MT')),
+            array('no', array('id'=>'no','name' => 'Norwegian', 'image' => 'no.png', 'locale' => 'nn_NO')),
+            array('pl', array('id'=>'pl','name' => 'Polish', 'image' => 'pl.png', 'locale' => 'pl_PL')),
+            array('pt', array('id'=>'pt','name' => 'Portuguese', 'image' => 'pt.png', 'locale' => 'pt_PT')),
+            array('ro', array('id'=>'ro','name' => 'Romanian', 'image' => 'ro.png', 'locale' => 'ro_RO')),
+            array('sk', array('id'=>'sk','name' => 'Slovak', 'image' => 'sk.png', 'locale' => 'sk_SK')),
+            array('sl', array('id'=>'sl','name' => 'Slovenian', 'image' => 'si.png', 'locale' => 'sl_SI')),
+            array('sr', array('id'=>'sr','name' => 'Serbian', 'image' => 'si.png', 'locale' => 'sr_RS')),
+            array('sv', array('id'=>'sv','name' => 'Swedish', 'image' => 'se.png', 'locale' => 'sv_SE')),
+            array('es', array('id'=>'es','name' => 'Spanish', 'image' => 'es.png', 'locale' => 'an_ES')),
+            array('th', array('id'=>'th','name' => 'Thai', 'image' => 'th.png', 'locale' => 'th_TH')),
+            array('tr', array('id'=>'tr','name' => 'Turkish', 'image' => 'tr.png', 'locale' => 'tr_TR')),
+            array('vi', array('id'=>'vi','name' => 'Vietnamese', 'image' => 'vn.png', 'locale' => 'vi_VN')),
+        );
+    }
 
-
+    public function getDataLangList()
+    {
+        $currLangs = Yii::$app->languageManager->getCodes();
+        $result = array();
+        foreach (self::langListArray() as $lang) {
+            // if (!array_keys($currLangs, $lang[0])) {
+            if($currLangs[0] !== $lang[0]){
+                $result[$lang[0]] = $lang[1]['name'];
+            }
+        }
+        return $result;
+    }
 
 }
