@@ -6,8 +6,6 @@ use Yii;
 use panix\engine\controllers\AdminController;
 use panix\mod\rbac\filters\AccessControl;
 
-//use yii\filters\AccessControl;
-
 class AuthController extends AdminController {
 
     public $layout = '@theme/views/layouts/auth';
@@ -25,6 +23,7 @@ class AuthController extends AdminController {
     }
 
     public function actionIndex() {
+      //  die('auth');
         if (!Yii::$app->user->isGuest)
             return $this->redirect(['/admin']);
                 
