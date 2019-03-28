@@ -68,9 +68,9 @@ class Module extends WebModule {
         ];
     }
 
-    public function getAdminSidebar() {
-        $items = $this->getAdminMenu();
-        return $items['system']['items'];
+    public function getAdminSidebar()
+    {
+        return (new \panix\engine\bootstrap\BackendNav)->findMenu('system')['items'];
     }
 
 }
