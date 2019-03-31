@@ -84,24 +84,24 @@ class Chat extends \yii\db\ActiveRecord {
 
 
 
-                $output .= '<li class="' . $isYouPosition . ' clearfix">';
-                $output .= '<span class="chat-img pull-' . $isYouPosition . '"><img src="http://placehold.it/50/55C1E7/fff" alt="' . $model->user->username . '" class="img-circle" /></span>';
-                $output .= '<div class="chat-body clearfix">';
-                $output .= '<div class="header">';
+                $output .= '<div class="' . $isYouPosition . ' clearfix chat-item">';
+                $output .= '<div class="chat-img float-' . $isYouPosition . '"><img src="http://placehold.it/50/55C1E7/fff" alt="' . $model->user->username . '" class="rounded-circle" /></div>';
+                $output .= '<div class="chat-body">';
+                $output .= '<div class="chat-header">';
                 if ($isYouBool) {
                     $output .= '<strong class="primary-font">' . $model->user->username . '</strong>';
-                    $output .= '<small class="pull-right text-muted">';
+                    $output .= '<small class="float-right text-muted">';
                     $output .= '<i class="icon-time"></i> ' . CMS::date($model->date_update, true) . '</small>';
                 } else {
                     $output .= '<small class=" text-muted">';
                     $output .= '<i class="icon-time"></i> ' . CMS::date($model->date_update, true) . '</small>';
-                    $output .= '<strong class="pull-right primary-font">' . $model->user->username . '</strong>';
+                    $output .= '<strong class="float-right primary-font">' . $model->user->username . '</strong>';
                 }
 
                 $output .= '</div>';
-                $output .= '<p>' . Html::text(CMS::replace_urls($model->message)) . '</p>';
+                $output .= '<div class="chat-text">' . Html::text(CMS::replace_urls($model->message)) . '</div>';
                 $output .= '</div>';
-                $output .= '</li>';
+                $output .= '</div>';
             }
 
         return $output;

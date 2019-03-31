@@ -1,13 +1,12 @@
 <?php
 $bundle = \panix\engine\emoji\EmojiPickerAsset::register($this);
-?>
-<script>
+$this->registerJs("
     $(function () {
 
         // Initializes and creates emoji set from sprite sheet
         window.emojiPicker = new EmojiPicker({
             emojiable_selector: '[data-emojiable=true]',
-            assetsPath: '<?= $bundle->baseUrl ?>/images',
+            assetsPath: '".$bundle->baseUrl."/images',
             popupButtonClasses: 'icon-delete'
         });
         // Finds all elements with `emojiable_selector` and converts them to rich emoji input fields
@@ -16,8 +15,9 @@ $bundle = \panix\engine\emoji\EmojiPickerAsset::register($this);
         window.emojiPicker.discover();
 
     });
+");
 
-</script>
+?>
 
 <div class="chat-panel card">
     <div class="card-header">
@@ -38,9 +38,9 @@ $bundle = \panix\engine\emoji\EmojiPickerAsset::register($this);
         </div>
     </div>
     <div class="card-body">
-        <ul class="chat" id="chat-box">
+        <div class="chat" id="chat-box">
             <?= $data; ?>
-        </ul>
+        </div>
     </div>  
     <div class="card-footer">
         <div class="emoji-picker-container">

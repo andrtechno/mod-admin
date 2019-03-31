@@ -55,7 +55,7 @@ class ChatRoom extends Widget
     public function run()
     {
         parent::init();
-        ChatJs::register($this->view);
+        ChatAsset::register($this->view);
         $model = new Chat();
         $model->userModel = $this->userModel;
         $model->userField = $this->userField;

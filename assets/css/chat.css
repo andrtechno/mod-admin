@@ -1,0 +1,33 @@
+.chat {
+    margin: 0;
+    padding: 0;
+    max-height: 300px;
+    overflow-x: hidden;
+}
+
+.chat-item {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.chat .left,
+.chat .right {
+    padding: 10px;
+}
+
+.chat .left .chat-body {
+    margin-left: 60px;
+    text-align: left;
+}
+
+.chat .right .chat-body {
+    margin-right: 60px;
+    text-align: right;
+}
+
+.chat .left .chat-img {
+    margin-right: 15px;
+}
+
+.chat .right .chat-img {
+    margin-left: 15px;
+}

@@ -91,7 +91,7 @@ use yii\helpers\Url;
 
 
         <?php
-        echo \panix\mod\admin\models\chat\ChatRoom::widget(['url' => '/default/send-chat']);
+        echo \panix\mod\admin\models\chat\ChatRoom::widget(['url' => '/admin/app/default/send-chat']);
         ?>
 
 
