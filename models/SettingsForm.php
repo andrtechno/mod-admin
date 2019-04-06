@@ -2,9 +2,13 @@
 
 namespace panix\mod\admin\models;
 
+use panix\engine\Html;
 use panix\engine\SettingsModel;
+use yii\web\UploadedFile;
+use Yii;
 
-class SettingsForm extends SettingsModel {
+class SettingsForm extends SettingsModel
+{
     const NAME = 'app';
     protected $module = 'admin';
     protected $category = 'app';
@@ -21,17 +25,58 @@ class SettingsForm extends SettingsModel {
     public $censor_replace;
     public $timezone;
 
-    public function rules() {
+
+    public $attachment_image_type;
+    public $attachment_image_resize;
+    public $attachment_wm_active;
+    public $attachment_wm_path;
+    public $attachment_wm_corner;
+    public $attachment_wm_offsetx;
+    public $attachment_wm_offsety;
+
+    public function renderWatermarkImage()
+    {
+        if (file_exists(Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . 'watermark.png'))
+            return Html::img('/uploads/watermark.png?' . time(), ['class' => 'img-fluid']);
+    }
+
+    public function validateWatermarkFile($attr)
+    {
+        $file = UploadedFile::getInstance($this, 'attachment_wm_path');
+        if ($file) {
+            $allowedExts = ['jpg', 'gif', 'png'];
+            if (!in_array($file->getExtension(), $allowedExts))
+                $this->addError($attr, self::t('ERROR_WM_NO_IMAGE'));
+        }
+    }
+
+    public function getWatermarkCorner()
+    {
+        return array(
+            1 => self::t('CORNER_LEFT_TOP'),
+            2 => self::t('CORNER_RIGHT_TOP'),
+            3 => self::t('CORNER_LEFT_BOTTOM'),
+            4 => self::t('CORNER_RIGHT_BOTTOM'),
+            5 => self::t('CORNER_CENTER'),
+        );
+    }
+
+    public function rules()
+    {
+
         return [
-            [['email', 'sitename', 'pagenum', 'maintenance_allow_users', 'timezone', 'theme'], "required"],
+            [['attachment_wm_corner', 'attachment_wm_offsety', 'attachment_wm_offsetx'], 'integer'],
+            [['email', 'sitename', 'pagenum', 'maintenance_allow_users', 'timezone', 'theme', 'attachment_wm_offsetx', 'attachment_wm_offsety', 'attachment_wm_corner', 'attachment_image_type'], "required"],
             ['email', 'email'],
-            [['theme', 'censor_words', 'censor_replace', 'maintenance_text', 'maintenance_allow_ips', 'maintenance_allow_users', 'timezone'], "string"],
+            ['attachment_wm_path', 'validateWatermarkFile'],
+            [['theme', 'censor_words', 'censor_replace', 'maintenance_text', 'maintenance_allow_ips', 'maintenance_allow_users', 'timezone', 'attachment_wm_active', 'attachment_image_resize'], "string"],
             [['maintenance', 'censor'], 'boolean'],
             ['email', 'filter', 'filter' => 'trim'],
         ];
     }
 
-    public function getThemes() {
+    public function getThemes()
+    {
         $themes = [];
         $themesList = array_filter(glob('themes/*'), 'is_dir');
         foreach ($themesList as $theme) {

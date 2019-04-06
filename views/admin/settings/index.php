@@ -31,6 +31,11 @@ use panix\engine\bootstrap\ActiveForm;
                     'headerOptions' => [],
                 ],
                 [
+                    'label' => 'Image',
+                    'content' => $this->render('_images', ['form' => $form, 'model' => $model]),
+                    'headerOptions' => [],
+                ],
+                [
                     'label' => 'Дата и время',
                     'content' => $this->render('_datetime', ['form' => $form, 'model' => $model]),
                     'headerOptions' => [],
