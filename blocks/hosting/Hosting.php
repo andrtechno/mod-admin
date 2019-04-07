@@ -85,7 +85,7 @@ class Hosting extends Widget {
                         'account' => $this->config['account'],
                         'class' => $class,
                         'method' => $method,
-                            'host'=>'corner-cms.com'
+                            'host'=>'pixelion.com.ua'
                             //'stack' => ['data']
                     ])
                 ),
