@@ -5,7 +5,7 @@ use yii\helpers\Url;
 ?>
 
 <div class="row">
-    <div class="col-md-3 col-xs-6">
+    <div class="col-md-6 col-lg-3 col-sm-6">
 
 
         <div class="card bg-primary text-white o-hidden">
@@ -26,7 +26,7 @@ use yii\helpers\Url;
 
 
     </div>
-    <div class="col-md-3 col-xs-6">
+    <div class="col-md-6 col-lg-3 col-sm-6">
 
         <div class="card bg-danger text-white o-hidden">
             <div class="card-body" style="padding: 1rem">
@@ -46,7 +46,7 @@ use yii\helpers\Url;
 
     </div>
     <?php if (Yii::$app->hasModule('stats')) { ?>
-        <div class="col-md-3 col-xs-6">
+        <div class="col-md-6 col-lg-3 col-sm-6">
             <div class="card bg-warning o-hidden">
                 <div class="card-body" style="padding: 1rem">
                     <div class="row">
@@ -65,7 +65,7 @@ use yii\helpers\Url;
 
         </div>
     <?php } ?>
-    <div class="col-md-3 col-xs-6">
+    <div class="col-md-6 col-lg-3 col-sm-6">
 
 
         <div class="card bg-success text-white o-hidden">
