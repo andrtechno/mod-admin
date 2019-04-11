@@ -5,12 +5,25 @@ namespace panix\mod\admin;
 use Yii;
 //use yii\base\BootstrapInterface; // implements BootstrapInterface
 use panix\engine\WebModule;
+use yii\base\BootstrapInterface;
 
 /**
  * Class Module
  * @package panix\mod\admin
  */
-class Module extends WebModule {
+class Module extends WebModule { // implements BootstrapInterface
+
+    public function bootstrap2($app)
+    {
+        $app->urlManager->addRules(
+            [
+                'admin' => 'admin/admin/default/index',
+                'admin/auth' => 'admin/auth/index',
+            ],
+            true
+        );
+
+    }
 
     public function getInfo() {
         return [
