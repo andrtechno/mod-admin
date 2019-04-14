@@ -17,8 +17,8 @@ class EditorfileController extends \panix\engine\controllers\AdminController {
         if (file_exists(Yii::getAlias('@app') . DIRECTORY_SEPARATOR . '.htaccess')) {
             $this->path_htaccess = Yii::getAlias('@app') . DIRECTORY_SEPARATOR . '.htaccess';
         }
-        if (file_exists(Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . 'robots.txt')) {
-            $this->path_robots = Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . 'robots.txt';
+        if (file_exists(Yii::getAlias('@frontend') . DIRECTORY_SEPARATOR . 'robots.txt')) {
+            $this->path_robots = Yii::getAlias('@frontend') . DIRECTORY_SEPARATOR . 'robots.txt';
         }
         parent::init();
     }
@@ -57,9 +57,6 @@ class EditorfileController extends \panix\engine\controllers\AdminController {
 
         $contentRobots = $request->post('robots');
         if ($contentRobots && $request->post('htaccess')) {
-
-
-
 
             $robots_h = fopen($this->path_robots, "wb");
             fwrite($robots_h, CMS::textReplace($contentRobots));
