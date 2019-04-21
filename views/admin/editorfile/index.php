@@ -5,11 +5,8 @@ use panix\engine\Html;
 $robotsmess = CMS::isChmod($this->context->path_robots, 0666);
 if ($robotsmess)
     $this->theme->alert('warning', Yii::t('app', 'CHMOD_ERROR', array('{dir}' => $this->context->path_robots, '{chmod}' => 666)), false);
-$htaccessmess = CMS::isChmod($this->context->path_htaccess, 0666);
-if ($htaccessmess)
-    $this->theme->alert('warning', Yii::t('app', 'CHMOD_ERROR', array('{dir}' => $this->context->path_htaccess, '{chmod}' => 666)), false);
 
-if (!$robotsmess && !$htaccessmess) {
+if (!$robotsmess) {
 
 
 
@@ -20,25 +17,6 @@ if (!$robotsmess && !$htaccessmess) {
 
             <div class="col">
                 <div class="accordion" id="accordionExample">
-                    <div class="card">
-                        <div class="card-header" id="headingOne">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link" type="button" data-toggle="collapse"
-                                        data-target="#collapseOne"
-                                        aria-expanded="true" aria-controls="collapseOne">
-                                    Collapsible Group Item #1
-                                </button>
-                            </h5>
-                        </div>
-
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                             data-parent="#accordionExample">
-                            <div class="card-body">
-                                <?= Html::textArea('htaccess', $htaccess, array('class' => 'form-control', 'rows' => 20, 'style' => 'resize:none;border:0;')); ?>
-                                <?= Html::checkBox('htaccess_reset', 0, array()); ?>
-                            </div>
-                        </div>
-                    </div>
                     <div class="card">
                         <div class="card-header" id="headingTwo">
                             <h5 class="mb-0">

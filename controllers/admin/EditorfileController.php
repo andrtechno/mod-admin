@@ -9,16 +9,12 @@ use yii\helpers\ArrayHelper;
 class EditorfileController extends \panix\engine\controllers\AdminController {
 
     public $icon = 'icon-file';
-    public $path_htaccess = false;
     public $path_robots = false;
 
     public function init() {
 
-        if (file_exists(Yii::getAlias('@app') . DIRECTORY_SEPARATOR . '.htaccess')) {
-            $this->path_htaccess = Yii::getAlias('@app') . DIRECTORY_SEPARATOR . '.htaccess';
-        }
-        if (file_exists(Yii::getAlias('@frontend') . DIRECTORY_SEPARATOR . 'robots.txt')) {
-            $this->path_robots = Yii::getAlias('@frontend') . DIRECTORY_SEPARATOR . 'robots.txt';
+        if (file_exists(Yii::getAlias('@frontend/web') . DIRECTORY_SEPARATOR . 'robots.txt')) {
+            $this->path_robots = Yii::getAlias('@frontend/web') . DIRECTORY_SEPARATOR . 'robots.txt';
         }
         parent::init();
     }
@@ -28,24 +24,14 @@ class EditorfileController extends \panix\engine\controllers\AdminController {
         $this->pageName = Yii::t('app', 'Редактирование файлов');
         // $this->breadcrumbs = array($this->pageName);
 
-
-        if ($this->path_htaccess) {
-            $htaccess = file_get_contents($this->path_htaccess, false);
-        }
         if ($this->path_robots) {
             $robots = file_get_contents($this->path_robots, false);
         }
 
-        if ($request->post('robots_reset') || $request->post('htaccess_reset')) {
+        if ($request->post('robots_reset')) {
             if ($request->post('robots_reset')) {
                 $robots_h = fopen($this->path_robots, "wb");
                 fwrite($robots_h, $this->defaultRobots());
-                fclose($robots_h);
-            }
-
-            if ($request->post('htaccess_reset')) {
-                $robots_h = fopen($this->path_robots, "wb");
-                fwrite($robots_h, $this->defaultHtaccess());
                 fclose($robots_h);
             }
             Yii::$app->session->setFlash('success', 'Success! default');
@@ -56,15 +42,12 @@ class EditorfileController extends \panix\engine\controllers\AdminController {
 
 
         $contentRobots = $request->post('robots');
-        if ($contentRobots && $request->post('htaccess')) {
+        if ($contentRobots) {
 
             $robots_h = fopen($this->path_robots, "wb");
             fwrite($robots_h, CMS::textReplace($contentRobots));
             fclose($robots_h);
 
-            $htaccess_h = fopen($this->path_htaccess, "wb");
-            fwrite($htaccess_h, $request->post('htaccess'));
-            fclose($htaccess_h);
             Yii::$app->session->setFlash('success', 'Success! default');
             $this->redirect(['/admin/app/editorfile']);
         }
@@ -72,7 +55,6 @@ class EditorfileController extends \panix\engine\controllers\AdminController {
 
 
         return $this->render('index', array(
-                    'htaccess' => $htaccess,
                     'robots' => CMS::textReplace($robots,[],true)
         ));
     }
