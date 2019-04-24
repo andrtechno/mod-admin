@@ -53,12 +53,6 @@ class Module extends WebModule { // implements BootstrapInterface
                         'visible' => true
                     ],
                     [
-                        'label' => Yii::t('admin/default', 'EDIT_FILES'),
-                        'url' => ['/admin/app/editorfile'],
-                        'icon' => 'file',
-                        'visible' => true
-                    ],
-                    [
                         'label' => Yii::t('admin/default', 'WIDGETS'),
                         'url' => ['/admin/app/widgets'],
                         'icon' => 'chip',
