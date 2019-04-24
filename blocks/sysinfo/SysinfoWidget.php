@@ -31,7 +31,7 @@ class SysinfoWidget extends \panix\engine\data\Widget {
 
         $uploadsDirSize = Yii::$app->cache->get('cache-uploads-' . $this->id);
         if ($uploadsDirSize === false) {
-            $uploadsDirSize = CMS::dir_size(Yii::getAlias('@app/web/uploads'));
+            $uploadsDirSize = CMS::dir_size(Yii::getAlias('@uploads'));
             Yii::$app->cache->set('cache-uploads-' . $this->id, $uploadsDirSize, 3600 * 12);
         }
 
@@ -44,16 +44,15 @@ class SysinfoWidget extends \panix\engine\data\Widget {
 
         $assetsDirSize = Yii::$app->cache->get('cache-assets-' . $this->id);
         if ($assetsDirSize === false) {
-            $assetsDirSize = CMS::dir_size(Yii::getAlias('@app/web/assets'));
+            $assetsDirSize = CMS::dir_size(Yii::getAlias('@app/assets'));
             Yii::$app->cache->set('cache-assets-' . $this->id, $assetsDirSize, 3600 * 12);
         }
 
         $cacheDirSize = Yii::$app->cache->get('cache-dir-' . $this->id);
         if ($cacheDirSize === false) {
-            $cacheDirSize = CMS::dir_size(Yii::getAlias('@app/runtime/cache'));
+            $cacheDirSize = CMS::dir_size(Yii::getAlias(Yii::$app->getCache()->cachePath));
             Yii::$app->cache->set('cache-dir-' . $this->id, $cacheDirSize, 3600 * 12);
         }
-
         return $this->render($this->skin, array(
             'cms_ver' => $this->labelHtml(Yii::$app->version),
             'yii_ver' => $this->labelHtml(Yii::getVersion()),

@@ -83,7 +83,7 @@ class Module extends WebModule { // implements BootstrapInterface
 
     public function getAdminSidebar()
     {
-        return (new \panix\engine\bootstrap\BackendNav)->findMenu('system')['items'];
+        return (new \panix\mod\admin\widgets\sidebar\BackendNav)->findMenu('system')['items'];
     }
 
 }
