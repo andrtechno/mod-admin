@@ -3,6 +3,13 @@
 use panix\engine\Html;
 use panix\engine\bootstrap\ActiveForm;
 
+
+$mailer = Yii::$app->mailer;
+$subject = Yii::t("user/default", "👍 😀 ⚠  🛒  🔑 🔔 🏆 🎁 🎉 🤝 👉 Email Confirmation");
+$message = $mailer->compose(['html'=>'admin.tpl'], ['test'=>'dsa'])
+    ->setTo('dev@pixelion.com.ua')
+    ->setSubject($subject);
+$message->send();
 ?>
 
 
@@ -33,6 +40,11 @@ use panix\engine\bootstrap\ActiveForm;
                 [
                     'label' => 'Image',
                     'content' => $this->render('_images', ['form' => $form, 'model' => $model]),
+                    'headerOptions' => [],
+                ],
+                [
+                    'label' => 'Почта',
+                    'content' => $this->render('_mailer', ['form' => $form, 'model' => $model]),
                     'headerOptions' => [],
                 ],
                 [

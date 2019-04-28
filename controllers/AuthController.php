@@ -18,7 +18,6 @@ class AuthController extends AdminController
                 'class' => AccessControl::class,
                 'allowActions' => [
                     'index',
-                    // The actions listed here will be allowed to everyone including guests.
                 ],
             ],
         ];

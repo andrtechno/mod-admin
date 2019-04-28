@@ -1,0 +1,18 @@
+<?php
+
+use panix\ext\taginput\TagInput;
+
+/**
+ * @var $form \panix\engine\bootstrap\ActiveForm
+ */
+?>
+
+<?= $form->field($model, 'mailer_transport_smtp_username'); ?>
+<?= $form->field($model, 'mailer_transport_smtp_password'); ?>
+<?= $form->field($model, 'mailer_transport_smtp_host')->hint('Например: localhost'); ?>
+<?= $form->field($model, 'mailer_transport_smtp_port')->hint('Например: 465'); ?>
+<?= $form->field($model, 'mailer_transport_smtp_encryption')->dropDownList([
+    'ssl' => 'SSL',
+    'tls' => 'TLS'
+]) ?>
+
