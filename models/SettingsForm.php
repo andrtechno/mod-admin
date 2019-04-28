@@ -34,7 +34,7 @@ class SettingsForm extends SettingsModel
     public $attachment_wm_offsetx;
     public $attachment_wm_offsety;
 
-
+    public $mailer_transport_smtp_enabled;
     public $mailer_transport_smtp_host;
     public $mailer_transport_smtp_username;
     public $mailer_transport_smtp_password;
@@ -77,6 +77,7 @@ class SettingsForm extends SettingsModel
             [['mailer_transport_smtp_port'], 'integer'],
             [['mailer_transport_smtp_port', 'mailer_transport_smtp_host', 'mailer_transport_smtp_username', 'mailer_transport_smtp_password', 'mailer_transport_smtp_encryption'], 'trim'],
             ['mailer_transport_smtp_encryption', 'in', 'range' => ['ssl', 'tls']],
+            ['mailer_transport_smtp_enabled', 'boolean'],
 
 
             [['attachment_wm_corner', 'attachment_wm_offsety', 'attachment_wm_offsetx'], 'integer'],
@@ -94,7 +95,8 @@ class SettingsForm extends SettingsModel
         $themes = [];
         $themesList = array_filter(glob('web/themes/*'), 'is_dir');
         foreach ($themesList as $theme) {
-            if ($theme != 'dashboard') {
+
+            if (basename($theme) != 'dashboard') {
                 $themes[basename($theme)] = ucfirst(basename($theme));
             }
         }

@@ -3,17 +3,9 @@
 use panix\engine\Html;
 use panix\engine\bootstrap\ActiveForm;
 
-
-$mailer = Yii::$app->mailer;
-$subject = Yii::t("user/default", "👍 😀 ⚠  🛒  🔑 🔔 🏆 🎁 🎉 🤝 👉 Email Confirmation");
-$message = $mailer->compose(['html'=>'admin.tpl'], ['test'=>'dsa'])
-    ->setTo('dev@pixelion.com.ua')
-    ->setSubject($subject);
-$message->send();
 ?>
 
-
-<div class="card bg-light">
+<div class="card">
     <div class="card-header">
         <h5><?= $this->context->pageName ?></h5>
     </div>
@@ -60,6 +52,5 @@ $message->send();
         </div>
         <?php ActiveForm::end(); ?>
     </div>
-
 </div>
 

@@ -1,6 +1,10 @@
 <?php
 
 use panix\engine\helpers\TimeZoneHelper;
+
+/**
+ * @var $form \panix\engine\bootstrap\ActiveForm
+ */
 ?>
 
 <?= $form->field($model, 'sitename') ?>

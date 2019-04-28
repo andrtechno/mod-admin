@@ -1,12 +1,9 @@
 <?php
-
-use panix\ext\taginput\TagInput;
-
 /**
  * @var $form \panix\engine\bootstrap\ActiveForm
  */
 ?>
-
+<?= $form->field($model, 'mailer_transport_smtp_enabled')->checkbox(); ?>
 <?= $form->field($model, 'mailer_transport_smtp_username'); ?>
 <?= $form->field($model, 'mailer_transport_smtp_password'); ?>
 <?= $form->field($model, 'mailer_transport_smtp_host')->hint('Например: localhost'); ?>

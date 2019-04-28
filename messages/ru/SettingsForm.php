@@ -28,6 +28,7 @@ return [
     'CORNER_RIGHT_BOTTOM' => 'Правый нижний угол',
     'CORNER_CENTER' => 'Центр изображения',
     'ERROR_WM_NO_IMAGE' => 'Ошибка. Водяной знак не изображение.',
+    'MAILER_TRANSPORT_SMTP_ENABLED' => 'Активировать настройки SMTP',
     'MAILER_TRANSPORT_SMTP_USERNAME' => 'Имя пользователя',
     'MAILER_TRANSPORT_SMTP_PASSWORD' => 'Пароль',
     'MAILER_TRANSPORT_SMTP_HOST' => 'SMTP сервер',
