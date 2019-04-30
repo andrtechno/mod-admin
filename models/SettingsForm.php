@@ -11,7 +11,7 @@ class SettingsForm extends SettingsModel
 {
     const NAME = 'app';
     protected $module = 'admin';
-    protected $category = 'app';
+    public static $category = 'app';
     public $sitename;
     public $pagenum;
     public $email;
@@ -40,6 +40,18 @@ class SettingsForm extends SettingsModel
     public $mailer_transport_smtp_password;
     public $mailer_transport_smtp_port;
     public $mailer_transport_smtp_encryption;
+
+
+    public static function defaultSettings()
+    {
+        return [
+            'email' => 'dev@pixelion.com.ua',
+            'pagenum' => 20,
+            'sitename' => 'Pixelion',
+            'theme' => 'basic',
+            'backup_limit' => 10,
+        ];
+    }
 
     public function renderWatermarkImage()
     {

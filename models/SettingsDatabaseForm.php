@@ -6,7 +6,7 @@ class SettingsDatabaseForm extends SettingsModel {
 
     const NAME = 'db';
     protected $module = 'admin';
-    protected $category = 'db';
+    public static $category = 'db';
 
     public $backup = false; //no record in db
     public $backup_limit = 1;
