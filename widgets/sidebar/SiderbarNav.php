@@ -3,7 +3,7 @@
 namespace panix\mod\admin\widgets\sidebar;
 
 use panix\engine\bootstrap\Nav;
-use panix\engine\View;
+use yii\web\View;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\helpers\ArrayHelper;
