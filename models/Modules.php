@@ -64,15 +64,19 @@ class Modules extends \panix\engine\db\ActiveRecord
      * Load enabled modules and cache for current request
      * @return array Enabled modules
      */
-    public static function getEnabled()
+    public function getEnabled()
     {
         if (self::$cache)
             return self::$cache;
 
-        self::$cache = self::find()
+        $tableSchema = Yii::$app->db->schema->getTableSchema(static::tableName());
+        if ($tableSchema !== null) {
+            // Table does not exist
+
+        self::$cache = static::find()
             ->select(['name', 'access', 'className'])
             ->all();
-
+        }
 
         return self::$cache;
     }
