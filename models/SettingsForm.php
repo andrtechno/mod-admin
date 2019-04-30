@@ -9,7 +9,6 @@ use Yii;
 
 class SettingsForm extends SettingsModel
 {
-    const NAME = 'app';
     protected $module = 'admin';
     public static $category = 'app';
     public $sitename;
@@ -50,6 +49,21 @@ class SettingsForm extends SettingsModel
             'sitename' => 'Pixelion',
             'theme' => 'basic',
             'backup_limit' => 10,
+            'timezone' => 'Europe/Kiev',
+            'site_close' => 0,
+            'censor' => 1,
+            'censor_words' => 'bad',
+            'censor_replace' => '***',
+            'attachment_image_type' => 'render',
+            'attachment_wm_offsety' => 10,
+            'attachment_wm_offsetx' => 10,
+            'attachment_wm_corner' => 5,
+            'mailer_transport_smtp_enabled' => '',
+            'mailer_transport_smtp_username' => '',
+            'mailer_transport_smtp_password' => '',
+            'mailer_transport_smtp_host' => 'smtp.gmail.com',
+            'mailer_transport_smtp_port' => '465',
+            'mailer_transport_smtp_encryption' => 'ssl',
         ];
     }
 
