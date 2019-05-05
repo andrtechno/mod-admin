@@ -19,7 +19,7 @@ class WidgetsController extends AdminController
     {
 
         $this->pageName = Yii::t('admin/default', 'WIDGETS');
-        $this->breadcrumbs = array($this->pageName);
+        $this->breadcrumbs = [$this->pageName];
 
 
         // $result = Yii::$app->cache->get(self::CHACHEID);
@@ -107,7 +107,7 @@ class WidgetsController extends AdminController
         $this->breadcrumbs = [
             [
                 'label' => Yii::t('admin/default', 'WIDGETS'),
-                'url' => ['/app/widgets']
+                'url' => ['index']
             ],
             $this->pageName
         ];
@@ -139,10 +139,10 @@ class WidgetsController extends AdminController
                 }
             }
         }
-        return $this->render('update', array(
+        return $this->render('update', [
             'form' => $system->getConfigurationFormHtml($alias),
             //  'title'=>Yii::t(str_replace('Form','',get_class($system)).'.default','TITLE')
-        ));
+        ]);
     }
 
 }

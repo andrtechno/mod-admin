@@ -68,8 +68,8 @@ use panix\engine\CMS;
     });
 </script>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
+<div class="card">
+    <div class="card-header">
         <h3 class="panel-title"><?= Yii::t('wgt_Hosting/default', 'HOSTING') ?></h3>
         <div class="panel-option">
             <?= Html::a(Html::icon('settings'), ['/admin/app/widgets/update', 'alias' => get_class($this->context)], ['class' => 'btn btn-link']); ?>
@@ -77,7 +77,7 @@ use panix\engine\CMS;
         </div>
 
     </div>
-    <div class="panel-body" style="padding:15px;">
+    <div class="card-body" style="padding:15px;">
 
         <?php if ($result->status == 'success') {
 
