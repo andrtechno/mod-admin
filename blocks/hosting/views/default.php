@@ -3,36 +3,26 @@
 use panix\engine\Html;
 use panix\engine\CMS;
 
-
 $this->registerCss('
-    .progress {
-        position: relative;
-        border: 1px solid #cdcdcd;
-        /*-webkit-box-shadow: inset 0 0 5px 0 rgba(0,0,0,0.2);
-        -moz-box-shadow: inset 0 0 5px 0 rgba(0,0,0,0.2);
-        box-shadow: inset 0 0 5px 0 rgba(0,0,0,0.2);*/
-    }
+.progress .progress-value {
+    font-style: normal;
+    margin: 0 auto;
+    display: block;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    font-size: 90%;
+    letter-spacing: .5px;
+}
 
-    .progress .progress-value {
-        font-style: normal;
-        margin: 0 auto;
-        display: block;
-        position: absolute;
-        color: #000;
-        text-align: center;
-        width: 100%;
-        font-size: 80%;
-        letter-spacing: .5px;
-    }
-
-    .progress-bar {
-        text-align: left;
-        transition: margin 3s;
-        box-shadow: none;
-        position: relative;
-        width: 100%;
-        background-color: #f7f7f7;
-    }
+.progress-bar {
+    text-align: left;
+    transition: margin 3s;
+    position: relative;
+    width: 100%;
+    background-color: #efefef;
+}
 ');
 $this->registerJs('
 function progressBar(id) {
@@ -55,9 +45,12 @@ progressBar("#pb2 .progress-bar");
         </div>
     </div>
     <div class="card-body p-3">
-        <h4>Информация о аккауте "pix1"</h4>
+        <h6>
+            <?= Yii::t('wgt_Hosting/default', 'ACCOUNT_TITLE', [
+                'name' => $this->context->config->account
+            ]); ?>
+        </h6>
         <?php if ($result['status'] == 'success') {
-
 
             $inode = $this->context->ssdPercentInode();
             $sdd = $this->context->ssdPercentSize();
@@ -70,8 +63,8 @@ progressBar("#pb2 .progress-bar");
                 </div>
                 <span class="progress-value">
                     <?= Yii::t('wgt_Hosting/default', 'PROGRESS_FILES', [
-                        'used' => $result['data']['used']['inode'],
-                        'limit' => $result['data']['limit']['inode'],
+                        'used' => number_format($result['data']['used']['inode'],0,' ','.'),
+                        'limit' => number_format($result['data']['limit']['inode'],0,' ','.'),
                         'percent' => round($inode, 2)
                     ]); ?>
                 </span>
@@ -79,7 +72,7 @@ progressBar("#pb2 .progress-bar");
             <br>
 
             <div class="progress" id="pb2">
-                <div class="progress-bar progress-gradient" role="progressbar"
+                <div class="progress-bar" role="progressbar"
                      aria-valuenow="<?= round($sdd, 2); ?>"
                      aria-valuemin="0" aria-valuemax="100">
                 </div>
