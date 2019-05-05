@@ -55,7 +55,7 @@ class AjaxController extends \panix\engine\controllers\AdminController {
 
     /**
      * Экшен для CEditableColumn
-     * @throws CHttpException
+     * @throws HttpException
      */
     public function actionUpdateGridRow() {
         if (Yii::app()->request->isAjaxRequest) {

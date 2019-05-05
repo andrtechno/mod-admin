@@ -1,17 +1,17 @@
 <?php
 
-namespace panix\mod\admin\models\chat;
+namespace panix\mod\admin\blocks\chat;
 
 use Yii;
 use yii\web\AssetBundle;
 
 /**
  * Class ChatAsset
- * @package panix\mod\admin\models\chat
+ * @package panix\mod\admin\blocks\chat
  */
 class ChatAsset extends AssetBundle {
 
-    public $sourcePath = '@admin/assets';
+    public $sourcePath = __DIR__.'/assets';
     public $js = [
         'js/chat.js',
     ];

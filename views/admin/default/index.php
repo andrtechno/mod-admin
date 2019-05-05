@@ -108,7 +108,7 @@ use yii\helpers\Url;
     </div>
     <div class="col-sm-6">
         <?php
-        echo \panix\mod\admin\models\chat\ChatRoom::widget(['url' => '/admin/app/default/send-chat']);
+        echo \panix\mod\admin\blocks\chat\ChatWidget::widget(['url' => '/admin/app/default/send-chat']);
         ?>
         <?php echo \panix\mod\admin\blocks\sysinfo\SysinfoWidget::widget([]); ?>
 

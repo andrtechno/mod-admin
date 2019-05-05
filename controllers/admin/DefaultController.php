@@ -31,7 +31,7 @@ class DefaultController extends AdminController {
     public function actionSendChat()
     {
         if (!empty($_POST)) {
-            echo \panix\mod\admin\models\chat\ChatRoom::sendChat($_POST);
+            echo \panix\mod\admin\blocks\chat\ChatWidget::sendChat($_POST);
         }
     }
 
