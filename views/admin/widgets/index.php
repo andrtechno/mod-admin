@@ -29,13 +29,13 @@ echo GridView::widget([
     'columns' => [
         [
             'attribute' => 'title',
-            'header' => Yii::t('app', 'title'),
+            'header' => Yii::t('app', 'Название'),
             'format' => 'raw',
             'contentOptions' => ['class' => 'text-left'],
         ],
         [
             'attribute' => 'alias',
-            'header' => Yii::t('app', 'alias'),
+            'header' => Yii::t('app', 'Путь'),
             'format' => 'raw',
             'contentOptions' => ['class' => 'text-center'],
         ],

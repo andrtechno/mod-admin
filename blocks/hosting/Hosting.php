@@ -3,6 +3,7 @@
 namespace panix\mod\admin\blocks\hosting;
 
 use Yii;
+use yii\base\Exception;
 use yii\helpers\Json;
 use panix\engine\data\Widget;
 
@@ -80,9 +81,9 @@ class Hosting extends Widget {
                     CURLOPT_HTTPHEADER => ["Content-Type: application/json; charset={$lang}"],
                     CURLOPT_HEADER => false,
                     CURLOPT_POSTFIELDS => Json::encode([
-                        'auth_login' => $this->config['auth_login'],
-                        'auth_token' => $this->config['auth_token'],
-                        'account' => $this->config['account'],
+                        'auth_login' => $this->config->auth_login,
+                        'auth_token' => $this->config->auth_token,
+                        'account' => $this->config->account,
                         'class' => $class,
                         'method' => $method,
                             'host'=>'pixelion.com.ua'

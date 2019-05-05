@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'TITLE' => 'Погода',
     'WIND' => 'Ветер',
     'PRESSURE' => 'Давление',
@@ -45,6 +45,5 @@ return array(
     'WNW' => 'Запад северо-запад (west-northwest)',
     'NW' => 'Северо заподный (northwest)',
     'NNW' => 'north-northwest',
-
-);
+];
 

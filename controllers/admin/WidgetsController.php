@@ -24,7 +24,7 @@ class WidgetsController extends AdminController
 
         // $result = Yii::$app->cache->get(self::CHACHEID);
         // if ($result === false) {
-        $result = array();
+        $result = [];
 
 
         $manager = new WidgetSystemManager;
@@ -57,12 +57,12 @@ class WidgetsController extends AdminController
                         //}
 
 
-                        $result[] = array(
-                            'title' => $class->getTitle() . $fileName,
+                        $result[] = [
+                            'title' => $class->getTitle(),
                             'alias' => $classNamespace,
                             'category' => 'module',
-                            'edit' => ($edit) ? Html::a(Html::icon('edit'), ['update', 'alias' => $classNamespace], ['class' => 'btn btn-secondary']) : ''
-                        );
+                            'edit' => ($edit) ? Html::a(Html::icon('edit'), ['update', 'alias' => $classNamespace], ['class' => 'btn btn-sm btn-secondary']) : ''
+                        ];
                     }
                 }
             }

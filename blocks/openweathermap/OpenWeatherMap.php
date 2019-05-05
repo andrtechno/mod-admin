@@ -3,6 +3,7 @@
 namespace panix\mod\admin\blocks\openweathermap;
 
 use Yii;
+use yii\base\Exception;
 use yii\helpers\Json;
 use panix\engine\data\Widget;
 
