@@ -2,6 +2,7 @@
 
 use panix\engine\Html;
 use yii\helpers\Url;
+
 ?>
 
 <div class="row">
@@ -116,4 +117,166 @@ use yii\helpers\Url;
         <?php //echo panix\mod\admin\blocks\openweathermap\OpenWeatherMap::widget(); ?>
 
     </div>
+</div>
+
+
+<?php
+
+
+$this->registerJs("
+    $(function () {
+        $('.delete-widget').click(function () {
+            var uri = $(this).attr('href');
+            var ids = $(this).attr('data-id');
+
+            common.ajax(uri, {}, function (data) {
+                $('#ids_' + ids).remove();
+                common.notify('".Yii::t('app', 'SUCCESS_RECORD_DELETE')."', 'success');
+                common.removeLoader();
+            });
+            return false;
+        });
+
+        $('#createWidget').click(function () {
+            var uri = $(this).attr('href');
+
+
+            $.ajax({
+                url: uri,
+                data: {},
+                type: 'GET',
+                success: function (data) {
+                    $('body').append('<div id=\"dialog\" class=\"no-padding\"></div>');
+
+                    $('#dialog').dialog({
+                        modal: true,
+                        autoOpen: true,
+                        width: 500,
+                        title: '".Yii::t('app', 'DESKTOP_CREATE_WIDGET')."',
+                        resizable: false,
+                        open: function () {
+                            //var obj = $.parseJSON(data);
+                            $(this).html(data); //obj.content
+                            common.removeLoader();
+                        },
+                        close: function (event, ui) {
+                            $(this).remove();
+                        },
+                        buttons: [{
+                            text: common.message.save,
+                            'class': 'btn btn-sm btn-success',
+                            click: function () {
+                                var str = $('#dialog form').serialize();
+                                str += '&json=true';
+
+                                $.ajax({
+                                    url: uri,
+                                    data: str,
+                                    type: 'POST',
+                                    success: function () {
+                                        console.log(data);
+                                        $('#dialog').dialog('close');
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        }, {
+                            text: common.message.cancel,
+                            'class': 'btn btn-sm btn-secondary',
+                            click: function () {
+                                $(this).dialog('close');
+                            }
+                        }]
+                    });
+                    $(\"#dialog\").dialog(\"open\");
+                }
+            });
+
+
+            return false;
+        });
+
+        $('.column').sortable({
+            containment: 'parent',
+            cursor: 'move',
+            connectWith: '.column',
+            handle: '.handle',
+            //revert: true, //animation
+            placeholder: 'placeholder',
+            update: function (event, ui) {
+                var data = $(this).sortable('serialize');
+                data += '&column_new=' + $(this).attr('data-id');
+                data += '&desktop_id=' + $(this).attr('data-desktop-id');
+                $.post('/admin/desktop/sortable', data, function () {
+                    common.notify('Success', 'success');
+                });
+
+            }
+        }).disableSelection();
+    });
+");
+
+$desktop = \panix\mod\admin\models\Desktop::findOne(1);
+
+?>
+
+<div class="row desktop">
+    <?php
+   // Yii::import('app.blocks_settings.*');
+   // $manager = new WidgetSystemManager;
+    $x = 0;
+
+    if (isset($desktop->columns)) {
+        while ($x++ < $desktop->columns) {
+            if ($desktop->columns == 3) {
+                $class = 'col-lg-4 col-md-6 col-sm-4';
+            } elseif ($desktop->columns == 2) {
+                $class = 'col-lg-6 col-md-6 col-sm-4';
+            } else {
+                $class = '';
+            }
+            ?>
+            <div class="column <?= $class; ?>" data-id="<?= $x; ?>" data-desktop-id="<?= $desktop->id ?>">
+                <?php
+
+                $widgets = \panix\mod\admin\models\DesktopWidgets::find()
+                    ->where([
+                        'col' => $x,
+                        'desktop_id' => $desktop->id
+                    ])
+                    ->orderBy(['ordern'=>SORT_DESC])
+                    ->all();
+                if ($widgets) {
+                    foreach ($widgets as $wgt) {
+                        ?>
+                        <div class="card desktop-widget" id="ids_<?= $wgt->id ?>" data-test="test-<?= $x ?>">
+
+                            <div class="card-header">
+                                <h5>
+                                    <?php
+                                    echo (new $wgt->widget)->getTitle();
+                                    ?>
+                                </h5>
+                                <div class="card-option">
+                                    <?php
+
+                                        echo Html::a('<i class="icon-settings"></i>', ['/admin/app/widgets/update', 'alias' => $wgt->widget], array('class' => ' btn btn-link'));
+
+
+                                    echo Html::a('<i class="icon-move"></i>', 'javascript:void(0)', ['class' => 'handle btn btn-link']);
+
+                                        echo Html::a('<i class="icon-delete"></i>', ['delete-widget', 'id' => $wgt->id], ['data-id' => $wgt->id, 'class' => 'delete-widget btn btn-link']);
+
+                                    ?>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <?php echo $wgt->widget::widget(); ?>
+                            </div>
+                        </div>
+                    <?php } ?>
+                <?php } ?>
+            </div>
+        <?php } ?>
+    <?php } ?>
 </div>

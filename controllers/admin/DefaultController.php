@@ -3,6 +3,8 @@
 namespace panix\mod\admin\controllers\admin;
 
 
+use panix\mod\admin\models\Desktop;
+use panix\mod\admin\models\DesktopWidgets;
 use Yii;
 use yii\web\HttpException;
 use yii\web\Response;
@@ -12,7 +14,8 @@ use panix\engine\Html;
 use panix\mod\admin\models\GridColumns;
 use panix\engine\FileSystem;
 
-class DefaultController extends AdminController {
+class DefaultController extends AdminController
+{
 
     public $icon = 'icon-app';
 
@@ -64,6 +67,59 @@ class DefaultController extends AdminController {
         return ['ok'];
     }
 
+    /**
+     * @param $id
+     * @return Response
+     */
+    public function actionDeleteWidget($id)
+    {
+        if (Yii::$app->request->isPost) {
+            $model = DesktopWidgets::findModel($id);
+            //$model->desktop->accessControlDesktop();
+            if (isset($model)) {
+                $model->delete();
+            }
+            if (!Yii::$app->request->isAjax)
+                return $this->redirect('admin');
+        }
+    }
+
+    public function actionCreateWidget($id) {
+
+        $model = new DesktopWidgets;
+
+        if (isset($_POST['DesktopWidgets'])) {
+            $model->desktop_id = $id;
+            $model->attributes = $_POST['DesktopWidgets'];
+            if ($model->validate()) {
+                $model->save();
+                //Yii::app()->cache->flush();
+            }else{
+                print_r($model->getErrors());die;
+            }
+        }
+
+       // Yii::app()->getClientScript()->scriptMap = array(
+       //     'jquery.js' => false,
+       //     'jquery.min.js' => false,
+       // );
+        return $this->render('widget-create', ['model' => $model]);
+    }
+    /**
+     * Delete desktop
+     * @param $id
+     * @return Response
+     */
+    public function actionDelete($id) {
+        $model = Desktop::findModel($id);
+        $model->accessControlDesktop();
+        if (isset($model) && $model->id != 1) {
+            $model->delete();
+            unset(Yii::app()->session['desktop_id']);
+        }
+        if (!Yii::app()->request->isAjax)
+            return $this->redirect(array('/admin'));
+    }
     public function actionGetGrid()
     {
         $request = Yii::$app->request;
