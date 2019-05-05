@@ -110,7 +110,7 @@ use yii\helpers\Url;
         <?php
         echo \panix\mod\admin\blocks\chat\ChatWidget::widget(['url' => '/admin/app/default/send-chat']);
         ?>
-        <?php echo \panix\mod\admin\blocks\sysinfo\SysinfoWidget::widget([]); ?>
+        <?php echo \panix\mod\admin\blocks\sysinfo\SysInfoWidget::widget([]); ?>
 
         <?php //echo panix\mod\admin\blocks\hosting\Hosting::widget(); ?>
         <?php //echo panix\mod\admin\blocks\openweathermap\OpenWeatherMap::widget(); ?>

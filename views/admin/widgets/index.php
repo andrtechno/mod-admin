@@ -1,25 +1,5 @@
 <?php
 
-$path=Yii::getAlias('@cart/widgets');
-$test = \yii\helpers\FileHelper::findDirectories($path,[
-    'recursive'=>false
-]);
-$test2 = \yii\helpers\FileHelper::findFiles($path.'/buyOneClick',[
-    'recursive'=>true,
-   // 'except'=>['\!view!.php'],
-    'only'=>['form/*.php'],
-    'filter'=>function($path){
-    return $path;
-    }
-]);
-
-print_r($test);
-echo '<br><br><br>';
-print_r($test2);
-foreach ($test2 as $f){
-
-}
-
 use panix\engine\grid\GridView;
 
 echo GridView::widget([
@@ -37,7 +17,10 @@ echo GridView::widget([
             'attribute' => 'alias',
             'header' => Yii::t('app', 'Путь'),
             'format' => 'raw',
-            'contentOptions' => ['class' => 'text-center'],
+            'contentOptions' => ['class' => 'text-left'],
+            'value' => function ($data) {
+                return \panix\engine\Html::tag('code', $data['alias']);
+            }
         ],
         [
             'attribute' => 'category',

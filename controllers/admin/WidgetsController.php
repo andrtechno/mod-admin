@@ -46,23 +46,24 @@ class WidgetsController extends AdminController
                         $class = new $classNamespace;
                         if ($class instanceof \panix\engine\data\Widget) {
                             //  echo 'pok';
+
+
+                            $edit = false;
+                            //if (file_exists(dirname($obj) . DIRECTORY_SEPARATOR . 'form')) {
+                            $system = $manager->getClass($classNamespace);
+                            if ($system) {
+                                $edit = true;
+                            }
+                            //}
+
+
+                            $result[] = [
+                                'title' => $class->getTitle(),
+                                'alias' => $classNamespace,
+                                'category' => 'module',
+                                'edit' => ($edit) ? Html::a(Html::icon('edit'), ['update', 'alias' => $classNamespace], ['class' => 'btn btn-sm btn-secondary']) : Yii::$app->formatter->asText(null)
+                            ];
                         }
-
-                        $edit = false;
-                        //if (file_exists(dirname($obj) . DIRECTORY_SEPARATOR . 'form')) {
-                        $system = $manager->getClass($classNamespace);
-                        if ($system) {
-                            $edit = true;
-                        }
-                        //}
-
-
-                        $result[] = [
-                            'title' => $class->getTitle(),
-                            'alias' => $classNamespace,
-                            'category' => 'module',
-                            'edit' => ($edit) ? Html::a(Html::icon('edit'), ['update', 'alias' => $classNamespace], ['class' => 'btn btn-sm btn-secondary']) : ''
-                        ];
                     }
                 }
             }
