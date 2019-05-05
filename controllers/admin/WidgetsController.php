@@ -97,12 +97,9 @@ class WidgetsController extends AdminController
 
     public function actionUpdate($alias)
     {
-
         if (empty($alias)) {
             return $this->redirect(['index']);
         }
-
-
         $this->pageName = Yii::t('admin/default', 'WIDGETS_UPDATE');
         $this->breadcrumbs = [
             [
@@ -132,6 +129,7 @@ class WidgetsController extends AdminController
             if ($post) {
 
                 if ($system->load($post) && $system->validate()) {
+
                     $system->saveSettings($alias, $post);
                     Yii::$app->session->setFlash('success', Yii::t('app', 'SUCCESS_UPDATE'));
                 } else {
