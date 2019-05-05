@@ -9,10 +9,10 @@ use panix\engine\bootstrap\ActiveForm;
 <?= $form->field($model, 'auth_login')->textInput() ?>
 
 <?=
-$form->field($model, 'auth_token')->textInput()->hint('asd');
+$form->field($model, 'auth_token')->textInput();
 ?>
 <?=
-$form->field($model, 'account')->textInput()->hint('asd');
+$form->field($model, 'account')->textInput();
 ?>
 
 
