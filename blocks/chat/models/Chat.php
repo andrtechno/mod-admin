@@ -5,7 +5,7 @@ namespace panix\mod\admin\blocks\chat\models;
 use Yii;
 use panix\engine\CMS;
 use panix\engine\Html;
-
+use yii\db\ActiveRecord;
 /**
  * This is the model class for table "chat".
  *
@@ -14,7 +14,7 @@ use panix\engine\Html;
  * @property integer $userId
  * @property string $updateDate
  */
-class Chat extends \yii\db\ActiveRecord {
+class Chat extends ActiveRecord {
 
     public $userModel;
     public $userField;

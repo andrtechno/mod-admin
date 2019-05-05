@@ -41,7 +41,7 @@ class ChatWidget extends \panix\engine\data\Widget
 
         $this->model->userField = $this->userField;
 
-
+        $assets = ChatAsset::register($this->view);
 
         //Yii::$app->assetManager->publish("@admin/assets/images/chat/loadingAnimation.gif");
         //$this->loadingImage = Yii::$app->assetManager->getPublishedUrl("@admin/assets/images/chat/loadingAnimation.gif");
@@ -52,8 +52,6 @@ class ChatWidget extends \panix\engine\data\Widget
 
     public function run()
     {
-       // parent::init();
-        ChatAsset::register($this->view);
         $model = new Chat();
         $model->userModel = $this->userModel;
         $model->userField = $this->userField;
