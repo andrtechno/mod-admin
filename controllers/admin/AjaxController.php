@@ -102,7 +102,7 @@ class AjaxController extends \panix\engine\controllers\AdminController
         }
     }
 
-    public function actionCheckalias()
+    public function actionCheckSlug()
     {
         $request = Yii::$app->request;
         Yii::$app->response->format = Response::FORMAT_JSON;
