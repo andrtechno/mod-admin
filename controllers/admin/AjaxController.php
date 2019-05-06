@@ -8,35 +8,29 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use panix\engine\CMS;
+use yii\web\Response;
 
 
+class AjaxController extends \panix\engine\controllers\AdminController
+{
 
-class AjaxController extends \panix\engine\controllers\AdminController {
-
-    public function actionSetHashstate() {
+    public function actionSetHashstate()
+    {
         Yii::$app->user->setState('redirectTabsHash', $_POST['hash']);
     }
 
 
-
-
-    public function beforeAction($action) {
-        if($action->id === 'viber'){
+    public function beforeAction($action)
+    {
+        if ($action->id === 'viber') {
             Yii::$app->controller->enableCsrfValidation = false;
         }
         return parent::beforeAction($action);
     }
 
 
-
-
-
-
-
-
-
-
-    public function actionGeo($ip) {
+    public function actionGeo($ip)
+    {
         // die($ip);
         $city = CMS::getCityNameByIp($ip);
         $this->render('_geo', array(
@@ -45,11 +39,12 @@ class AjaxController extends \panix\engine\controllers\AdminController {
         ));
     }
 
-    public function actionCounters() {
+    public function actionCounters()
+    {
         Yii::import('mod.cart.models.Order');
         echo Json::encode(array(
-                // 'comments' => (int) Comment::model()->waiting()->count(),
-                //'orders' => Yii::app()->getModule('cart')->countOrder,
+            // 'comments' => (int) Comment::model()->waiting()->count(),
+            //'orders' => Yii::app()->getModule('cart')->countOrder,
         ));
     }
 
@@ -57,7 +52,8 @@ class AjaxController extends \panix\engine\controllers\AdminController {
      * Экшен для CEditableColumn
      * @throws HttpException
      */
-    public function actionUpdateGridRow() {
+    public function actionUpdateGridRow()
+    {
         if (Yii::app()->request->isAjaxRequest) {
             $response = array();
             $modelClass = $_POST['modelClass'];
@@ -80,7 +76,9 @@ class AjaxController extends \panix\engine\controllers\AdminController {
         }
     }
 
-    public function actionDeleteFile() {
+    public function actionDeleteFile()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
         $dir = $_POST['aliasDir'];
         $filename = $_POST['filename'];
         $model = $_POST['modelClass'];
@@ -92,23 +90,22 @@ class AjaxController extends \panix\engine\controllers\AdminController {
             $m = $model::model()->findByPk($record_id);
             $m->$attr = '';
             $m->save(false);
-            echo Json::encode([
+            return [
                 'response' => 'success',
                 'message' => Yii::t('app', 'FILE_SUCCESS_DELETE')
-                    ]
-            );
+            ];
         } else {
-            echo Json::encode([
+            return [
                 'response' => 'error',
                 'message' => Yii::t('app', 'ERR_FILE_NOT_FOUND')
-                    ]
-            );
+            ];
         }
-        Yii::$app->end();
     }
 
-    public function actionCheckalias() {
+    public function actionCheckalias()
+    {
         $request = Yii::$app->request;
+        Yii::$app->response->format = Response::FORMAT_JSON;
         if ($request->isAjax) {
             //  $model = $_POST['model'];
 
@@ -120,21 +117,20 @@ class AjaxController extends \panix\engine\controllers\AdminController {
 
             if (!empty($pk)) {
                 $check = $model::find()
-                        ->where([$attribute_slug => $url])
-                        ->andWhere(['!=', 'id', $pk])
-                        ->one();
+                    ->where([$attribute_slug => $url])
+                    ->andWhere(['!=', 'id', $pk])
+                    ->one();
             } else {
                 $check = $model::find()
-                        ->where([$attribute_slug => $url])
-                        ->one();
+                    ->where([$attribute_slug => $url])
+                    ->one();
             }
 
             if (isset($check))
-                echo Json::encode(['result' => true, 'message' => $message]);
+                return ['result' => true, 'message' => $message];
             else
-                echo Json::encode(['result' => false]);
-            Yii::$app->end();
-        }else {
+                return ['result' => false];
+        } else {
             throw new \yii\web\ForbiddenHttpException('denied');
         }
     }
@@ -149,7 +145,8 @@ class AjaxController extends \panix\engine\controllers\AdminController {
       }
      */
 
-    public function actionAutocomplete() {
+    public function actionAutocomplete()
+    {
         $model = $_GET['modelClass'];
         $string = $_GET['string'];
         $field = $_GET['field'];
@@ -169,7 +166,8 @@ class AjaxController extends \panix\engine\controllers\AdminController {
         Yii::$app->end();
     }
 
-    public function actionSendMailForm() {
+    public function actionSendMailForm()
+    {
         Yii::import('mod.admin.models.MailForm');
         $model = new MailForm;
         $model->toemail = $_GET['mail'];
