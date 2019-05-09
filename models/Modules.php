@@ -69,15 +69,18 @@ class Modules extends \panix\engine\db\ActiveRecord
         if (self::$cache)
             return self::$cache;
 
-        $tableSchema = Yii::$app->db->schema->getTableSchema(static::tableName());
-        if ($tableSchema !== null) {
-            // Table does not exist
+        try {
+            $tableSchema = Yii::$app->db->schema->getTableSchema(static::tableName());
+            if ($tableSchema !== null) {
+                // Table does not exist
 
-        self::$cache = static::find()
-            ->select(['name', 'access', 'className'])
-            ->all();
+                self::$cache = static::find()
+                    ->select(['name', 'access', 'className'])
+                    ->all();
+            }
+        } catch (\yii\db\Exception $e) {
+
         }
-
         return self::$cache;
     }
 
