@@ -45,51 +45,62 @@ progressBar("#pb2 .progress-bar");
         </div>
     </div>
     <div class="card-body p-3">
-        <h6>
-            <?= Yii::t('wgt_Hosting/default', 'ACCOUNT_TITLE', [
-                'name' => $this->context->config->account
-            ]); ?>
-        </h6>
-        <?php if ($result['status'] == 'success') {
+        <?php if($result) { ?>
+            <h6>
+                <?= Yii::t('wgt_Hosting/default', 'ACCOUNT_TITLE', [
+                    'name' => $this->context->config->account
+                ]); ?>
+            </h6>
+            <?php
 
-            $inode = $this->context->ssdPercentInode();
-            $sdd = $this->context->ssdPercentSize();
-            ?>
 
-            <div class="progress" id="pb1">
-                <div class="progress-bar" role="progressbar" aria-valuenow="<?= round($inode, 2); ?>"
-                     aria-valuemin="0"
-                     aria-valuemax="100">
-                </div>
-                <span class="progress-value">
+            if ($result['status'] == 'success') {
+
+                $inode = $this->context->ssdPercentInode();
+                $sdd = $this->context->ssdPercentSize();
+                ?>
+
+                <div class="progress" id="pb1">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="<?= round($inode, 2); ?>"
+                         aria-valuemin="0"
+                         aria-valuemax="100">
+                    </div>
+                    <span class="progress-value">
                     <?= Yii::t('wgt_Hosting/default', 'PROGRESS_FILES', [
-                        'used' => number_format($result['data']['used']['inode'],0,' ','.'),
-                        'limit' => number_format($result['data']['limit']['inode'],0,' ','.'),
+                        'used' => number_format($result['data']['used']['inode'], 0, ' ', '.'),
+                        'limit' => number_format($result['data']['limit']['inode'], 0, ' ', '.'),
                         'percent' => round($inode, 2)
                     ]); ?>
                 </span>
-            </div>
-            <br>
-
-            <div class="progress" id="pb2">
-                <div class="progress-bar" role="progressbar"
-                     aria-valuenow="<?= round($sdd, 2); ?>"
-                     aria-valuemin="0" aria-valuemax="100">
                 </div>
-                <span class="progress-value">
+                <br>
+
+                <div class="progress" id="pb2">
+                    <div class="progress-bar" role="progressbar"
+                         aria-valuenow="<?= round($sdd, 2); ?>"
+                         aria-valuemin="0" aria-valuemax="100">
+                    </div>
+                    <span class="progress-value">
                     <?= Yii::t('wgt_Hosting/default', 'PROGRESS_SDD', [
                         'percent' => round($sdd, 2)
                     ]); ?>
                 </span>
-            </div>
+                </div>
 
-            <?php
-        } else {
+                <?php
+            } else {
+                echo \panix\engine\bootstrap\Alert::widget([
+                    'body' => $result['message'],
+                    'options' => ['class' => 'alert-info']
+                ]);
+            }
+        }else{
             echo \panix\engine\bootstrap\Alert::widget([
-                'body' => $result['message'],
+                'body' => 'No config',
                 'options' => ['class' => 'alert-info']
             ]);
         }
+
         ?>
     </div>
 </div>

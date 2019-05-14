@@ -20,6 +20,11 @@ class Hosting extends Widget
 
     public function run()
     {
+        if($this->config){
+            $this->result = $this->connect('info', 'hosting_quota');
+        }else{
+            $this->result = false;
+        }
         $this->result = $this->connect('info', 'hosting_quota');
         return $this->render($this->skin, ['result' => $this->result]);
     }
