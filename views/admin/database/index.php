@@ -117,6 +117,9 @@ if (!$db->checkLimit()) {
             <div class="card-header">
                 <h5><?= Yii::t('admin/default', 'DB_OPTIMIZE_REPAIR') ?></h5>
             </div>
+            <?php
+            echo Html::beginForm('', 'POST', ['class' => 'form-horizontal']);
+            ?>
             <div class="card-body">
                 <?php
                 $db = Yii::$app->db;
@@ -130,25 +133,24 @@ if (!$db->checkLimit()) {
                     // $tbl_name = str_replace('`', '', $tbl->rawName);
                     $tables[$tbl] = $tbl;
                 }
-                echo Html::beginForm('', 'POST', ['class' => 'form-horizontal']);
+
                 ?>
-                <div class="form-group" style="display: none;">
+                <div class="form-group row" style="">
                     <div class="col-sm-12 text-center">
-                        <?= Html::dropDownList('datatable[]', null, $tables, ['multiple' => true]) ?>
+                        <?= Html::dropDownList('datatable[]', null, $tables, ['multiple' => true, 'class' => 'custom-select']) ?>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                     <div class="col-sm-12 text-center">
                         <?= Html::dropDownList('type', $type, [
                             'optimize' => Yii::t('admin/default', 'OPTIMIZE_DB'),
                             'repair' => Yii::t('admin/default', 'REPAIR_DB')
-                        ],['class'=>'custom-select']); ?>
-                        <?= Html::submitButton('OK', ['class' => 'btn btn-success']); ?>
+                        ], ['class' => 'custom-select']); ?>
+
                     </div>
                 </div>
 
-                <?=
-                Html::endForm();
+                <?php
 
 
                 if ($type == 'optimize') {
@@ -260,7 +262,14 @@ if (!$db->checkLimit()) {
 
 
             </div>
+            <div class="card-footer text-center">
+                <?= Html::submitButton('OK', ['class' => 'btn btn-success']); ?>
+            </div>
+            <?php
+            echo Html::endForm();
+            ?>
         </div>
+
     </div>
 
 

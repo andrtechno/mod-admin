@@ -3,14 +3,14 @@
 namespace panix\mod\admin\controllers\admin;
 
 use Yii;
+use yii\helpers\Html;
+use yii\data\ArrayDataProvider;
 use panix\engine\controllers\AdminController;
 use panix\mod\admin\models\SettingsDatabaseForm;
 use panix\engine\CMS;
-use yii\helpers\Html;
 
 class DatabaseController extends AdminController
 {
-
 
     public $icon = 'database';
 
@@ -21,13 +21,7 @@ class DatabaseController extends AdminController
         $this->enableCsrfValidation = false;
         $model = new SettingsDatabaseForm();
         $this->pageName = Yii::t('admin/default', 'DATABASE');
-        $this->breadcrumbs = [
-            [
-                'label' => Yii::t('admin/default', 'DATABASE'),
-                'url' => ['dsa'],
-            ],
-            $this->pageName
-        ];
+        $this->breadcrumbs[] = $this->pageName;
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
@@ -51,7 +45,6 @@ class DatabaseController extends AdminController
                     'url' => Html::a('<i class="icon-delete"></i>', ['/admin/app/database/delete', 'file' => $file], ['class' => 'btn btn-sm btn-danger'])
                 ];
             }
-            //   $this->_filesizes += filesize(Yii::getPathOfAlias($database->backupPath).DS.$file);
         }
         closedir($fdir);
 
@@ -65,7 +58,6 @@ class DatabaseController extends AdminController
                     'default' => SORT_DESC,
                     'label' => 'Filename',
                 ],
-                // or any other attribute
             ],
         ]);
 
@@ -107,7 +99,7 @@ class DatabaseController extends AdminController
                     'free' => CMS::fileSize($free)
                 );
             }
-            $providerOptimize = new \yii\data\ArrayDataProvider([
+            $providerOptimize = new ArrayDataProvider([
                 'allModels' => $dataOptimize,
                 'pagination' => false,
             ]);
@@ -127,14 +119,14 @@ class DatabaseController extends AdminController
                     'total_size' => CMS::fileSize($total)
                 );
             }
-            $providerRepair = new \yii\data\ArrayDataProvider([
+            $providerRepair = new ArrayDataProvider([
                 'allModels' => $dataRepair,
                 'pagination' => false,
             ]);
         }
 
 
-        $data_db = new \yii\data\ArrayDataProvider([
+        $data_db = new ArrayDataProvider([
             'allModels' => $data,
             'pagination' => [
                 'pageSize' => 10,
