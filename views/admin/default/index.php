@@ -188,7 +188,7 @@ $this->registerJs("
                 var data = $(this).sortable('serialize');
                 data += '&column_new=' + $(this).attr('data-id');
                 data += '&desktop_id=' + $(this).attr('data-desktop-id');
-                $.post('/admin/desktop/sortable', data, function () {
+                $.post('/admin/app/default/sortable', data, function () {
                     common.notify('Success', 'success');
                 });
 

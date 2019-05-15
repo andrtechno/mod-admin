@@ -19,6 +19,16 @@ class DefaultController extends AdminController
 
     public $icon = 'icon-app';
 
+    public function actions()
+    {
+        return [
+            'sortable' => [
+                'class' => 'panix\engine\grid\sortable\Action',
+                'modelClass' => DesktopWidgets::class,
+                'successMessage' => Yii::t('shop/admin', 'SORT_PRODUCT_SUCCESS_MESSAGE')
+            ],
+        ];
+    }
 
     public function actionIndex()
     {
