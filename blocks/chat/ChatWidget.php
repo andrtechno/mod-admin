@@ -11,14 +11,7 @@ use panix\mod\admin\blocks\chat\models\Chat;
 class ChatWidget extends \panix\engine\data\Widget
 {
 
-    public $sourcePath = '@admin/assets';
-    public $css = [];
-    public $js = [ // Configured conditionally (source/minified) during init()
-        'js/chat.js',
-    ];
-    public $depends = [
-        'yii\web\JqueryAsset',
-    ];
+
     public $models;
     public $url;
     public $userModel;
@@ -45,7 +38,10 @@ class ChatWidget extends \panix\engine\data\Widget
 
         //Yii::$app->assetManager->publish("@admin/assets/images/chat/loadingAnimation.gif");
         //$this->loadingImage = Yii::$app->assetManager->getPublishedUrl("@admin/assets/images/chat/loadingAnimation.gif");
-        $this->loadingImage = Yii::$app->controller->assetUrl.'/images/s-loading.gif';
+        $this->loadingImage = Yii::$app->controller->assetUrl . '/images/s-loading.gif';
+
+        if (!$this->url)
+            $this->url = '/admin/app/default/send-chat';
 
         parent::init();
     }
@@ -88,7 +84,7 @@ class ChatWidget extends \panix\engine\data\Widget
             if ($model->save()) {
                 \Yii::$app->response->format = Response::FORMAT_JSON;
                 \Yii::$app->response->data = $model->data();
-               // return $model->data();
+                // return $model->data();
             } else {
                 print_r($model->getErrors());
                 exit(0);

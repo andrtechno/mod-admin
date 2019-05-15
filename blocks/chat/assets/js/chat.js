@@ -1,3 +1,4 @@
+var chatBox = $("#chat-box");
 function reloadchat(message, clearChat) {
     var selector = $(".btn-send-comment");
     var url = selector.data("url");
@@ -13,19 +14,23 @@ function reloadchat(message, clearChat) {
                 $('.emoji-wysiwyg-editor .emoji-inner').remove(); //emojipicker
                 $('.emoji-wysiwyg-editor').html(''); //emojipicker
             }
-            $("#chat-box").html(html);
-            $("#chat-box").animate({
-                scrollTop: $('#chat-box').prop("scrollHeight")
+            console.log('reloadchat');
+            chatBox.html(html);
+            chatBox.animate({
+                scrollTop: chatBox.prop("scrollHeight")
             }, 0);
         }
     });
 }
-$("#chat-box").animate({
-    scrollTop: $('#chat-box').prop("scrollHeight")
+
+chatBox.animate({
+    scrollTop: chatBox.prop("scrollHeight")
 }, 0);
+
 setInterval(function () {
-   // reloadchat('', false);
+    // reloadchat('', false);
 }, 5000);
+
 $(".btn-send-comment").on("click", function () {
     var message = $("#chat_message").val();
     reloadchat(message, true);
