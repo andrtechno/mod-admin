@@ -30,15 +30,12 @@ class DatabaseController extends AdminController
         ];
 
         if ($model->load(Yii::$app->request->post())) {
-            if($model->validate()){
+            if ($model->validate()) {
                 $model->save();
                 if ($model->backup) {
                     $db->export();
                 }
-            }else{
-                print_r($model->getErrors());die;
             }
-
         }
 
 
@@ -158,20 +155,17 @@ class DatabaseController extends AdminController
 
     public function actionDelete($file)
     {
-        die;
         if (isset($file)) {
             $filePath = Yii::getAlias(Yii::$app->db->backupPath) . DIRECTORY_SEPARATOR . $file;
             if (file_exists($filePath)) {
                 @unlink($filePath);
-                //Yii::$app->session->addFlash("success", Yii::t('app', 'FILE_SUCCESS_DELETE'));
-                //$this->setFlashMessage(Yii::t('app', 'FILE_SUCCESS_DELETE'));
-                if (!Yii::$app->request->isPjax || !Yii::$app->request->isAjax) {
-                    //$this->redirect(['admin/database']);
-                }
+                Yii::$app->session->setFlash("success", Yii::t('app', 'FILE_SUCCESS_DELETE'));
             } else {
-                //Yii::$app->session->addFlash("danger", Yii::t('app', 'ERR_FILE_NOT_FOUND'));
-                // $this->setFlashMessage(Yii::t('app', 'ERR_FILE_NOT_FOUND'));
+                Yii::$app->session->setFlash("danger", Yii::t('app', 'ERR_FILE_NOT_FOUND'));
             }
+        }
+        if (!Yii::$app->request->isPjax || !Yii::$app->request->isAjax) {
+            return $this->redirect(['/admin/app/database']);
         }
     }
 
