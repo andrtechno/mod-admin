@@ -1,10 +1,13 @@
 <?php
+
 namespace panix\mod\admin\models;
 
+use Yii;
 use panix\engine\SettingsModel;
-class SettingsDatabaseForm extends SettingsModel {
 
-    const NAME = 'db';
+class SettingsDatabaseForm extends SettingsModel
+{
+
     protected $module = 'admin';
     public static $category = 'db';
 
@@ -12,7 +15,8 @@ class SettingsDatabaseForm extends SettingsModel {
     public $backup_limit = 1;
 
 
-    public function rules() {
+    public function rules()
+    {
         return [
             [["backup_limit"], "required"],
             ["backup", "boolean"],
@@ -21,11 +25,18 @@ class SettingsDatabaseForm extends SettingsModel {
         ];
     }
 
-    
+    public function beforeValidate()
+    {
+        if (!Yii::$app->db->checkLimit()) {
+            return true;
+        }
+        return parent::beforeValidate();
+    }
 
 
-    public function save() {
-       // unset($this->backup);
+    public function save()
+    {
+        // unset($this->backup);
         parent::save();
     }
 

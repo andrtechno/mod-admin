@@ -5,138 +5,123 @@ use yii\widgets\Pjax;
 use panix\engine\Html;
 use panix\engine\CMS;
 use panix\engine\grid\GridView;
-?>
 
 
-
-
-
-
-
-
-<?php
 $type = Yii::$app->request->post('type');
-?>
 
-
-<?php
 if (!$db->checkLimit()) {
 
     echo panix\engine\bootstrap\Alert::widget([
-        'closeButton'=>false,
+        //'closeButton' => false,
         'options' => [
             'class' => 'alert-danger',
         ],
-        'body' => Yii::t('admin/default', 'BACKUP_LIMIT', array(
-            'maxsize' => CMS::files_size($db->limitBackup),
-            'current_size' => CMS::files_size($db->checkFilesSize())
-        ))
+        'body' => Yii::t('admin/default', 'BACKUP_LIMIT', [
+            'maxsize' => CMS::fileSize($db->limitBackup),
+            'current_size' => CMS::fileSize($db->checkFilesSize())
+        ])
     ]);
 }
+
 ?>
-
-
 
 
 <div class="row">
     <div class="col-md-6">
-<?php
+        <?php
 
-$form = ActiveForm::begin();
-?>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title"><?= $this->context->pageName ?></h3>
-    </div>
-    <div class="panel-body">
-        <?= $form->field($model, 'backup')->checkbox() ?>
-        <?= $form->field($model, 'backup_limit') ?>
-
-
-    </div>
-    <div class="panel-footer text-center">
-        <?= Html::submitButton(Yii::t('app', 'SAVE'), ['class' => 'btn btn-success']) ?>
-    </div>
-</div>
-<?php ActiveForm::end(); ?>
+        $form = ActiveForm::begin();
+        ?>
+        <div class="card">
+            <div class="card-header">
+                <h5><?= $this->context->pageName ?></h5>
+            </div>
+            <div class="card-body">
+                <?= $form->field($model, 'backup')->checkbox() ?>
+                <?= $form->field($model, 'backup_limit') ?>
 
 
-<?php
-yii\widgets\Pjax::begin([
-    'id' => 'pjax-container-backup',
-    'enablePushState' => false,
-    'enableReplaceState' => false,
-]);
-?>
-<?=
-GridView::widget([
-    'tableOptions' => ['class' => 'table table-striped'],
-    'dataProvider' => $data_db,
-    'filterModel' => $searchModel,
-    'layoutOptions' => ['title' => $this->context->pageName],
-    'columns' => [
-        [
-            'attribute' => 'filename',
-            'header' => Yii::t('app', 'FILENAME'),
-            'format' => 'raw',
-            'contentOptions' => ['class' => 'text-left'],
-        ],
-        [
-            'attribute' => 'filesize',
-            'header' => Yii::t('app', 'SIZE'),
-            'format' => 'raw',
-            'contentOptions' => ['class' => 'text-center'],
-        ],
-        [
-            'attribute' => 'url',
-            'header' => Yii::t('app', 'OPTIONS'),
-            'format' => 'raw',
-            'contentOptions' => ['class' => 'text-center'],
-        ],
-        [
-            'class' => 'panix\engine\grid\columns\ActionColumn',
-            'template' => '{active}',
-            'buttons' => [
-                'delete' => function ($url, $model, $key) {
+            </div>
+            <div class="card-footer text-center">
+                <?= Html::submitButton(Yii::t('app', 'SAVE'), ['class' => 'btn btn-success']) ?>
+            </div>
+        </div>
+        <?php ActiveForm::end(); ?>
 
-                    return Html::a('<i class="icon-delete"></i>', $url, [
+
+        <?php
+        yii\widgets\Pjax::begin([
+            'id' => 'pjax-container-backup',
+            'enablePushState' => false,
+            'enableReplaceState' => false,
+        ]);
+        ?>
+        <?=
+        GridView::widget([
+            'tableOptions' => ['class' => 'table table-striped'],
+            'dataProvider' => $data_db,
+            // 'filterModel' => $searchModel,
+            'layoutOptions' => ['title' => $this->context->pageName],
+            'columns' => [
+                [
+                    'attribute' => 'filename',
+                    'header' => Yii::t('app', 'FILENAME'),
+                    'format' => 'raw',
+                    'contentOptions' => ['class' => 'text-left'],
+                ],
+                [
+                    'attribute' => 'filesize',
+                    'header' => Yii::t('app', 'SIZE'),
+                    'format' => 'raw',
+                    'contentOptions' => ['class' => 'text-center'],
+                ],
+                [
+                    'attribute' => 'url',
+                    'header' => Yii::t('app', 'OPTIONS'),
+                    'format' => 'raw',
+                    'contentOptions' => ['class' => 'text-center'],
+                ],
+                [
+                    'class' => 'panix\engine\grid\columns\ActionColumn',
+                    'template' => '{active}',
+                    'header' => Yii::t('app', 'OPTIONS'),
+                    'buttons' => [
+                        'delete' => function ($url, $model, $key) {
+
+                            return Html::a('<i class="icon-delete"></i>', $url, [
                                 'title' => Yii::t('app', 'DELETE'),
                                 'class' => 'btn btn-sm btn-danger']);
-                },
+                        },
                         "active" => function ($url, $model) {
 
-                    $url = Yii::$app->urlManager->createUrl(['/admin/app/database/delete', 'file' => $model['filename']]);
+                            $url = Yii::$app->urlManager->createUrl(['/admin/app/database/delete', 'file' => $model['filename']]);
 
-                    return Html::a('dsadas', $url, [
+                            return Html::a('dsadas', $url, [
                                 'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
                                 'title' => Yii::t('app', 'Toogle Active'),
                                 'data-pjax' => '#pjax-container-backup',
                                 'data-method' => 'post'
-                    ]);
-                },
+                            ]);
+                        },
                     ]
                 ]
             ]
         ]);
         ?>
-                <?php Pjax::end(); ?>
+        <?php Pjax::end(); ?>
     </div>
 
 
-
     <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?= Yii::t('admin/default', 'DB_OPTIMIZE_REPAIR') ?></h3>
+        <div class="card">
+            <div class="card-header">
+                <h5><?= Yii::t('admin/default', 'DB_OPTIMIZE_REPAIR') ?></h5>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <?php
                 $db = Yii::$app->db;
                 $dbSchema = $db->schema;
                 $tables = array();
-
-
-
 
 
                 //die;
@@ -148,17 +133,17 @@ GridView::widget([
                 echo Html::beginForm('', 'POST', ['class' => 'form-horizontal']);
                 ?>
                 <div class="form-group" style="display: none;">
-                    <div class="col-sm-12  text-center">
+                    <div class="col-sm-12 text-center">
                         <?= Html::dropDownList('datatable[]', null, $tables, ['multiple' => true]) ?>
-
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-12 text-center">
-
-                        <?= Html::dropDownList('type', $type, array('optimize' => Yii::t('admin/default', 'OPTIMIZE_DB'), 'repair' => Yii::t('admin/default', 'REPAIR_DB'))) ?>
-                        <?= Html::submitButton('OK', array('class' => 'btn btn-success')); ?>
-
+                        <?= Html::dropDownList('type', $type, [
+                            'optimize' => Yii::t('admin/default', 'OPTIMIZE_DB'),
+                            'repair' => Yii::t('admin/default', 'REPAIR_DB')
+                        ],['class'=>'custom-select']); ?>
+                        <?= Html::submitButton('OK', ['class' => 'btn btn-success']); ?>
                     </div>
                 </div>
 
@@ -166,16 +151,21 @@ GridView::widget([
                 Html::endForm();
 
 
-
-
-
-
                 if ($type == 'optimize') {
                     ?>
                     <ul class="list-group">
-                        <li class="list-group-item"><?= Yii::t('admin/default', 'OPTIMIZE_DB') ?>: <span class="label label-default"><?= CMS::tableName() ?></span></li>
-                        <li class="list-group-item"><?= Yii::t('admin/default', 'TOTAL_SIZE_DB') ?>: <span class="label label-default"><?= CMS::files_size($totaltotal) ?></span></li>
-                        <li class="list-group-item"><?= Yii::t('admin/default', 'TOTAL_OVERHEAD') ?>: <span class="label label-default"><?= CMS::files_size($totalfree) ?></span></li>
+                        <li class="list-group-item">
+                            <?= Yii::t('admin/default', 'OPTIMIZE_DB') ?>: <span
+                                    class="badge badge-secondary"><?= CMS::tableName() ?></span>
+                        </li>
+                        <li class="list-group-item">
+                            <?= Yii::t('admin/default', 'TOTAL_SIZE_DB') ?>: <span
+                                    class="badge badge-secondary"><?= CMS::fileSize($totaltotal) ?></span>
+                        </li>
+                        <li class="list-group-item">
+                            <?= Yii::t('admin/default', 'TOTAL_OVERHEAD') ?>: <span
+                                    class="badge badge-secondary"><?= CMS::fileSize($totalfree) ?></span>
+                        </li>
                     </ul>
 
                     <?php
@@ -183,7 +173,7 @@ GridView::widget([
                         echo GridView::widget([
                             'tableOptions' => ['class' => 'table table-striped'],
                             'dataProvider' => $providerOptimize,
-                            'layout' => $this->render('@admin/views/layouts/_grid_layout', ['title' => Yii::t('admin/default', 'OPTIMIZE_DB')]), //'{items}{pager}{summary}'
+                            'layoutOptions' => ['title' => Yii::t('admin/default', 'OPTIMIZE_DB')],
                             'columns' => [
                                 [
                                     'class' => 'yii\grid\SerialColumn',
@@ -222,15 +212,21 @@ GridView::widget([
                     ?>
 
                     <ul class="list-group">
-                        <li class="list-group-item"><?= Yii::t('admin/default', 'REPAIR_DB') ?>: <span class="label label-default"><?= CMS::tableName() ?></span></li>
-                        <li class="list-group-item"><?= Yii::t('admin/default', 'TOTAL_SIZE_DB') ?>: <span class="label label-default"><?= CMS::files_size($totaltotal) ?></span></li>
+                        <li class="list-group-item">
+                            <?= Yii::t('admin/default', 'REPAIR_DB') ?>: <span
+                                    class="badge badge-secondary"><?= CMS::tableName() ?></span>
+                        </li>
+                        <li class="list-group-item">
+                            <?= Yii::t('admin/default', 'TOTAL_SIZE_DB') ?>: <span
+                                    class="badge badge-secondary"><?= CMS::fileSize($totaltotal) ?></span>
+                        </li>
                     </ul>
                     <?php
                     if ($providerRepair) {
                         echo GridView::widget([
                             'tableOptions' => ['class' => 'table table-striped'],
                             'dataProvider' => $providerRepair,
-                            'layout' => $this->render('@admin/views/layouts/_grid_layout', ['title' => Yii::t('admin/default', 'REPAIR_DB')]), //'{items}{pager}{summary}'
+                            'layoutOptions' => ['title' => Yii::t('admin/default', 'REPAIR_DB')],
                             'columns' => [
                                 [
                                     'class' => 'yii\grid\SerialColumn',
@@ -263,24 +259,9 @@ GridView::widget([
                 ?>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </div>
         </div>
     </div>
 
-   
+
 </div>
