@@ -101,25 +101,6 @@ use yii\helpers\Url;
     ?>
 </div>
 
-
-<div class="row">
-    <div class="col-sm-6">
-        <?php echo \panix\mod\admin\blocks\hosting\Hosting::widget(); ?>
-        <?php echo \panix\mod\shop\blocks\popular\PopularBlock::widget([]); ?>
-    </div>
-    <div class="col-sm-6">
-        <?php
-        echo \panix\mod\admin\blocks\chat\ChatWidget::widget(['url' => '/admin/app/default/send-chat']);
-        ?>
-        <?php echo \panix\mod\admin\blocks\sysinfo\SysInfoWidget::widget([]); ?>
-
-        <?php //echo panix\mod\admin\blocks\hosting\Hosting::widget(); ?>
-        <?php //echo panix\mod\admin\blocks\openweathermap\OpenWeatherMap::widget(); ?>
-
-    </div>
-</div>
-
-
 <?php
 
 
@@ -131,7 +112,7 @@ $this->registerJs("
 
             common.ajax(uri, {}, function (data) {
                 $('#ids_' + ids).remove();
-                common.notify('".Yii::t('app', 'SUCCESS_RECORD_DELETE')."', 'success');
+                common.notify('" . Yii::t('app', 'SUCCESS_RECORD_DELETE') . "', 'success');
                 common.removeLoader();
             });
             return false;
@@ -152,7 +133,7 @@ $this->registerJs("
                         modal: true,
                         autoOpen: true,
                         width: 500,
-                        title: '".Yii::t('app', 'DESKTOP_CREATE_WIDGET')."',
+                        title: '" . Yii::t('app', 'DESKTOP_CREATE_WIDGET') . "',
                         resizable: false,
                         open: function () {
                             //var obj = $.parseJSON(data);
@@ -222,8 +203,8 @@ $desktop = \panix\mod\admin\models\Desktop::findOne(1);
 
 <div class="row desktop">
     <?php
-   // Yii::import('app.blocks_settings.*');
-   // $manager = new WidgetSystemManager;
+    // Yii::import('app.blocks_settings.*');
+    // $manager = new WidgetSystemManager;
     $x = 0;
 
     if (isset($desktop->columns)) {
@@ -244,7 +225,7 @@ $desktop = \panix\mod\admin\models\Desktop::findOne(1);
                         'col' => $x,
                         'desktop_id' => $desktop->id
                     ])
-                    ->orderBy(['ordern'=>SORT_DESC])
+                    ->orderBy(['ordern' => SORT_DESC])
                     ->all();
                 if ($widgets) {
                     foreach ($widgets as $wgt) {
@@ -252,21 +233,12 @@ $desktop = \panix\mod\admin\models\Desktop::findOne(1);
                         <div class="card desktop-widget" id="ids_<?= $wgt->id ?>" data-test="test-<?= $x ?>">
 
                             <div class="card-header">
-                                <h5>
-                                    <?php
-                                    echo (new $wgt->widget)->getTitle();
-                                    ?>
-                                </h5>
+                                <h5><?= (new $wgt->widget)->getTitle(); ?></h5>
                                 <div class="card-option">
                                     <?php
-
-                                        echo Html::a('<i class="icon-settings"></i>', ['/admin/app/widgets/update', 'alias' => $wgt->widget], array('class' => ' btn btn-link'));
-
-
+                                    echo Html::a('<i class="icon-settings"></i>', ['/admin/app/widgets/update', 'alias' => $wgt->widget], array('class' => ' btn btn-link'));
                                     echo Html::a('<i class="icon-move"></i>', 'javascript:void(0)', ['class' => 'handle btn btn-link']);
-
-                                        echo Html::a('<i class="icon-delete"></i>', ['delete-widget', 'id' => $wgt->id], ['data-id' => $wgt->id, 'class' => 'delete-widget btn btn-link']);
-
+                                    echo Html::a('<i class="icon-delete"></i>', ['delete-widget', 'id' => $wgt->id], ['data-id' => $wgt->id, 'class' => 'delete-widget btn btn-link']);
                                     ?>
                                 </div>
                             </div>

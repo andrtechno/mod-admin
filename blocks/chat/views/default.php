@@ -19,35 +19,19 @@ $this->registerJs("
 
 ?>
 
-<div class="chat-panel card">
-    <div class="card-header">
-        <h5>
-            <i class="icon-comments"></i> Чат
-            <div class="btn-group">
-                <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">
-                    <i class="icon-arrow-down"></i>
-                </button>
-                <ul class="dropdown-menu slidedown">
-                    <li class="dropdown-item">
-                        <a href="#">
-                            <i class="icon-refresh"></i> Refresh
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </h5>
-    </div>
-    <div class="card-body">
+<div class="chat-panel">
+
         <div class="chat" id="chat-box">
             <?= $data; ?>
         </div>
-    </div>  
-    <div class="card-footer">
-        <div class="emoji-picker-container">
-            <textarea name="Chat[message]" id="chat_message" data-emojiable="true" placeholder="Сообщение..." class="form-control" rows="1" style="width:100%;resize:none;"></textarea>
-            <div class="text-right" style="margin-top: 10px;">
-                <button class="btn btn-sm btn-success btn-send-comment" data-url="<?= $url; ?>" data-model="<?= $userModel; ?>" data-userfield="<?= $userField; ?>" data-loading="<?= $loading; ?>"><i class="icon-send"></i> <?= Yii::t('app', 'SEND') ?></button>
-            </div>
+
+
+</div>
+<div class="card-footer">
+    <div class="emoji-picker-container">
+        <textarea name="Chat[message]" id="chat_message" data-emojiable="true" placeholder="Сообщение..." class="form-control" rows="1" style="width:100%;resize:none;"></textarea>
+        <div class="text-right" style="margin-top: 10px;">
+            <button class="btn btn-sm btn-success btn-send-comment" data-url="<?= $url; ?>" data-model="<?= $userModel; ?>" data-userfield="<?= $userField; ?>" data-loading="<?= $loading; ?>"><i class="icon-send"></i> <?= Yii::t('app', 'SEND') ?></button>
         </div>
     </div>
 </div>
