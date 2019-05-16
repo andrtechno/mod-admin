@@ -69,11 +69,11 @@ class LanguagesController extends AdminController
         if ($id === true) {
             $model = new Languages;
         } else {
-            $model = $this->findModel($id);
+            $model = Languages::findModel($id);
         }
 
 
-        $this->pageName = Yii::t('admin/default', 'MODULE_NAME');
+        $this->pageName = Yii::t('admin/default', 'LANGUAGES');
         $this->buttons = [
             [
                 'icon' => 'icon-add',
@@ -107,20 +107,11 @@ class LanguagesController extends AdminController
             }
         }
 
-        echo $this->render('update', [
+        return $this->render('update', [
             'model' => $model,
         ]);
     }
 
-    protected function findModel($id)
-    {
-        $model = new Languages;
-        if (($model = $model::findOne($id)) !== null) {
-            return $model;
-        } else {
-            $this->error404('The requested page does not exist.');
-        }
-    }
 
     public function actionTranslate()
     {

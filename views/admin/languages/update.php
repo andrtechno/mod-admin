@@ -2,45 +2,23 @@
 
 use yii\helpers\Html;
 use panix\engine\bootstrap\ActiveForm;
+
+$form = ActiveForm::begin([
+    'options' => ['class' => 'form-horizontal']
+]);
 ?>
-
-
-
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title"><?= Html::encode($this->context->pageName) ?></h3>
+<div class="card">
+    <div class="card-header">
+        <h5><?= Html::encode($this->context->pageName) ?></h5>
     </div>
-    <div class="panel-body">
-
-
-        <?php
-        $form = ActiveForm::begin([
-                    'options' => ['class' => 'form-horizontal']
-        ]);
-        ?>
-
+    <div class="card-body">
         <?= $form->field($model, 'name')->textInput(['maxlength' => 100]) ?>
         <?= $form->field($model, 'code')->textInput(['maxlength' => 2]) ?>
         <?= $form->field($model, 'locale')->textInput(['maxlength' => 5]) ?>
-
-      <?= $form->field($model, 'is_default')->checkbox() ?>
-
-
-
-
-
-
-        <div class="form-group text-center">
-            <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'CREATE') : Yii::t('app', 'UPDATE'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-        </div>
-
-
-
-
-        <?php ActiveForm::end(); ?>
-
-
-
+        <?= $form->field($model, 'is_default')->checkbox() ?>
+    </div>
+    <div class="card-footer text-center">
+        <?= $model->submitButton() ?>
     </div>
 </div>
-
+<?php ActiveForm::end(); ?>
