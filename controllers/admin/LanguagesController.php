@@ -10,6 +10,7 @@ use panix\mod\admin\models\search\LanguagesSearch;
 use yii\base\Exception;
 use yii\helpers\FileHelper;
 use yii\helpers\Json;
+use yii\helpers\VarDumper;
 use yii\web\Response;
 
 class LanguagesController extends AdminController
@@ -95,8 +96,6 @@ class LanguagesController extends AdminController
 
 
         if ($model->load($post) && $model->validate()) {
-
-
             $model->save();
 
             Yii::$app->session->addFlash('success', \Yii::t('app', 'SUCCESS_CREATE'));
@@ -112,6 +111,14 @@ class LanguagesController extends AdminController
         ]);
     }
 
+    public function actionEditFile($file)
+    {
+
+
+        echo VarDumper::dump(Yii::$app->i18n->translations,10,true);
+   // echo file_get_contents(Yii::getAlias($file));
+        print_r($file);die;
+    }
 
     public function actionTranslate()
     {
