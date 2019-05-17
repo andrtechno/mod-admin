@@ -115,9 +115,21 @@ class LanguagesController extends AdminController
     {
 
 
-        echo VarDumper::dump(Yii::$app->i18n->translations,10,true);
-   // echo file_get_contents(Yii::getAlias($file));
-        print_r($file);die;
+          echo VarDumper::dump(Yii::$app->i18n->translations,100,true);
+        die;
+        foreach (Yii::$app->i18n->translations as $translation) {
+            if (isset($translation->fileMap)) {
+
+                foreach ($translation->fileMap as $file) {
+echo $translation->basePath;
+                  //  echo VarDumper::dump($file, 10, true);
+                    //     echo $file;
+                    echo '<br>';
+                }
+            }
+        }
+        // echo file_get_contents(Yii::getAlias($file));
+        die;
     }
 
     public function actionTranslate()
