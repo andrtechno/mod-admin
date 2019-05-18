@@ -1,4 +1,5 @@
 <?php
+
 namespace panix\mod\admin\components;
 
 use panix\engine\Curl;
@@ -6,13 +7,15 @@ use Yii;
 use yii\db\Exception;
 use yii\helpers\Json;
 
-class YandexTranslate {
+class YandexTranslate
+{
 
     const API_KEY = 'trnsl.1.1.20141219T203729Z.c1345ed900582266.7501482db4e6901d183127f3933b578656878fcb';
 
     public $api_url = 'https://translate.yandex.net/api/v1.5/tr.json/translate';
 
-    public function translitUrl($lang = array(), $text) {
+    public function translitUrl($lang = array(), $text)
+    {
         //if (!$params)
         $params = array();
         $params['key'] = self::API_KEY;
@@ -49,7 +52,8 @@ class YandexTranslate {
         return strtolower($text);
     }
 
-    public function translate($lang = array(), $text, $each = false) {
+    public function translate($lang = array(), $text, $each = false)
+    {
         $params = array();
         $params['key'] = self::API_KEY;
         $params['format'] = 'html';
@@ -74,17 +78,19 @@ class YandexTranslate {
             $response = array();
             //TODO need recoding this...
 
-            if($result['response'][0]['hasError']){
-                print_r($text);die;
+            if ($result['response'][0]['hasError']) {
+                print_r($text);
+                die;
             }
             foreach ($result['response'] as $t) {
-                if(!$t['hasError']){
+                if (!$t['hasError']) {
 
                     foreach ($t['text'] as $tt) {
                         $response['text'][] = $tt;
                     }
-                }else{
-                    print_r($t);die;
+                } else {
+                    print_r($t);
+                    die;
                 }
             }
             return $response;
@@ -97,21 +103,23 @@ class YandexTranslate {
     }
 
 
-    public function translatefile($lang = array(), $text, $each = false) {
+    public function translatefile($lang = array(), $text, $each = false)
+    {
         $params = array();
         $params['key'] = self::API_KEY;
         $params['format'] = 'html';
         $params['lang'] = $lang[0] . '-' . $lang[1];
 
 
-            $params['text'] = $text;
-            $query = $this->api_url . '?' . $this->params($params);
-            $res = $this->curl_get_contents($query);
-            return Json::decode($res, true);
+        $params['text'] = $text;
+        $query = $this->api_url . '?' . $this->params($params);
+        $res = $this->curl_get_contents($query);
+        return Json::decode($res, true);
 
     }
 
-    public function checkConnect(){
+    public function checkConnect()
+    {
         $params = array();
         $params['key'] = self::API_KEY;
         $params['format'] = 'html';
@@ -119,7 +127,9 @@ class YandexTranslate {
         $res = $this->curl_get_contents($query);
         return Json::decode($res, false);
     }
-    private function curl_get_contents($url) {
+
+    private function curl_get_contents($url)
+    {
         if (isset(Yii::$app->curl)) {
             $curl = Yii::$app->curl;
             $curl->options = array(
@@ -132,12 +142,12 @@ class YandexTranslate {
                 )
             );
 
-         //   $curl = new \linslin\yii2\curl\Curl();
+            //   $curl = new \linslin\yii2\curl\Curl();
 
             //get http://example.com/
-           // $response = $curl->get('http://example.com/');
+            // $response = $curl->get('http://example.com/');
 
-           // print_r($response);die;
+            // print_r($response);die;
 
 
             $connect = $curl->run($url);
@@ -152,7 +162,8 @@ class YandexTranslate {
         }
     }
 
-    private function params($params) {
+    private function params($params)
+    {
         $pice = array();
         foreach ($params as $k => $v) {
             if (is_array($v)) {
@@ -165,54 +176,54 @@ class YandexTranslate {
         }
         return implode('&', $pice);
     }
-/*
-    public static function onlineLangs() {
-        return array(
-            'ar' => "Arabic",
-            'hy' => "Armenian",
-            'sq' => "Albanian",
-            'az' => "Azerbaijani",
-            'be' => "Belarusian",
-            'bg' => "Bulgarian",
-            'bs' => "Bosnian",
-            'ca' => "Catalan",
-            'cs' => "Czech",
-            'hr' => "Croatian",
-            'zh' => "Chinese",
-            'da' => "Danish",
-            'nl' => "Dutch",
-            'de' => "German",
-            'el' => "Greek",
-            'ka' => "Georgian",
-            'en' => "English",
-            'et' => "Estonian",
-            'fi' => "Finnish",
-            'fr' => "French",
-            'he' => "Hebrew",
-            'hu' => "Hungarian",
-            'id' => "Indonesian",
-            'is' => "Icelandic",
-            'it' => "Italian",
-            'lt' => "Lithuanian",
-            'lv' => "Latvian",
-            'mk' => "Macedonian",
-            'ms' => "Malay",
-            'mt' => "Maltese",
-            'no' => "Norwegian",
-            'pl' => "Polish",
-            'pt' => "Portuguese",
-            'ro' => "Romanian",
-            'ru' => "Russian",
-            'sk' => "Slovak",
-            'sl' => "Slovenian",
-            'sr' => "Serbian",
-            'sv' => "Swedish",
-            'es' => "Spanish",
-            'th' => "Thai",
-            'tr' => "Turkish",
-            'uk' => "Ukrainian",
-            'vi' => "Vietnamese",
-        );
-    }*/
+    /*
+        public static function onlineLangs() {
+            return array(
+                'ar' => "Arabic",
+                'hy' => "Armenian",
+                'sq' => "Albanian",
+                'az' => "Azerbaijani",
+                'be' => "Belarusian",
+                'bg' => "Bulgarian",
+                'bs' => "Bosnian",
+                'ca' => "Catalan",
+                'cs' => "Czech",
+                'hr' => "Croatian",
+                'zh' => "Chinese",
+                'da' => "Danish",
+                'nl' => "Dutch",
+                'de' => "German",
+                'el' => "Greek",
+                'ka' => "Georgian",
+                'en' => "English",
+                'et' => "Estonian",
+                'fi' => "Finnish",
+                'fr' => "French",
+                'he' => "Hebrew",
+                'hu' => "Hungarian",
+                'id' => "Indonesian",
+                'is' => "Icelandic",
+                'it' => "Italian",
+                'lt' => "Lithuanian",
+                'lv' => "Latvian",
+                'mk' => "Macedonian",
+                'ms' => "Malay",
+                'mt' => "Maltese",
+                'no' => "Norwegian",
+                'pl' => "Polish",
+                'pt' => "Portuguese",
+                'ro' => "Romanian",
+                'ru' => "Russian",
+                'sk' => "Slovak",
+                'sl' => "Slovenian",
+                'sr' => "Serbian",
+                'sv' => "Swedish",
+                'es' => "Spanish",
+                'th' => "Thai",
+                'tr' => "Turkish",
+                'uk' => "Ukrainian",
+                'vi' => "Vietnamese",
+            );
+        }*/
 
 }

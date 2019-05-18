@@ -6,6 +6,8 @@ use Yii;
 use yii\base\Exception;
 use yii\helpers\Json;
 use panix\engine\data\Widget;
+use yii\helpers\VarDumper;
+use yii\httpclient\Client;
 
 class Hosting extends Widget
 {
@@ -48,44 +50,30 @@ class Hosting extends Widget
 
     /**
      * Connection to Hosting api
-     *
      * @param $method
      * @param $class
-     * @return mixed
-     * @throws Exception
+     * @return bool|mixed
      */
     private function connect($method, $class)
     {
-        $curl = Yii::$app->curl;
+        $client = new Client(['baseUrl' => 'https://adm.tools/api.php']);
+        $response = $client->createRequest()
+            ->setMethod('POST')
+            ->setData([
+                'auth_login' => $this->config->auth_login,
+                'auth_token' => $this->config->auth_token,
+                'account' => $this->config->account,
+                'class' => $class,
+                'method' => $method,
+            ])
+            ->setFormat(Client::FORMAT_JSON)
+            ->addHeaders(['content-type' => 'application/json'])
+            ->send();
 
-        if ($curl) {
-            $response = $curl->setRawPostData(Json::encode([
-                    'auth_login' => $this->config->auth_login,
-                    'auth_token' => $this->config->auth_token,
-                    'account' => $this->config->account,
-                    'class' => $class,
-                    'method' => $method,
-                ]))
-                ->setHeaders(['Content-Type' => "application/json; charset=".Yii::$app->charset])
-                ->post('https://adm.tools/api.php');
-
-            $result = Json::decode($response);
-            if ($curl->errorCode === null) {
-                    return $result;
-
-            } else {
-                // List of curl error codes here https://curl.haxx.se/libcurl/c/libcurl-errors.html
-                switch ($curl->errorCode) {
-
-                    case 6:
-                        //host unknown example
-                        break;
-                }
-            }
-        } else {
-            throw new Exception('error curl component');
+        if ($response->isOk) {
+            return $response->data;
         }
-        return $result;
+        return false;
     }
 
 }
