@@ -53,7 +53,7 @@ class Modules extends \panix\engine\db\ActiveRecord
 
     public function getIsInsertSql()
     {
-        if (file_exists(Yii::getAlias("mod.{$this->name}.sql") . DS . 'insert.sql')) {
+        if (file_exists(Yii::getAlias("@{$this->name}/sql") . DIRECTORY_SEPARATOR . 'insert.sql')) {
             return true;
         } else {
             return false;
