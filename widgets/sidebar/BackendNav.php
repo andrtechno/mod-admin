@@ -7,7 +7,8 @@ use yii\base\InvalidConfigException;
 use yii\helpers\ArrayHelper;
 use panix\engine\Html;
 
-class BackendNav extends \yii\bootstrap4\Nav {
+class BackendNav extends \yii\bootstrap4\Nav
+{
 
     public $dropdownClass = '\panix\engine\bootstrap\Dropdown';
 
@@ -20,7 +21,8 @@ class BackendNav extends \yii\bootstrap4\Nav {
      * @inheritdoc
      * @throws InvalidConfigException
      */
-    public function init() {
+    public function init()
+    {
         if (!class_exists($this->dropdownClass)) {
             throw new InvalidConfigException("The dropdownClass '{$this->dropdownClass}' does not exist or is not accessible.");
         }
@@ -48,7 +50,8 @@ class BackendNav extends \yii\bootstrap4\Nav {
     /**
      * @inheritdoc
      */
-    public function renderDropdown($items, $parentItem) {
+    public function renderDropdown($items, $parentItem)
+    {
         /**
          * @var \panix\engine\bootstrap\Dropdown $ddWidget
          */
@@ -66,7 +69,8 @@ class BackendNav extends \yii\bootstrap4\Nav {
     /**
      * @inheritdoc
      */
-    protected function isChildActive($items, &$active) {
+    protected function isChildActive($items, &$active)
+    {
         foreach ($items as $i => $child) {
             if (ArrayHelper::remove($items[$i], 'active', false) || $this->isItemActive($child)) {
                 Html::addCssClass($items[$i]['options'], 'active');
@@ -86,7 +90,8 @@ class BackendNav extends \yii\bootstrap4\Nav {
         return $items;
     }
 
-    public function findMenu($mod = false) {
+    public function findMenu($mod = false)
+    {
         $result = array();
         $modules = Yii::$app->getModules();
         foreach ($modules as $mid => $module) {
@@ -113,7 +118,8 @@ class BackendNav extends \yii\bootstrap4\Nav {
         return ($mod) ? $resultFinish[$mod] : $resultFinish;
     }
 
-    public function renderItem($item) {
+    public function renderItem($item)
+    {
         if (is_string($item)) {
             return $item;
         }
@@ -122,16 +128,18 @@ class BackendNav extends \yii\bootstrap4\Nav {
             throw new InvalidConfigException("The 'label' option is required.");
         }
         // $id=crc32($item['label']).CMS::gen(4);
+        $badge = Html::tag('span', ArrayHelper::getValue($item, 'badge'), ['class' => 'badge badge-success']);
         $encodeLabel = isset($item['encode']) ? $item['encode'] : $this->encodeLabels;
         $icon = isset($item['icon']) ? Html::icon($item['icon']) . ' ' : '';
-        $label = $encodeLabel ? Html::encode($item['label']) : $item['label'];
+        $label = $encodeLabel ? Html::encode($item['label']) . $badge : $item['label'] . $badge;
         $options = ArrayHelper::getValue($item, 'options', []);
         $items = ArrayHelper::getValue($item, 'items');
         $url = ArrayHelper::getValue($item, 'url', '#');
+
         $linkOptions = ArrayHelper::getValue($item, 'linkOptions', [
             // 'id'=>'dropdown-'.$id,
-            'aria-haspopup'=>"true",
-            'aria-expanded'=>"false"
+            'aria-haspopup' => "true",
+            'aria-expanded' => "false"
         ]);
 
         if (isset($item['active'])) {
