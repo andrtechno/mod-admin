@@ -44,7 +44,7 @@ class LanguagesController extends AdminController
         $this->pageName = Yii::t('admin/default', 'LANGUAGES');
         $this->buttons = [
             [
-                'icon' => 'icon-add',
+                'icon' => 'add',
                 'label' => Yii::t('admin/default', 'CREATE_LANG'),
                 'url' => ['create'],
                 'options' => ['class' => 'btn btn-success']
@@ -77,7 +77,7 @@ class LanguagesController extends AdminController
         $this->pageName = Yii::t('admin/default', 'LANGUAGES');
         $this->buttons = [
             [
-                'icon' => 'icon-add',
+                'icon' => 'add',
                 'label' => Yii::t('admin/default', 'CREATE_LANG'),
                 'url' => ['create'],
                 'options' => ['class' => 'btn btn-success']

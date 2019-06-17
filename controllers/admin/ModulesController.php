@@ -7,11 +7,13 @@ use panix\engine\controllers\AdminController;
 use panix\mod\admin\models\search\ModulesSearch;
 use panix\mod\admin\models\Modules;
 
-class ModulesController extends AdminController {
+class ModulesController extends AdminController
+{
 
     public $icon = 'puzzle';
 
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $this->pageName = Yii::t('admin/default', 'MODULES');
         $this->breadcrumbs[] = [
             'label' => Yii::t('admin/default', 'SYSTEM'),
@@ -24,25 +26,26 @@ class ModulesController extends AdminController {
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
 
-
         $mod = new Modules; //пересмотреть
         if (count($mod->getAvailable())) {
-            $this->buttons = array(array(
-                    'label' => Yii::t('admin/default', 'INSTALL', array('n' => count($mod->getAvailable()), 0)),
+            $this->buttons = [
+                [
+                    'label' => Yii::t('admin/default', 'INSTALL', ['n' => count($mod->getAvailable()), 0]),
                     'url' => ['install'],
-                    'options' => array('class' => 'btn btn-success')
-            ));
+                    'options' => ['class' => 'btn btn-success']
+                ]
+            ];
         }
 
 
-
         return $this->render('index', [
-                    'dataProvider' => $dataProvider,
-                    'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
         ]);
     }
 
-    public function actionInstall($name = null) {
+    public function actionInstall($name = null)
+    {
 
 
         $this->pageName = Yii::t('admin/default', 'LIST_MODULES');
@@ -63,7 +66,8 @@ class ModulesController extends AdminController {
         return $this->render('install', ['modules' => $mod->getAvailable()]);
     }
 
-    public function actionUpdate() {
+    public function actionUpdate()
+    {
         $model = Modules::findOne($_GET['id']);
         $this->pageName = Yii::t('admin/default', 'MODULES');
 
@@ -73,7 +77,6 @@ class ModulesController extends AdminController {
         ];
 
         $this->breadcrumbs[] = Yii::t('app', 'UPDATE');
-
 
 
         $post = Yii::$app->request->post();
@@ -89,7 +92,8 @@ class ModulesController extends AdminController {
         return $this->render('update', array('model' => $model));
     }
 
-    public function actionDelete() {
+    public function actionDelete()
+    {
         if (Yii::$app->request->isPost) {
             $model = Modules::findOne($_GET['id']);
             if ($model) {
@@ -102,7 +106,8 @@ class ModulesController extends AdminController {
         }
     }
 
-    public function actionInsertSql() {
+    public function actionInsertSql()
+    {
         $model = Modules::find(['name' => $_GET['mod']])->one();
         if ($model) {
             Yii::$app->db->import($model->name, 'insert.sql');
