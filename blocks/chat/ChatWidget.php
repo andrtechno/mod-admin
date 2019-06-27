@@ -4,11 +4,11 @@
 namespace panix\mod\admin\blocks\chat;
 
 use Yii;
-use yii\base\Widget;
 use yii\web\Response;
 use panix\mod\admin\blocks\chat\models\Chat;
+use panix\engine\data\Widget;
 
-class ChatWidget extends \panix\engine\data\Widget
+class ChatWidget extends Widget
 {
 
 
