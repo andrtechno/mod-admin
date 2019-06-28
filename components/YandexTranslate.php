@@ -6,6 +6,7 @@ use panix\engine\Curl;
 use Yii;
 use yii\db\Exception;
 use yii\helpers\Json;
+use yii\httpclient\Client;
 
 class YandexTranslate
 {
@@ -73,7 +74,8 @@ class YandexTranslate
                 }
                 $query = $this->api_url . '?' . $this->params($params);
                 $resp = $this->curl_get_contents($query);
-                $result['response'][$offset] = CJSON::decode($resp, true);
+                $result['response'][$offset] = Json::decode($resp, true);
+
             }
             $response = array();
             //TODO need recoding this...
@@ -98,7 +100,7 @@ class YandexTranslate
             $params['text'] = $text;
             $query = $this->api_url . '?' . $this->params($params);
             $res = $this->curl_get_contents($query);
-            return Json::decode($res, true);
+            return $res;
         }
     }
 
@@ -130,35 +132,14 @@ class YandexTranslate
 
     private function curl_get_contents($url)
     {
-        if (isset(Yii::$app->curl)) {
-            $curl = Yii::$app->curl;
-            $curl->options = array(
-                'setOptions' => array(
-                    CURLOPT_HEADER => false,
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_FOLLOWLOCATION => true,
-                    CURLOPT_SSL_VERIFYPEER => false,
-                    CURLOPT_SSL_VERIFYHOST => false,
-                )
-            );
+        $client = new Client(['baseUrl' => $url]);
+        $response = $client->createRequest()
+            ->setFormat(Client::FORMAT_JSON)
+            //->addHeaders(['content-type' => 'application/json'])
+            ->send();
 
-            //   $curl = new \linslin\yii2\curl\Curl();
-
-            //get http://example.com/
-            // $response = $curl->get('http://example.com/');
-
-            // print_r($response);die;
-
-
-            $connect = $curl->run($url);
-            if (!$connect->hasErrors()) {
-
-                return $curl->getData();
-            } else {
-                return Json::encode($curl->getErrors());
-            }
-        } else {
-            throw new Exception('Curl error');
+        if ($response->isOk) {
+            return $response->data;
         }
     }
 
