@@ -2,16 +2,23 @@
 
 namespace panix\mod\admin\controllers;
 
-use panix\mod\user\models\forms\LoginForm;
 use Yii;
+use panix\mod\user\models\forms\LoginForm;
 use panix\engine\controllers\AdminController;
 use panix\mod\rbac\filters\AccessControl;
 
+/**
+ * Class AuthController
+ * @package panix\mod\admin\controllers
+ */
 class AuthController extends AdminController
 {
 
     public $layout = '@theme/views/layouts/auth';
 
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
@@ -24,14 +31,18 @@ class AuthController extends AdminController
         ];
     }
 
+    /**
+     * Display admin panel login
+     * @return string|\yii\web\Response
+     */
     public function actionIndex()
     {
         if (!Yii::$app->user->isGuest)
             return $this->redirect(['/admin']);
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login(Yii::$app->settings->get('user', 'login_duration'))) {
-            return $this->goBack(['/']);
+        if ($model->load(Yii::$app->request->post()) && $model->login((int) Yii::$app->settings->get('user', 'login_duration'))) {
+            return $this->goBack(['/admin']);
         }
 
         // render

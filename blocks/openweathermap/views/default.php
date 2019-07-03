@@ -15,7 +15,7 @@ use panix\engine\CMS;
             <h3>
                 <img src="<?= $this->context->assetsUrl ?>/images/<?= $result['weather'][0]['icon'] ?>.png" alt=""/>
                 <?= floor($result['main']['temp']) ?><?= $this->context->deg ?>
-                <small class="text-muted"><?= $result['weather'][0]['description']; ?></small>
+                <small class="text-muted d-block"><?= $result['weather'][0]['description']; ?></small>
             </h3>
         </div>
     </div>
