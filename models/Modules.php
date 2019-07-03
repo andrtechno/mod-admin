@@ -158,7 +158,7 @@ class Modules extends \panix\engine\db\ActiveRecord
     {
         if ($name) {
             $mod = self::loadModuleClass($name);
-            return (object)[
+            return (object) [
                 'name' => $mod->name,
                 'author' => $mod->author,
                 'description' => $mod->description,
