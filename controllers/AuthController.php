@@ -2,6 +2,7 @@
 
 namespace panix\mod\admin\controllers;
 
+use panix\mod\user\models\forms\LoginForm;
 use Yii;
 use panix\engine\controllers\AdminController;
 use panix\mod\rbac\filters\AccessControl;
@@ -28,8 +29,8 @@ class AuthController extends AdminController
         if (!Yii::$app->user->isGuest)
             return $this->redirect(['/admin']);
 
-        $model = Yii::$app->getModule("user")->model("LoginForm");
-        if ($model->load(Yii::$app->request->post()) && $model->login(Yii::$app->getModule("user")->loginDuration)) {
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login(Yii::$app->settings->get('user', 'login_duration'))) {
             return $this->goBack(['/']);
         }
 

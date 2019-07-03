@@ -54,11 +54,7 @@ $form = ActiveForm::begin([
 
     <div class="form-group row">
         <div class="col-sm-6">
-            <?php
-            echo $form->field($model, 'rememberMe', ['template' => ''])->checkbox([
-                'template' => '<div class="form-check">{input}{label}{error}</div>',
-            ])
-            ?>
+            <?= $form->field($model, 'rememberMe', ['options' => ['class' => 'mt-2']])->checkbox() ?>
         </div>
         <div class="col-sm-6 controls text-right">
             <?= Html::submitButton(Yii::t('user/default', 'LOGIN'), ['class' => 'btn btn-success']) ?>
