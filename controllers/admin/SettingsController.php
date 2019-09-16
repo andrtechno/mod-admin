@@ -26,9 +26,9 @@ class SettingsController extends AdminController
         //Yii::$app->request->post()
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
-                if ($model->save()) {
-                    return $this->redirect(['/admin/app/settings']);
-                }
+                $model->save();
+                return $this->redirect(['/admin/app/settings']);
+
             }
 
         }
