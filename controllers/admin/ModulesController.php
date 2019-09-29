@@ -108,7 +108,7 @@ class ModulesController extends AdminController
 
     public function actionInsertSql()
     {
-        $model = Modules::find(['name' => $_GET['mod']])->one();
+        $model = Modules::findOne(['name' => $_GET['mod']]);
         if ($model) {
             Yii::$app->db->import($model->name, 'insert.sql');
             Yii::$app->user->setFlash('success', 'База данных успешно импортирована.');
