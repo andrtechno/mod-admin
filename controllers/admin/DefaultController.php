@@ -37,8 +37,7 @@ class DefaultController extends AdminController
         $this->clearCache();
         $this->clearAssets();
 
-        return $this->render('index', [
-        ]);
+        return $this->render('index');
     }
 
     public function actionSendChat()
