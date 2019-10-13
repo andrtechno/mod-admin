@@ -39,7 +39,9 @@ class SettingsForm extends SettingsModel
     public $mailer_transport_smtp_password;
     public $mailer_transport_smtp_port;
     public $mailer_transport_smtp_encryption;
-
+    public $captcha_class;
+    public $recaptcha_key;
+    public $recaptcha_secret;
 
     public static function defaultSettings()
     {
@@ -64,9 +66,34 @@ class SettingsForm extends SettingsModel
             'mailer_transport_smtp_host' => 'smtp.gmail.com',
             'mailer_transport_smtp_port' => '465',
             'mailer_transport_smtp_encryption' => 'ssl',
+            'captcha_class' => '\yii\captcha\Captcha',
+            'recaptcha_key' => '',
+            'recaptcha_secret' => '',
         ];
     }
 
+    public static function captchaList()
+    {
+        return [
+            '\yii\captcha\Captcha' => 'Core captcha',
+            '\panix\engine\widgets\recaptcha\v2\ReCaptcha' => 'ReCaptcha (v2)',
+            '\panix\engine\widgets\recaptcha\v3\ReCaptcha' => 'ReCaptcha (v3)',
+        ];
+    }
+    public static function captchaConfig(){
+        return [
+            '\yii\captcha\Captcha'=>[
+                'captchaAction' => 'default/captcha',
+            ],
+            '\panix\engine\widgets\recaptcha\v2\ReCaptcha'=>[
+
+            ],
+            '\panix\engine\widgets\recaptcha\v3\ReCaptcha'=>[
+                'threshold' => 0.5,
+                'action' => 'homepage',
+            ],
+        ];
+    }
     public function renderWatermarkImage()
     {
         if (file_exists(Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . 'watermark.png'))
@@ -101,18 +128,18 @@ class SettingsForm extends SettingsModel
             //Mailer smtp
             [['mailer_transport_smtp_host', 'mailer_transport_smtp_username', 'mailer_transport_smtp_password', 'mailer_transport_smtp_encryption'], "string"],
             [['mailer_transport_smtp_port'], 'integer'],
-            [['mailer_transport_smtp_port', 'mailer_transport_smtp_host', 'mailer_transport_smtp_username', 'mailer_transport_smtp_password', 'mailer_transport_smtp_encryption'], 'trim'],
+            [['email','mailer_transport_smtp_port', 'mailer_transport_smtp_host', 'mailer_transport_smtp_username', 'mailer_transport_smtp_password', 'mailer_transport_smtp_encryption'], 'trim'],
             ['mailer_transport_smtp_encryption', 'in', 'range' => ['ssl', 'tls']],
             ['mailer_transport_smtp_enabled', 'boolean'],
 
 
             [['attachment_wm_corner', 'attachment_wm_offsety', 'attachment_wm_offsetx'], 'integer'],
-            [['email', 'sitename', 'pagenum', 'maintenance_allow_users', 'timezone', 'theme', 'attachment_wm_offsetx', 'attachment_wm_offsety', 'attachment_wm_corner', 'attachment_image_type'], "required"],
+            [['email', 'sitename', 'pagenum', 'timezone', 'theme', 'attachment_wm_offsetx', 'attachment_wm_offsety', 'attachment_wm_corner', 'attachment_image_type','captcha_class'], "required"],
             ['email', 'email'],
             ['attachment_wm_path', 'validateWatermarkFile'],
-            [['theme', 'censor_words', 'censor_replace', 'maintenance_text', 'maintenance_allow_ips', 'maintenance_allow_users', 'timezone', 'attachment_wm_active', 'attachment_image_resize'], "string"],
+            [['theme', 'censor_words', 'censor_replace', 'maintenance_text', 'maintenance_allow_ips', 'maintenance_allow_users', 'timezone', 'attachment_wm_active', 'attachment_image_resize', 'recaptcha_key', 'recaptcha_secret'], "string"],
             [['maintenance', 'censor'], 'boolean'],
-            ['email', 'filter', 'filter' => 'trim'],
+            //[['email', 'recaptcha_key', 'recaptcha_secret'], 'filter', 'filter' => 'trim'],
         ];
     }
 
