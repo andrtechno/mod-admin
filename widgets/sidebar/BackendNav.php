@@ -16,6 +16,7 @@ class BackendNav extends \yii\bootstrap4\Nav
      * @var array the dropdown widget options
      */
     public $dropdownOptions = [];
+    public $enableDefaultItems = true;
 
     /**
      * @inheritdoc
@@ -26,23 +27,23 @@ class BackendNav extends \yii\bootstrap4\Nav
         if (!class_exists($this->dropdownClass)) {
             throw new InvalidConfigException("The dropdownClass '{$this->dropdownClass}' does not exist or is not accessible.");
         }
-
-        $found = ArrayHelper::merge($this->items, $this->findMenu());
-        $defaultItems = [
-            'system' => [
-                'label' => Yii::t('admin/default', 'SYSTEM'),
-                'icon' => 'tools',
-                // 'visible' => count($found['system']['items'])
-            ],
-            'modules' => [
-                'label' => Yii::t('admin/default', 'MODULES'),
-                'icon' => 'puzzle',
-                // 'visible' => count($found['modules']['items'])
-                //  'items'=>$found['modules']['items']
-            ],
-        ];
-        $this->items = ArrayHelper::merge($defaultItems, $found);
-
+        if ($this->enableDefaultItems) {
+            $found = ArrayHelper::merge($this->items, $this->findMenu());
+            $defaultItems = [
+                'system' => [
+                    'label' => Yii::t('admin/default', 'SYSTEM'),
+                    'icon' => 'tools',
+                    // 'visible' => count($found['system']['items'])
+                ],
+                'modules' => [
+                    'label' => Yii::t('admin/default', 'MODULES'),
+                    'icon' => 'puzzle',
+                    // 'visible' => count($found['modules']['items'])
+                    //  'items'=>$found['modules']['items']
+                ],
+            ];
+            $this->items = ArrayHelper::merge($defaultItems, $found);
+        }
 
         parent::init();
     }
@@ -60,9 +61,10 @@ class BackendNav extends \yii\bootstrap4\Nav
             'items' => $items,
             'encodeLabels' => $this->encodeLabels,
             'clientOptions' => false,
-            // 'options'=>['aria-labelledby'=>$id],
+            'options' => ArrayHelper::getValue($parentItem, 'dropdownOptions', []),
             'view' => $this->getView(),
         ]);
+
         return $ddWidget::widget($ddOptions);
     }
 
@@ -92,7 +94,7 @@ class BackendNav extends \yii\bootstrap4\Nav
 
     public function findMenu($mod = false)
     {
-        $result = array();
+        $result = [];
         $modules = Yii::$app->getModules();
         foreach ($modules as $mid => $module) {
 
@@ -128,7 +130,17 @@ class BackendNav extends \yii\bootstrap4\Nav
             throw new InvalidConfigException("The 'label' option is required.");
         }
         // $id=crc32($item['label']).CMS::gen(4);
-        $badge = Html::tag('span', ArrayHelper::getValue($item, 'badge'), ['class' => 'badge badge-success']);
+
+        $badgeOptions = ['class' => 'badge badge-success'];
+        if (isset($item['badgeOptions'])) {
+            $badgeOptions = array_merge($badgeOptions, $item['badgeOptions']);
+        }
+
+        $badge = '';
+        if (isset($item['badge'])) {
+            $badge = Html::tag('span', ArrayHelper::getValue($item, 'badge'), $badgeOptions);
+        }
+
         $encodeLabel = isset($item['encode']) ? $item['encode'] : $this->encodeLabels;
         $icon = isset($item['icon']) ? Html::icon($item['icon']) . ' ' : '';
         $label = $encodeLabel ? Html::encode($item['label']) . $badge : $item['label'] . $badge;
@@ -136,11 +148,7 @@ class BackendNav extends \yii\bootstrap4\Nav
         $items = ArrayHelper::getValue($item, 'items');
         $url = ArrayHelper::getValue($item, 'url', '#');
 
-        $linkOptions = ArrayHelper::getValue($item, 'linkOptions', [
-            // 'id'=>'dropdown-'.$id,
-            'aria-haspopup' => "true",
-            'aria-expanded' => "false"
-        ]);
+
 
         if (isset($item['active'])) {
             $active = ArrayHelper::remove($item, 'active', false);
@@ -149,7 +157,12 @@ class BackendNav extends \yii\bootstrap4\Nav
         }
 
         if ($items !== null) {
-            $linkOptions['data-toggle'] = 'dropdown';
+            $linkOptions = ArrayHelper::getValue($item, 'linkOptions', [
+                'aria-haspopup' => "true",
+                'aria-expanded' => "false",
+                'data-toggle'=>'dropdown'
+            ]);
+            //$linkOptions['data-toggle'] = 'dropdown';
             Html::addCssClass($options, 'nav-item dropdown');
             Html::addCssClass($linkOptions, 'nav-link dropdown-toggle');
             // $label .= ' ' . Html::tag('b', '', ['class' => 'caret2']);
@@ -160,6 +173,9 @@ class BackendNav extends \yii\bootstrap4\Nav
                 $items = $this->renderDropdown($items, $item);
 
             }
+        } else {
+            Html::addCssClass($options, 'nav-item');
+            Html::addCssClass($linkOptions, 'nav-link');
         }
 
         if ($this->activateItems && $active) {

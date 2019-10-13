@@ -5,6 +5,7 @@ namespace panix\mod\admin\controllers\admin;
 
 use panix\mod\admin\models\Desktop;
 use panix\mod\admin\models\DesktopWidgets;
+use panix\mod\cart\models\Order;
 use Yii;
 use yii\web\HttpException;
 use yii\web\Response;
@@ -50,32 +51,39 @@ class DefaultController extends AdminController
     public function actionAjaxCounters()
     {
 
-        $notifications = Notifications::find()->read(0)->all();
+        $notificationsAll = Notifications::find()->read([Notifications::STATUS_NO_READ, Notifications::STATUS_NOTIFY])->all();
+        $notificationsLimit = Notifications::find()->read([Notifications::STATUS_NO_READ, Notifications::STATUS_NOTIFY])->limit(5)->all();
+       // $notificationsCount = Notifications::find()->read([Notifications::STATUS_NO_READ, Notifications::STATUS_NOTIFY])->count();
+        $orderCount = Order::find()->where(['status_id' => 1])->count();
         $result = [];
         $result['count']['cart'] = 5;
-        $result['count']['comments'] = 10;
+        $result['count']['comments'] = $orderCount;
+        $result['count']['notifications'] = count($notificationsAll);
+
         $result['notify'] = [];
-        foreach ($notifications as $notify) {
+        foreach ($notificationsAll as $notify) {
             /** @var $notify Notifications */
             $result['notify'][$notify->id] = [
                 'text' => $notify->text,
+                'status' => $notify->status,
                 'type' => $notify->type,
+                'url' => $notify->url,
                 'sound' => $notify->sound
             ];
         }
+        $result['content'] = $this->render('notifications', ['notifications' => $notificationsLimit]);
         Yii::$app->response->format = Response::FORMAT_JSON;
         return $result;
     }
 
-    public function actionAjaxReadNotification($id)
+    public function actionAjaxNotificationStatus($id, $status)
     {
-        //$notifactions = Notifactions::find()->where(['id'=>$id])->one();
         $notifications = Notifications::findOne($id);
-        $notifications->is_read = 1;
+        $notifications->status = $status;
         $notifications->save(false);
 
         Yii::$app->response->format = Response::FORMAT_JSON;
-        return ['ok'];
+        return ['success' => true];
     }
 
     /**
