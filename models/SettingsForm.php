@@ -143,12 +143,11 @@ class SettingsForm extends SettingsModel
         ];
     }
 
-    public function getThemes()
+    public function themesList()
     {
         $themes = [];
-        $themesList = array_filter(glob('web/themes/*'), 'is_dir');
+        $themesList = array_filter(glob(Yii::getAlias('@app/web/themes').'/*'), 'is_dir');
         foreach ($themesList as $theme) {
-
             if (basename($theme) != 'dashboard') {
                 $themes[basename($theme)] = ucfirst(basename($theme));
             }

@@ -56,9 +56,11 @@ class DefaultController extends AdminController
         $result['count']['comments'] = 10;
         $result['notify'] = [];
         foreach ($notifications as $notify) {
+            /** @var $notify Notifications */
             $result['notify'][$notify->id] = [
                 'text' => $notify->text,
-                'type' => $notify->type
+                'type' => $notify->type,
+                'sound' => $notify->sound
             ];
         }
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -93,7 +95,8 @@ class DefaultController extends AdminController
         }
     }
 
-    public function actionCreateWidget($id) {
+    public function actionCreateWidget($id)
+    {
 
         $model = new DesktopWidgets;
 
@@ -103,23 +106,26 @@ class DefaultController extends AdminController
             if ($model->validate()) {
                 $model->save();
                 //Yii::app()->cache->flush();
-            }else{
-                print_r($model->getErrors());die;
+            } else {
+                print_r($model->getErrors());
+                die;
             }
         }
 
-       // Yii::app()->getClientScript()->scriptMap = array(
-       //     'jquery.js' => false,
-       //     'jquery.min.js' => false,
-       // );
+        // Yii::app()->getClientScript()->scriptMap = array(
+        //     'jquery.js' => false,
+        //     'jquery.min.js' => false,
+        // );
         return $this->render('widget-create', ['model' => $model]);
     }
+
     /**
      * Delete desktop
      * @param $id
      * @return Response
      */
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         $model = Desktop::findModel($id);
         $model->accessControlDesktop();
         if (isset($model) && $model->id != 1) {
@@ -129,6 +135,7 @@ class DefaultController extends AdminController
         if (!Yii::app()->request->isAjax)
             return $this->redirect(array('/admin'));
     }
+
     public function actionGetGrid()
     {
         $request = Yii::$app->request;

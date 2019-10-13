@@ -59,6 +59,12 @@ class Module extends WebModule { // implements BootstrapInterface
                         'visible' => true
                     ],
                     [
+                        'label' => Yii::t('admin/default', 'Mails tpl'),
+                        'url' => ['/admin/app/mail-template'],
+                        'icon' => 'mail',
+                        'visible' => true
+                    ],
+                    [
                         'label' => Yii::t('admin/default', 'DATABASE'),
                         'url' => ['/admin/app/database'],
                         'icon' => 'database',

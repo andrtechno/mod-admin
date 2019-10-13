@@ -6,6 +6,13 @@ use Yii;
 use panix\mod\admin\models\query\NotificationsQuery;
 use panix\engine\db\ActiveRecord;
 
+/**
+ * Class Notifications
+ * @property string $type Type
+ * @property string $sound Sound Path
+ * @property string $text Content
+ * @package panix\mod\admin\models
+ */
 class Notifications extends ActiveRecord {
 
     const MODULE_ID = 'admin';
@@ -16,16 +23,6 @@ class Notifications extends ActiveRecord {
 
     public static function tableName() {
         return '{{%notifications}}';
-    }
-
-    public function rules2() {
-        return [
-            [['name', 'code', 'locale'], 'required'],
-            [['name'], 'string', 'max' => 100],
-            [['code'], 'string', 'max' => 2],
-            [['locale'], 'string', 'max' => 5],
-            [['is_default'], 'in', 'range' => [0, 1]],
-        ];
     }
 
 }
