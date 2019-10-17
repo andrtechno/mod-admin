@@ -13,7 +13,7 @@ use panix\engine\Html;
     </div>
     <?php $form = ActiveForm::begin(); ?>
     <div class="card-body">
-        <?= $form->field($model, 'desktop_id')->hint(''); ?>
+        <?php //echo $form->field($model, 'desktop_id'); ?>
         <?= $form->field($model, 'widget')->dropDownList([
             'panix\mod\admin\blocks\hosting\Hosting' => 'Hosting',
             'panix\mod\admin\blocks\chat\ChatWidget' => 'Чат',

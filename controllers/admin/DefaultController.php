@@ -7,6 +7,7 @@ use panix\mod\admin\models\Desktop;
 use panix\mod\admin\models\DesktopWidgets;
 use panix\mod\cart\models\Order;
 use Yii;
+use yii\base\Exception;
 use yii\web\HttpException;
 use yii\web\Response;
 use panix\engine\controllers\AdminController;
@@ -84,64 +85,6 @@ class DefaultController extends AdminController
 
         Yii::$app->response->format = Response::FORMAT_JSON;
         return ['success' => true];
-    }
-
-    /**
-     * @param $id
-     * @return Response
-     */
-    public function actionDeleteWidget($id)
-    {
-        if (Yii::$app->request->isPost) {
-            $model = DesktopWidgets::findModel($id);
-            //$model->desktop->accessControlDesktop();
-            if (isset($model)) {
-                $model->delete();
-            }
-            if (!Yii::$app->request->isAjax)
-                return $this->redirect('admin');
-        }
-    }
-
-    public function actionCreateWidget($id)
-    {
-
-        $model = new DesktopWidgets;
-
-        if (isset($_POST['DesktopWidgets'])) {
-            $model->desktop_id = $id;
-            $model->attributes = $_POST['DesktopWidgets'];
-            if ($model->validate()) {
-                $model->save();
-                //Yii::app()->cache->flush();
-            } else {
-                print_r($model->getErrors());
-                die;
-            }
-        }
-
-        // Yii::app()->getClientScript()->scriptMap = array(
-        //     'jquery.js' => false,
-        //     'jquery.min.js' => false,
-        // );
-        return $this->render('widget-create', ['model' => $model]);
-    }
-
-    /**
-     * Delete desktop
-     * @param $id
-     * @return Response
-     */
-    public function actionDelete($id)
-    {
-        $model = Desktop::findModel($id);
-        $model->accessControlDesktop();
-        if (isset($model) && $model->id != 1) {
-            $model->delete();
-            unset(Yii::app()->session['desktop_id']);
-        }
-        if (!Yii::app()->request->isAjax)
-            return $this->redirect(array('/admin'));
     }
 
     public function actionGetGrid()
@@ -246,4 +189,32 @@ class DefaultController extends AdminController
     }
 
 
+    public function getAddonsMenu()
+    {
+        return [
+            [
+                'label' => Yii::t('shop/admin', 'Рабочий стол'),
+                'url' => ['/admin/shop/attribute-group'],
+                'visible' => true
+            ],
+            [
+                'label' => Yii::t('shop/admin', 'еуые'),
+                //'url' => ['/admin/shop/attribute-group'],
+                'visible' => true,
+                'items' => [
+                    [
+                        'label' => Yii::t('shop/admin', 'ATTRIBUTE_GROUP'),
+                        'url' => ['/admin/app/default/desktop-create'],
+                        'visible' => true
+                    ],
+                    [
+                        'label' => Yii::t('shop/admin', 'Add widget'),
+                        'url' => ['/admin/app/default/create-widget'],
+                        'visible' => true
+                    ],
+                ]
+
+            ],
+        ];
+    }
 }

@@ -6,9 +6,11 @@ use Yii;
 use panix\engine\CMS;
 use panix\engine\data\Widget;
 
-class SysInfoWidget extends Widget {
+class SysInfoWidget extends Widget
+{
 
-    public function run() {
+    public function run()
+    {
 
         $memorylimit = CMS::fileSize(str_replace("M", "", ini_get('memory_limit')) * 1024 * 1024);
         $globals = (ini_get('register_globals') == 1) ? $this->labelHtml(Yii::t('app', 'ON'), 'danger') : $this->labelHtml(Yii::t('app', 'OFF'), 'success');
@@ -27,7 +29,7 @@ class SysInfoWidget extends Widget {
         $phpver = phpversion();
         $gd = (extension_loaded('gd')) ? $this->labelHtml(Yii::t('app', 'ON', 0), 'success') : $this->labelHtml(Yii::t('app', 'OFF'), 'danger');
         $pdo = (extension_loaded('pdo')) ? $this->labelHtml(Yii::t('app', 'ON', 0), 'success') : $this->labelHtml("<span style=\"color:red\">" . Yii::t('app', 'OFF') . "</span>", 'danger');
-        $php = ($phpver >= "5.1") ? $this->labelHtml("$phpver (" . @php_sapi_name() . ")", 'success') : $this->labelHtml("$phpver (" . @php_sapi_name() . ")", 'danger');
+        $php = ($phpver >= "5.1") ? $this->labelHtml(PHP_VERSION, 'success') : $this->labelHtml("$phpver (" . @php_sapi_name() . ")", 'danger');
 
 
         $uploadsDirSize = Yii::$app->cache->get('cache-uploads-' . $this->id);
@@ -54,6 +56,7 @@ class SysInfoWidget extends Widget {
             $cacheDirSize = CMS::dir_size(Yii::getAlias(Yii::$app->getCache()->cachePath));
             Yii::$app->cache->set('cache-dir-' . $this->id, $cacheDirSize, 3600 * 12);
         }
+        $checkOs = ini_set('disable_functions', "php_uname") ? @php_uname('s') : PHP_OS;
         return $this->render($this->skin, array(
             'cms_ver' => $this->labelHtml(Yii::$app->version),
             'yii_ver' => $this->labelHtml(Yii::getVersion()),
@@ -63,7 +66,7 @@ class SysInfoWidget extends Widget {
             'u_max' => $u_max,
             'm_max' => $m_max,
             'gd' => $gd,
-            'os' =>@php_uname('s'),
+            'os' => $checkOs,
             'php' => $php,
             'pdo' => $pdo,
             'backup_dir_size' => CMS::fileSize($backupsDirSize['size']),
@@ -74,7 +77,8 @@ class SysInfoWidget extends Widget {
         ));
     }
 
-    private function labelHtml($value, $class = 'secondary') {
+    private function labelHtml($value, $class = 'secondary')
+    {
         return '<span class="badge badge-' . $class . '">' . $value . '</span>';
     }
 
