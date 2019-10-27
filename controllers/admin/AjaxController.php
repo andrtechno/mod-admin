@@ -9,9 +9,9 @@ use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use panix\engine\CMS;
 use yii\web\Response;
+use panix\engine\controllers\AdminController;
 
-
-class AjaxController extends \panix\engine\controllers\AdminController
+class AjaxController extends AdminController
 {
 
     public function actionSetHashstate()
@@ -31,22 +31,13 @@ class AjaxController extends \panix\engine\controllers\AdminController
 
     public function actionGeo($ip)
     {
-        // die($ip);
-        $city = CMS::getCityNameByIp($ip);
-        $this->render('_geo', array(
-            'city' => $city,
-            'ip' => $ip
-        ));
+        $geoIp = Yii::$app->geoip->ip($ip);
+        return $this->render('_geo', [
+            'ip'=>$ip,
+            'geoIp' => $geoIp,
+        ]);
     }
 
-    public function actionCounters()
-    {
-        Yii::import('mod.cart.models.Order');
-        echo Json::encode(array(
-            // 'comments' => (int) Comment::model()->waiting()->count(),
-            //'orders' => Yii::app()->getModule('cart')->countOrder,
-        ));
-    }
 
     /**
      * Экшен для CEditableColumn
@@ -54,7 +45,7 @@ class AjaxController extends \panix\engine\controllers\AdminController
      */
     public function actionUpdateGridRow()
     {
-        if (Yii::app()->request->isAjaxRequest) {
+        if (Yii::$app->request->isAjax) {
             $response = array();
             $modelClass = $_POST['modelClass'];
             $id = intval($_POST['pk']);
