@@ -27,7 +27,7 @@ use panix\engine\Html;
         <div class="card p-3 text-center">
             <div class="card-body">
                 <a href="">
-                    <i class="icon-folder-open icon-x3"></i>
+                    <i class="icon-books icon-x3"></i>
                     <h5 class="card-title">Документация</h5>
                     <h6 class="mb-2 text-muted">Прочитайте официальные руководства</h6>
                 </a>
