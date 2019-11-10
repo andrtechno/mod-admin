@@ -28,8 +28,8 @@ $this->registerJs("
                     return true;
                 },
                 'themes': {
-                    'responsive': false,
-                    'variant': 'small',
+                    'responsive': true,
+                    'variant': 'large',
                     'stripes': true
                 }
             },
