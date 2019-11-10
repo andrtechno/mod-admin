@@ -23,9 +23,16 @@ class TemplateController extends AdminController
         $this->pageName = Yii::t('admin/default', 'template');
         $this->breadcrumbs = [$this->pageName];
 
-        return $this->render('index', []);
+        $post = Yii::$app->request->post();
+        if($post){
+            $fs = new FileSystem($post['file'],Yii::getAlias('@web_theme'));
+            $fs->write($post['code']);
+        }
+        return $this->render('index');
     }
-    public function actionOperation() {
+
+    public function actionOperation()
+    {
         Yii::$app->response->format = Response::FORMAT_JSON;
         if (Yii::$app->request->get('operation')) {
 
@@ -46,7 +53,7 @@ class TemplateController extends AdminController
 
                         $node = isset($_GET['id']) && $_GET['id'] !== '#' ? $_GET['id'] : '/';
                         $rslt = $fs->data($node);
-                        if($rslt['type'] == 'php'){
+                        if ($rslt['type'] == 'php') {
                             //CodeMirrorPhpAsset::register($this->view);
                         }
 

@@ -1,4 +1,5 @@
 <?php
+use panix\engine\Html;
 
 $this->registerJs("
 
@@ -249,60 +250,83 @@ $this->registerJs("
 \panix\ext\jstree\FileBrowser::widget([]);
 
 ?>
-<form method="post" action="/admin/app/template/" class="">
-    <input type="hidden" name="file" id="filename"/>
 
-    <div class="row">
-        <div class="col-xs-4 col-sm-5 col-md-4">
-            <div id="tree"></div>
+
+
+
+
+
+
+
+
+
+<?= Html::beginForm() ?>
+<?= Html::hiddenInput('file', null, ['id' => 'filename']) ?>
+<div class="row">
+    <div class="col-sm-5 col-md-4">
+        <div id="tree"></div>
+    </div>
+    <div class="col-sm-7 col-md-8">
+        <div class="row">
+            <div class="col-sm-4">
+                <span class="badge badge-secondary">Ctrl-F / Cmd-F</span> Поиск
+            </div>
+            <div class="col-sm-4">
+                <span class="badge badge-secondary">Ctrl-G / Cmd-G</span> Найти следующий
+            </div>
+            <div class="col-sm-4">
+                <span class="badge badge-secondary">Shift-Ctrl-G / Shift-Cmd-G</span> Найти предыдущий
+            </div>
+            <div class="col-sm-4">
+                <span class="badge badge-secondary">Alt-G</span> Переход по линиям
+            </div>
+            <div class="col-sm-4">
+                <span class="badge badge-secondary">Shift-Ctrl-F / Cmd-Option-F</span> Замена
+            </div>
+            <div class="col-sm-4">
+                <span class="badge badge-secondary">Shift-Ctrl-R / Shift-Cmd-Option-F</span> Заменить все
+            </div>
+            <div class="col-sm-12">
+                <span class="badge badge-secondary">Alt-F</span> Постоянный поиск (диалоговое окно не закрывается
+                автоматически, нажмите Enter, чтобы найти следующее, Shift-Enter, чтобы найти предыдущее)
+            </div>
         </div>
-        <div class="col-xs-8 col-sm-7 col-md-8">
-            <div id="data">
-                <div class="contentTree code" style="display:none;">
-
-                    <?php
-                    /*$this->widget('ext.codemirror.CodeMirrorWidget', array(
-                        'name' => 'code',
-                        'target' => 'code',
-                        'htmlOptions' => array('id' => 'code','class'=>'form-control')
-                    ));*/
-
-                    echo \panix\engine\widgets\CodeMirrorWidget::widget([
-                        'name' => 'code',
-                        'attribute' => 'code',
-                        'options' => ['id' => 'code', 'class' => 'form-control']
-                    ])
-                    ?>
 
 
-                </div>
-                <div class="contentTree folder" style="display:none;"></div>
-                <div class="contentTree image" style="display:none; position:relative;">
-                    <img src="" alt="" style="display:block; position:absolute; left:50%; top:50%; padding:0; max-height:90%; max-width:90%;"/>
-                </div>
-                <div class="contentTree default" style="text-align:center;">Select a file from the tree.</div>
+        <div id="data">
+            <div class="contentTree code" style="display:none;">
+
+                <?php
+                /*$this->widget('ext.codemirror.CodeMirrorWidget', array(
+                    'name' => 'code',
+                    'target' => 'code',
+                    'htmlOptions' => array('id' => 'code','class'=>'form-control')
+                ));*/
+
+                echo \panix\engine\widgets\CodeMirrorWidget::widget([
+                    'name' => 'code',
+                    'attribute' => 'code',
+                    'options' => ['id' => 'code', 'class' => 'form-control']
+                ])
+                ?>
+
+
             </div>
-
-
-            <div class="form-group text-center">
-                <input type="submit" value="<?= Yii::t('app', 'SAVE') ?>" class="btn btn-success"/>
+            <div class="contentTree folder" style="display:none;"></div>
+            <div class="contentTree image" style="display:none; position:relative;">
+                <img src="" alt=""
+                     style="display:block; position:absolute; left:50%; top:50%; padding:0; max-height:90%; max-width:90%;"/>
             </div>
+            <div class="contentTree default" style="text-align:center;">Select a file from the tree.</div>
+        </div>
+
+
+        <div class="form-group text-center">
+            <input type="submit" value="<?= Yii::t('app', 'SAVE') ?>" class="btn btn-success"/>
         </div>
     </div>
+</div>
 
-</form>
-Ctrl-F / Cmd-F
-Start searching
-Ctrl-G / Cmd-G
-Find next
-Shift-Ctrl-G / Shift-Cmd-G
-Find previous
-Shift-Ctrl-F / Cmd-Option-F
-Replace
-Shift-Ctrl-R / Shift-Cmd-Option-F
-Replace all
-Alt-F
-Persistent search (dialog doesn't autoclose, enter to find next, Shift-Enter to find previous)
-Alt-G
-Jump to line
+<?= Html::endForm() ?>
+
 
