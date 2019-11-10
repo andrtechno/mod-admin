@@ -162,14 +162,18 @@ $this->registerJs("
                                     $('#data .code').show();
                                     var cm = CodeMirror.fromTextArea(document.getElementById('code'), {
                                         mode: mode,
+                                        theme:'ambiance',
                                         lineNumbers: true,
+                                        lineWrapping: true,
                                         matchBrackets: true,
                                         indentUnit: 4,
                                         indentWithTabs: true,
                                         enterMode: 'keep',
-                                        tabMode: 'shift'
+                                        tabMode: 'shift',
+                                        readOnly: d.readonly
                                     });
                                     cm.setValue(d.content);
+                                    cm.setSize('100%', '100%');
                                     break;
                                 case 'css':
 
@@ -177,37 +181,41 @@ $this->registerJs("
                                     //$('#code').html(d.content).attr('readonly', d.readonly);
                                     var cm = CodeMirror.fromTextArea(document.getElementById('code'), {
                                         mode: mode,
+                                        theme:'ambiance',
                                         lineNumbers: true,
+                                        lineWrapping: true,
                                         matchBrackets: true,
                                         indentUnit: 4,
                                         indentWithTabs: true,
                                         enterMode: 'keep',
-                                        tabMode: 'shift'
+                                        tabMode: 'shift',
+                                        readOnly: d.readonly
                                     });
                                     cm.setValue(d.content);
+                                    cm.setSize('100%', '100%');
                                     //cm.refresh();
                                     break;
                                 case 'php':
                                     $('#data .code').show();
-                                    //$('#code').html(d.content).attr('readonly', d.readonly);
                                     var editorConfig = {
                                         mode: mode,
+                                        theme:'ambiance',
                                         lineNumbers: true,
+                                        lineWrapping: true,
                                         styleActiveLine: true,
                                         matchBrackets: true,
-                                        indentUnit: 4,
+                                        indentUnit: 10,
                                         indentWithTabs: true,
                                         enterMode: 'keep',
-                                        //tabMode: 'shift'
+                                        tabMode: 'shift',
+                                        readOnly: d.readonly,
                                     };
                                     var cm = CodeMirror.fromTextArea(document.getElementById('code'), editorConfig);
                                     cm.setValue(d.content);
+                                    cm.setSize('100%', '100%');
                                     //cm.refresh();
-                                    //cm.toTextArea();
-
-
-
                                     break;
+                                case 'svg':
                                 case 'html':
                                     $('#data .code').show();
                                     $('#code').val(d.content).attr('readonly', d.readonly);
@@ -283,5 +291,18 @@ $this->registerJs("
     </div>
 
 </form>
-
+Ctrl-F / Cmd-F
+Start searching
+Ctrl-G / Cmd-G
+Find next
+Shift-Ctrl-G / Shift-Cmd-G
+Find previous
+Shift-Ctrl-F / Cmd-Option-F
+Replace
+Shift-Ctrl-R / Shift-Cmd-Option-F
+Replace all
+Alt-F
+Persistent search (dialog doesn't autoclose, enter to find next, Shift-Enter to find previous)
+Alt-G
+Jump to line
 

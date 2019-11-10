@@ -32,7 +32,7 @@ class TemplateController extends AdminController
 
             $fs = new FileSystem();
 
-            $fs->setPath(Yii::getAlias('@theme'));
+            $fs->setPath(Yii::getAlias('@web_theme'));
             try {
                 $rslt = null;
                 switch (Yii::$app->request->get('operation')) {
@@ -61,7 +61,9 @@ class TemplateController extends AdminController
                         break;
                     case 'delete_node':
                         $node = isset($_GET['id']) && $_GET['id'] !== '#' ? $_GET['id'] : '/';
-                        $rslt = $fs->remove($node);
+                        $fs->setName($node);
+                        $rslt = $fs->delete();
+                        //$rslt = $fs->delete($node);
                         break;
                     case 'move_node':
                         $node = isset($_GET['id']) && $_GET['id'] !== '#' ? $_GET['id'] : '/';
