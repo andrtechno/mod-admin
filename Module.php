@@ -76,6 +76,18 @@ class Module extends WebModule { // implements BootstrapInterface
                         'icon' => 'puzzle',
                         'visible' => true
                     ],
+                    [
+                        'label' => Yii::t('admin/default', 'HELP'),
+                        'url' => ['/admin/app/help'],
+                        'icon' => 'info',
+                        'visible' => true
+                    ],
+                    [
+                        'label' => Yii::t('admin/default', 'THEME'),
+                        'url' => ['/admin/app/template'],
+                        'icon' => 'info',
+                        'visible' => true
+                    ],
                 ]
             ]
         ];
