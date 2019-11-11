@@ -16,16 +16,16 @@ use yii\web\Response;
 class TemplateController extends AdminController
 {
 
-    public $icon = 'icon-template';
+    public $icon = 'template';
 
     public function actionIndex()
     {
-        $this->pageName = Yii::t('admin/default', 'template');
+        $this->pageName = Yii::t('admin/default', 'TEMPLATE');
         $this->breadcrumbs = [$this->pageName];
 
         $post = Yii::$app->request->post();
-        if($post){
-            $fs = new FileSystem($post['file'],Yii::getAlias('@web_theme'));
+        if ($post) {
+            $fs = new FileSystem($post['file'], Yii::getAlias('@web_theme'));
             $fs->write($post['code']);
         }
         return $this->render('index');
