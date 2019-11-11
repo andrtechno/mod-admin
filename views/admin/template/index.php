@@ -39,12 +39,27 @@ $this->registerJs("
             'contextmenu': {
                 'items': function (node) {
                     var tmp = $.jstree.defaults.contextmenu.items();
+                    console.log(tmp);
                     delete tmp.create.action;
-                    tmp.create.label = 'New';
+                    tmp.remove.label = '".Yii::t('app','DELETE')."';
+                    tmp.remove.icon = 'icon-delete';
+                    tmp.rename.label = '".Yii::t('app','RENAME')."';
+                    tmp.rename.icon = 'icon-rename';
+                    tmp.ccp.label = '".Yii::t('app','UPDATE')."';
+                    tmp.ccp.icon = 'icon-edit';
+                    tmp.ccp.submenu.copy.icon = 'icon-copy';
+                    tmp.ccp.submenu.cut.icon = 'icon-cut';
+                    tmp.ccp.submenu.paste.icon = 'icon-paste';
+                    
+                    
+                    
+                    tmp.create.label = 'Создать';
+                    tmp.create.icon = 'icon-add';
                     tmp.create.submenu = {
                         'create_folder': {
-                            'separator_after': true,
-                            'label': 'Папка',
+                            //'separator_after': true,
+                            'label': 'Папку',
+                            'icon':'icon-folder-open',
                             'action': function (data) {
                                 var inst = $.jstree.reference(data.reference),
                                     obj = inst.get_node(data.reference);
@@ -57,6 +72,7 @@ $this->registerJs("
                         },
                         'create_file': {
                             'label': 'Файл',
+                            'icon':'icon-file-doc',
                             'action': function (data) {
                                 var inst = $.jstree.reference(data.reference),
                                     obj = inst.get_node(data.reference);
@@ -75,8 +91,8 @@ $this->registerJs("
                 }
             },
             'types': {
-                'default': {'icon': 'folder'},
-                'file': {'valid_children': [], 'icon': 'file'}
+                'default': {'icon': 'folder icon-folder-open'},
+                'file': {'valid_children': [], 'icon': 'file icon-file-doc'}
             },
             'unique': {
                 'duplicate': function (name, counter) {
@@ -86,13 +102,13 @@ $this->registerJs("
             'plugins': ['state', 'dnd', 'sort', 'types', 'contextmenu', 'unique']
         })
             .on('delete_node.jstree', function (e, data) {
-                $.get('/admin/app/template/operation?operation=delete_node', {'id': data.node.id})
+                $.get(common.url('/admin/app/template/operation?operation=delete_node'), {'id': data.node.id})
                     .fail(function () {
                         data.instance.refresh();
                     });
             })
             .on('create_node.jstree', function (e, data) {
-                $.get('/admin/app/template/operation?operation=create_node', {'type': data.node.type, 'id': data.node.parent, 'text': data.node.text})
+                $.get(common.url('/admin/app/template/operation?operation=create_node'), {'type': data.node.type, 'id': data.node.parent, 'text': data.node.text})
                     .done(function (d) {
                         data.instance.set_id(data.node, d.id);
                     })
@@ -101,7 +117,7 @@ $this->registerJs("
                     });
             })
             .on('rename_node.jstree', function (e, data) {
-                $.get('/admin/app/template/operation?operation=rename_node', {'id': data.node.id, 'text': data.text})
+                $.get(common.url('/admin/app/template/operation?operation=rename_node'), {'id': data.node.id, 'text': data.text})
                     .done(function (d) {
                         data.instance.set_id(data.node, d.id);
                     })
@@ -110,7 +126,7 @@ $this->registerJs("
                     });
             })
             .on('move_node.jstree', function (e, data) {
-                $.get('/admin/app/template/operation?operation=move_node', {'id': data.node.id, 'parent': data.parent})
+                $.get(common.url('/admin/app/template/operation?operation=move_node'), {'id': data.node.id, 'parent': data.parent})
                     .done(function (d) {
                         //data.instance.load_node(data.parent);
                         data.instance.refresh();
@@ -120,7 +136,7 @@ $this->registerJs("
                     });
             })
             .on('copy_node.jstree', function (e, data) {
-                $.get('/admin/app/template/operation?operation=copy_node', {'id': data.original.id, 'parent': data.parent})
+                $.get(common.url('/admin/app/template/operation?operation=copy_node'), {'id': data.original.id, 'parent': data.parent})
                     .done(function (d) {
                         //data.instance.load_node(data.parent);
                         data.instance.refresh();
