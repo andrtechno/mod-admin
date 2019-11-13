@@ -3,18 +3,18 @@
 namespace panix\mod\admin\controllers\admin;
 
 
-use panix\mod\admin\models\Desktop;
+use panix\engine\grid\GridColumns;
 use panix\mod\admin\models\DesktopWidgets;
 use panix\mod\cart\models\Order;
 use Yii;
-use yii\base\Exception;
-use yii\web\HttpException;
+use yii\data\ArrayDataProvider;
+use yii\helpers\Json;
 use yii\web\Response;
 use panix\engine\controllers\AdminController;
 use panix\mod\admin\models\Notifications;
 use panix\engine\Html;
-use panix\mod\admin\models\GridColumns;
 use panix\engine\FileSystem;
+use yii\web\UnauthorizedHttpException;
 
 class DefaultController extends AdminController
 {
@@ -87,83 +87,69 @@ class DefaultController extends AdminController
         return ['success' => true];
     }
 
-    public function actionGetGrid()
+
+    public function actionEditColumns()
     {
-        $request = Yii::$app->request;
-        if ($request->isAjax) {
-            $modelClass = $request->post('modelClass');
-            $gridId = $request->post('grid');
-            $runClass = new $modelClass;
-            $post_columns = $request->post('GridColumns');
+        if (Yii::$app->request->isAjax) {
+            $modelClass = str_replace('/', '\\', Yii::$app->request->post('model'));
 
-            if ($post_columns) {
-                GridColumns::deleteAll(['modelClass' => $modelClass]);
-                foreach ($post_columns['check'] as $key => $post) {
-                    $model = new GridColumns;
-                    $model->modelClass = $modelClass;
-                    $model->ordern = $post_columns['ordern'][$key];
-                    $model->column_key = $key;
-                    $model->save(false);
-                }
+            $grid_id = Yii::$app->request->post('grid_id');
+            $getGrid = Yii::$app->request->post('GridColumns');
+            $pageSize = Yii::$app->request->post('pageSize');
+
+
+            $model = GridColumns::findOne(['grid_id' => $grid_id]);
+
+            if (!$model)
+                $model = new GridColumns();
+
+            if ($getGrid) {
+                $model->grid_id = $grid_id;
+                $model->modelClass = $modelClass;
+                $model->column_data = Json::encode($getGrid);
+                $model->pageSize = $pageSize;
+                $model->save(false);
             }
 
-            $data = array();
+            $data = [];
 
-            $model = GridColumns::find()->where(['modelClass' => $modelClass])->all();
-            $m = array();
-            foreach ($model as $r) {
-                $m[$r->column_key]['ordern'] = $r->ordern;
-                $m[$r->column_key]['key'] = $r->column_key;
-            }
+            /** @var \panix\engine\db\ActiveRecord $mClass */
+            $mClass = new $modelClass();
+            $columnsArray = $mClass->getGridColumns();
 
-
-            $columsArray = $runClass->getGridColumns();
-            unset($columsArray['DEFAULT_COLUMNS'], $columsArray['DEFAULT_CONTROL']);
-            foreach ($columsArray as $key => $column) {
-
-                if (isset($column['header'])) {
-                    $name = $column['header'];
-                } else {
-                    if (is_array($column)) {
-                        $name = $runClass->getAttributeLabel($column['attribute']);
-                    } else {
-                        $name = $runClass->getAttributeLabel($column);
-                    }
-                }
-                if (isset($m[$key])) {
-                    $isChecked = ($m[$key]['key'] == $key) ? true : false;
-                } else {
-                    $m[$key] = 0;
+            unset($columnsArray['DEFAULT_COLUMNS'], $columnsArray['DEFAULT_CONTROL']);
+            if (isset($columnsArray)) {
+                foreach ($columnsArray as $key => $column) {
                     $isChecked = false;
+
+                    if (isset($column['header'])) {
+                        $name = $column['header'];
+                    } else {
+                        $name = $mClass->getAttributeLabel((isset($column['attribute'])) ? $column['attribute'] : $key);
+                    }
+                    if (isset($model->column_data[$key]['checked'])) {
+                        $isChecked = true;
+                    }
+                    $order = (isset($model->column_data[$key])) ? $model->column_data[$key]['ordern'] : '';
+                    $data[] = [
+                        'checkbox' => Html::checkbox('GridColumns[' . $key . '][checked]', $isChecked, ['checked' => $isChecked]),
+                        'name' => $name,
+                        'sort' => Html::textInput('GridColumns[' . $key . '][ordern]', $order, ['class' => 'form-control text-center'])
+                    ];
                 }
-                $data[] = array(
-                    'checkbox' => Html::checkbox('GridColumns[check][' . $key . ']', $isChecked, ['value' => $name]),
-                    'name' => $name,
-                    'sorter' => Html::textInput('GridColumns[ordern][' . $key . ']', $m[$key]['ordern'], ['style' => 'width:50px', 'class' => 'form-control text-center'])
-                );
             }
 
-
-            $provider = new \yii\data\ArrayDataProvider([
+            $provider = new ArrayDataProvider([
                 'allModels' => $data,
-                'sort' => [
-                    'attributes' => ['name'],
-                ],
-                'pagination' => [
-                    'pageSize' => 10,
-                ],
+                'pagination' => false
             ]);
-
-
-            return $this->renderAjax('grid', [
-                'provider' => $provider,
+            return $this->renderPartial('@panix/engine/views/_EditGridColumns', [
                 'modelClass' => $modelClass,
-                /* 'provider' => $provider,
-                  'grid_id' => $grid_id,
-                  'module' => $mod */
+                'provider' => $provider,
+                'grid_id' => $grid_id,
             ]);
         } else {
-            throw new HttpException(401, Yii::t('app/error', '401'));
+            throw new UnauthorizedHttpException(401);
         }
     }
 
