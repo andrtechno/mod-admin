@@ -130,7 +130,7 @@ class DefaultController extends AdminController
                     if (isset($model->column_data[$key]['checked'])) {
                         $isChecked = true;
                     }
-                    $order = (isset($model->column_data[$key])) ? $model->column_data[$key]['ordern'] : '';
+                    $order = (isset($model->column_data[$key]) && isset($model->column_data[$key]['ordern'])) ? $model->column_data[$key]['ordern'] : '';
                     $data[] = [
                         'checkbox' => Html::checkbox('GridColumns[' . $key . '][checked]', $isChecked, ['checked' => $isChecked]),
                         'name' => $name,
