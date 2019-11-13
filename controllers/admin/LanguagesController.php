@@ -2,6 +2,7 @@
 
 namespace panix\mod\admin\controllers\admin;
 
+use panix\engine\Html;
 use panix\mod\admin\components\YandexTranslate;
 use Yii;
 use panix\engine\controllers\AdminController;
@@ -65,15 +66,8 @@ class LanguagesController extends AdminController
 
     public function actionUpdate($id = false)
     {
-
-
-        if ($id === true) {
-            $model = new Languages;
-        } else {
-            $model = Languages::findModel($id);
-        }
-
-
+        $model = Languages::findModel($id);
+        $isNew = $model->isNewRecord;
         $this->pageName = Yii::t('admin/default', 'LANGUAGES');
         $this->buttons = [
             [
@@ -93,17 +87,9 @@ class LanguagesController extends AdminController
 
         //$model->setScenario("admin");
         $post = Yii::$app->request->post();
-
-
         if ($model->load($post) && $model->validate()) {
             $model->save();
-
-            Yii::$app->session->addFlash('success', \Yii::t('app', 'SUCCESS_CREATE'));
-            if ($model->isNewRecord) {
-                return Yii::$app->getResponse()->redirect(['/app/languages']);
-            } else {
-                return Yii::$app->getResponse()->redirect(['/app/languages/update', 'id' => $model->id]);
-            }
+            $this->redirectPage($isNew, $post);
         }
 
         return $this->render('update', [
@@ -114,22 +100,22 @@ class LanguagesController extends AdminController
     public function actionEditFile($file)
     {
 
+        //echo VarDumper::dump(Yii::$app->i18n->translations,10,true);die;
 
-          echo VarDumper::dump(Yii::$app->i18n->translations,100,true);
-        die;
-        foreach (Yii::$app->i18n->translations as $translation) {
-            if (isset($translation->fileMap)) {
-
-                foreach ($translation->fileMap as $file) {
-echo $translation->basePath;
-                  //  echo VarDumper::dump($file, 10, true);
-                    //     echo $file;
-                    echo '<br>';
-                }
+        $r = [];
+        $i18n = Yii::$app->i18n;
+        foreach ($i18n->translations as $key => $translation) {
+            if (isset($i18n->translations[$key])) {
+                $basePath = (isset($i18n->translations[$key]->basePath)) ? $i18n->translations[$key]->basePath : $i18n->translations[$key]['basePath'];
+                $r['path'][] = $basePath;
+                $r['s'][] = $key;
             }
+            //  echo $key.'<br>   ';
         }
         // echo file_get_contents(Yii::getAlias($file));
-        die;
+        return $this->render('edit-file', [
+            'r' => $r
+        ]);
     }
 
     public function actionTranslate()
@@ -304,5 +290,22 @@ return ' . var_export($content, true) . ';')
         } else {
             return false;
         }
+    }
+
+
+    public function getAddonsMenu()
+    {
+        return [
+            [
+                'label' => Yii::t('app', 'SETTINGS'),
+                'url' => array('/admin/seo/settings'),
+                'icon' => Html::icon('settings'),
+            ],
+            [
+                'label' => Yii::t('seo/default', 'REDIRECTS'),
+                'url' => array('/admin/seo/redirects'),
+                'icon' => Html::icon('refresh'),
+            ],
+        ];
     }
 }

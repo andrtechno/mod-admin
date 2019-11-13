@@ -4,6 +4,7 @@ namespace panix\mod\admin\controllers\admin;
 
 
 use Yii;
+use yii\base\Exception;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
@@ -41,9 +42,9 @@ class AjaxController extends AdminController
 
     /**
      * Экшен для CEditableColumn
-     * @throws HttpException
+     * @throws Exception
      */
-    public function actionUpdateGridRow()
+    public function ___actionUpdateGridRow()
     {
         if (Yii::$app->request->isAjax) {
             $response = array();
@@ -63,7 +64,7 @@ class AjaxController extends AdminController
             echo Json::encode($response);
             Yii::$app->end();
         } else {
-            throw new HttpException(403, 'no ajax');
+            throw new Exception(403, 'no ajax');
         }
     }
 

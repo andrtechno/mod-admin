@@ -183,7 +183,7 @@ class DefaultController extends AdminController
     public function clearAssets()
     {
         if (Yii::$app->request->post('clear_assets')) {
-            FileSystem::fs('assets', Yii::getAlias('@webroot'))->cleardir();
+            $s = (new FileSystem('assets', Yii::getAlias('@webroot')))->cleardir();
             Yii::$app->session->setFlash('success', Yii::t('app/admin', 'SUCCESS_CLR_ASSETS'));
         }
     }
