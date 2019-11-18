@@ -19,6 +19,8 @@ $icons = [
         ['name' => 'icon-telegram'],
         ['name' => 'icon-twitter'],
         ['name' => 'icon-skype'],
+        ['name' => 'icon-exit'],
+        ['name' => 'icon-logout'],
     ],
     'Браузер & OS' => [
         ['name' => 'icon-windows'],
