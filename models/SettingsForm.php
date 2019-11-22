@@ -112,13 +112,13 @@ class SettingsForm extends SettingsModel
 
     public function getWatermarkCorner()
     {
-        return array(
+        return [
             1 => self::t('CORNER_LEFT_TOP'),
             2 => self::t('CORNER_RIGHT_TOP'),
             3 => self::t('CORNER_LEFT_BOTTOM'),
             4 => self::t('CORNER_RIGHT_BOTTOM'),
             5 => self::t('CORNER_CENTER'),
-        );
+        ];
     }
 
     public function rules()
