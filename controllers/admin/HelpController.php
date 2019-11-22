@@ -15,7 +15,7 @@ use yii\helpers\FileHelper;
 class HelpController extends AdminController
 {
 
-    public $icon = 'icon-help';
+    public $icon = 'info';
 
     public function actionIndex()
     {

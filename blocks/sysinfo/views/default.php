@@ -56,7 +56,7 @@ use panix\engine\Html;
             'cached_settings' => 'settings',
             'cached_widgets' => 'cached_widgets',
             'url_manager_urls' => 'url_manager_urls'
-        ], ['prompt' => Yii::t('app', 'EMPTY_LIST'), 'class' => 'form-control'])
+        ], ['prompt' => html_entity_decode(Yii::t('app', 'EMPTY_LIST')), 'class' => 'form-control'])
         ?>
 
 
