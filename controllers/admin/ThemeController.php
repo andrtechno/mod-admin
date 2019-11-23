@@ -23,7 +23,25 @@ class ThemeController extends AdminController
             ];
             $model = Yii::createObject(['class'=>'app\web\themes\autima\settings\ThemeForm']);
             if ($model->load(Yii::$app->request->post())) {
+
+
+
+                $logo = \yii\web\UploadedFile::getInstances($model, 'logo');
+
+                if ($logo) {
+
+                    $uniqueName = \panix\engine\CMS::gen(10);
+                    $logo->saveAs(Yii::getAlias('@uploads') . '/' . $uniqueName . '_' . $logo->baseName . '.' . $logo->extension);
+
+
+                }
+
                 if ($model->validate()) {
+
+
+
+
+
                     $model->save();
                     return $this->redirect(['/admin/app/theme']);
 
