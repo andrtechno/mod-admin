@@ -147,6 +147,7 @@ class DefaultController extends AdminController
                 'modelClass' => $modelClass,
                 'provider' => $provider,
                 'grid_id' => $grid_id,
+                'pageSize' => $model->pageSize,
             ]);
         } else {
             throw new UnauthorizedHttpException(401);
