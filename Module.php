@@ -50,19 +50,19 @@ class Module extends WebModule { // implements BootstrapInterface
                         'label' => Yii::t('admin/default', 'LANGUAGES'),
                         'url' => ['/admin/app/languages'],
                         'icon' => 'language',
-                        'visible' => true
+                        'visible' => YII_DEBUG
                     ],
                     [
                         'label' => Yii::t('admin/default', 'WIDGETS'),
                         'url' => ['/admin/app/widgets'],
                         'icon' => 'chip',
-                        'visible' => true
+                        'visible' => YII_DEBUG
                     ],
                     [
                         'label' => Yii::t('admin/default', 'Mails tpl'),
                         'url' => ['/admin/app/mail-template'],
                         'icon' => 'mail',
-                        'visible' => true
+                        'visible' => YII_DEBUG
                     ],
                     [
                         'label' => Yii::t('admin/default', 'DATABASE'),
@@ -74,7 +74,7 @@ class Module extends WebModule { // implements BootstrapInterface
                         'label' => Yii::t('admin/default', 'MODULES'),
                         'url' => ['/admin/app/modules'],
                         'icon' => 'puzzle',
-                        'visible' => true
+                        'visible' => YII_DEBUG
                     ],
                     [
                         'label' => Yii::t('admin/default', 'HELP'),
@@ -86,7 +86,7 @@ class Module extends WebModule { // implements BootstrapInterface
                         'label' => Yii::t('admin/default', 'TEMPLATE'),
                         'url' => ['/admin/app/template'],
                         'icon' => 'template',
-                        'visible' => true
+                        'visible' => YII_DEBUG
                     ],
                 ]
             ]
