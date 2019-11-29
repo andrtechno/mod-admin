@@ -56,12 +56,7 @@ class LoginForm extends Model
         // check for valid user
         $user = $this->getUser();
         if (!$user) {
-            if (Yii::$app->getModule("user")->loginEmail && Yii::$app->getModule("user")->loginUsername) {
-                $attribute = "Email / Username";
-            } else {
-                $attribute = Yii::$app->getModule("user")->loginEmail ? "Email" : "Username";
-            }
-            $this->addError("username", Yii::t("user", "$attribute not found"));
+            $this->addError("username", Yii::t("user", "Username not found"));
         }
     }
 
@@ -82,7 +77,7 @@ class LoginForm extends Model
         if ($user->status == $user::STATUS_INACTIVE) {
 
             /** @var UserKey $userKey */
-          //  $userKey = new UserKey();
+            //  $userKey = new UserKey();
             $userKey = UserKey::generate($user->id, UserKey::TYPE_EMAIL_ACTIVATE);
             $user->sendEmailConfirmation($userKey);
             $this->addError("username", Yii::t("user/default", "Confirmation email resent"));
@@ -119,13 +114,8 @@ class LoginForm extends Model
             /** @var \yii\db\ActiveRecord $userModel */
             $userModel = Yii::$app->getUser()->identityClass;
             // build query based on email and/or username login properties
-            $user = $userModel::find();
-            if (Yii::$app->getModule("user")->loginEmail) {
-                $user->orWhere(["email" => $this->username]);
-            }
-            if (Yii::$app->getModule("user")->loginUsername) {
-                $user->orWhere(["username" => $this->username]);
-            }
+            $user = $userModel::find()->where(["username" => $this->username]);
+
 
             // get and store user
             $this->_user = $user->one();
@@ -140,15 +130,8 @@ class LoginForm extends Model
      */
     public function attributeLabels()
     {
-        // calculate attribute label for "username"
-        if (Yii::$app->getModule("user")->loginEmail && Yii::$app->getModule("user")->loginUsername) {
-            $attribute = "Email / Username";
-        } else {
-            $attribute = Yii::$app->getModule("user")->loginEmail ? "Email" : "Username";
-        }
-
         return [
-            "username" => Yii::t("user/default", $attribute),
+            "username" => Yii::t("user/default", 'Username'),
             "password" => Yii::t("user/default", "Password"),
             "rememberMe" => Yii::t("user/default", "Remember Me"),
         ];
