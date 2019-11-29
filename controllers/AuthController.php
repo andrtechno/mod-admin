@@ -3,7 +3,7 @@
 namespace panix\mod\admin\controllers;
 
 use Yii;
-use panix\mod\user\models\forms\LoginForm;
+use panix\mod\admin\models\LoginForm;
 use panix\engine\controllers\AdminController;
 use panix\mod\rbac\filters\AccessControl;
 
