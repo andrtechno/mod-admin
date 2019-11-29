@@ -23,5 +23,8 @@ return [
     'INSTALLED' => 'Установить',
     'LIST_MODULES' => 'Список доступных модулей',
     'INSTALL' => 'Установить ({n})',
-    'WIDGETS_UPDATE' => 'Редактирование виджета'
+    'WIDGETS_UPDATE' => 'Редактирование виджета',
+    'USERNAME' => 'Логин',
+    'PASSWORD' => 'Пароль',
+    'REMEMBER_ME' => 'Запомнить меня'
 ];
