@@ -116,9 +116,10 @@ class LoginForm extends Model
     {
         // check if we need to get user
         if ($this->_user === false) {
-            $this->userModel = Yii::$app->getUser()->identityClass;
+            /** @var \yii\db\ActiveRecord $userModel */
+            $userModel = Yii::$app->getUser()->identityClass;
             // build query based on email and/or username login properties
-            $user = $this->userModel::find();
+            $user = $userModel::find();
             if (Yii::$app->getModule("user")->loginEmail) {
                 $user->orWhere(["email" => $this->username]);
             }
