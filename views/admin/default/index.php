@@ -6,27 +6,44 @@ use yii\helpers\Url;
 ?>
 
 <div class="row">
-    <div class="col-md-6 col-lg-3 col-sm-6">
+    <?php if (Yii::$app->hasModule('cart')) { ?>
+        <div class="col-md-6 col-lg-3 col-sm-6">
+            <?php
 
+            $orders = \panix\mod\cart\models\Order::find()->status()->all();
+            if ($orders) {
+                $orders_total_cash = 0;
+                $orders_products = 0;
+                foreach ($orders as $order) {
+                    $orders_total_cash += $order->total_price;
+                    $orders_products += $order->productsCount;
 
-        <div class="card bg-primary text-white o-hidden">
-            <div class="card-body" style="padding: 1rem">
-                <div class="row">
-                    <i class="icon-shopcart"></i>
-                    <div class="col">
-                        <h2>30 <span class="lead">новых заказов</span></h2>
-                        <div><b>150</b> товаров на сумму <b>30 400</b> грн.</div>
+                }
+                ?>
+                <div class="card bg-primary text-white o-hidden">
+                    <div class="card-body" style="padding: 1rem">
+                        <div class="row">
+                            <i class="icon-shopcart"></i>
+                            <div class="col">
+                                <h2>
+                                    <?= Yii::$app->getModule('cart')->count['num']; ?>
+                                    <span class="lead">новых заказов</span>
+                                </h2>
+                                <div>
+                                    <strong><?= $orders_products; ?></strong> товаров на сумму
+                                    <strong><?= Yii::$app->currency->number_format($orders_total_cash); ?></strong> <?= Yii::$app->currency->active['iso']; ?>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <a href="<?= Url::toRoute(['/admin/cart']); ?>" class="card-footer z-1">
+                        <span class="float-left">Подробней</span>
+                        <span class="float-right"><i class="icon-arrow-right"></i></span>
+                    </a>
                 </div>
-            </div>
-            <a href="#" class="card-footer z-1">
-                <span class="float-left">Подробней</span>
-                <span class="float-right"><i class="icon-arrow-right"></i></span>
-            </a>
+            <?php } ?>
         </div>
-
-
-    </div>
+    <?php } ?>
     <div class="col-md-6 col-lg-3 col-sm-6">
 
         <div class="card bg-danger text-white o-hidden">
