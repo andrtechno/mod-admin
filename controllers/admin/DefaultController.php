@@ -55,10 +55,10 @@ class DefaultController extends AdminController
         $notificationsAll = Notifications::find()->read([Notifications::STATUS_NO_READ, Notifications::STATUS_NOTIFY])->all();
         $notificationsLimit = Notifications::find()->read([Notifications::STATUS_NO_READ, Notifications::STATUS_NOTIFY])->limit(5)->all();
        // $notificationsCount = Notifications::find()->read([Notifications::STATUS_NO_READ, Notifications::STATUS_NOTIFY])->count();
-        $orderCount = Order::find()->where(['status_id' => 1])->count();
         $result = [];
-        $result['count']['cart'] = 5;
-        $result['count']['comments'] = $orderCount;
+        foreach (Yii::$app->counters as $key=>$count){
+            $result['count'][$key] = $count;
+        }
         $result['count']['notifications'] = count($notificationsAll);
 
         $result['notify'] = [];
