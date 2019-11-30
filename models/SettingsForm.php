@@ -89,8 +89,8 @@ class SettingsForm extends SettingsModel
 
             ],
             '\panix\engine\widgets\recaptcha\v3\ReCaptcha'=>[
-                'threshold' => 0.5,
-                'action' => 'homepage',
+                //'threshold' => 0.5,
+               // 'action' => 'homepage',
             ],
         ];
     }
