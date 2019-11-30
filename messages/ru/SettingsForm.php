@@ -34,7 +34,7 @@ return [
     'MAILER_TRANSPORT_SMTP_HOST' => 'SMTP сервер',
     'MAILER_TRANSPORT_SMTP_PORT' => 'Порт',
     'MAILER_TRANSPORT_SMTP_ENCRYPTION' => 'Шифрование',
-    'CAPTCHA_CLASS'=>'Тип капчи',
+    'CAPTCHA_CLASS'=>'Капча',
     'RECAPTCHA_KEY'=>'API ключ (ReCaptcha)',
     'RECAPTCHA_SECRET'=>'Секретный ключ (ReCaptcha)'
 ];

@@ -83,7 +83,7 @@ class SettingsForm extends SettingsModel
     public static function captchaConfig(){
         return [
             '\yii\captcha\Captcha'=>[
-                'captchaAction' => 'default/captcha',
+                'captchaAction' => '/captcha',
             ],
             '\panix\engine\widgets\recaptcha\v2\ReCaptcha'=>[
 
@@ -126,19 +126,21 @@ class SettingsForm extends SettingsModel
 
         return [
             //Mailer smtp
-            [['mailer_transport_smtp_host', 'mailer_transport_smtp_username', 'mailer_transport_smtp_password', 'mailer_transport_smtp_encryption'], "string"],
+            [['mailer_transport_smtp_host', 'mailer_transport_smtp_username', 'mailer_transport_smtp_password', 'mailer_transport_smtp_encryption','captcha_class'], "string"],
             [['mailer_transport_smtp_port'], 'integer'],
             [['email','mailer_transport_smtp_port', 'mailer_transport_smtp_host', 'mailer_transport_smtp_username', 'mailer_transport_smtp_password', 'mailer_transport_smtp_encryption'], 'trim'],
             ['mailer_transport_smtp_encryption', 'in', 'range' => ['ssl', 'tls']],
             ['mailer_transport_smtp_enabled', 'boolean'],
-
-
             [['attachment_wm_corner', 'attachment_wm_offsety', 'attachment_wm_offsetx'], 'integer'],
-            [['email', 'sitename', 'pagenum', 'timezone', 'theme', 'attachment_wm_offsetx', 'attachment_wm_offsety', 'attachment_wm_corner', 'attachment_image_type','captcha_class'], "required"],
+            [['email', 'sitename', 'pagenum', 'timezone', 'theme', 'attachment_wm_offsetx', 'attachment_wm_offsety', 'attachment_wm_corner', 'attachment_image_type'], "required"],
             ['email', 'email'],
             ['attachment_wm_path', 'validateWatermarkFile'],
             [['theme', 'censor_words', 'censor_replace', 'maintenance_text', 'maintenance_allow_ips', 'maintenance_allow_users', 'timezone', 'attachment_wm_active', 'attachment_image_resize', 'recaptcha_key', 'recaptcha_secret'], "string"],
             [['maintenance', 'censor'], 'boolean'],
+
+
+            [['captcha_class'], 'default'],
+
             //[['email', 'recaptcha_key', 'recaptcha_secret'], 'filter', 'filter' => 'trim'],
         ];
     }
