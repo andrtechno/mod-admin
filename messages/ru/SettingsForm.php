@@ -12,12 +12,11 @@ return [
     'CENSOR_REPLACE' => 'Замена запрещенных слов на',
     'TIMEZONE' => 'Часовой пояс',
     'THEME' => 'Шаблон',
+    'FAVICON' => 'Favicon',
     'ADMIN_THEME' => 'Цвет темы админ-панели',
-    'ATTACHMENT_IMAGE_RESIZE' => '123',
     'ATTACHMENT_IMAGE_TYPE' => 'Тип сохраний изображений',
     'ATTACHMENT_IMAGE_TYPE_HINT' => '<b>Asset</b> &mdash; Сохраняет изображение со всем настройки<br/><b>Render</b> &mdash; Применяет к оригиналу изображений настройки и создается на лету без изменений оригинала',
     'ATTACHMENT_INFO' => 'Данные настройки не распространяются на текстовые редакторы.',
-    'ATTACHMENT_WM_ACTIVE' => 'Активировать настройки, водяного знака в модулях',
     'ATTACHMENT_WM_PATH' => 'Изображение',
     'ATTACHMENT_WM_CORNER' => 'Позиция водяного знака',
     'ATTACHMENT_WM_OFFSETX' => 'Отступ по горизонтали',
@@ -34,7 +33,7 @@ return [
     'MAILER_TRANSPORT_SMTP_HOST' => 'SMTP сервер',
     'MAILER_TRANSPORT_SMTP_PORT' => 'Порт',
     'MAILER_TRANSPORT_SMTP_ENCRYPTION' => 'Шифрование',
-    'CAPTCHA_CLASS'=>'Капча',
-    'RECAPTCHA_KEY'=>'API ключ (ReCaptcha)',
-    'RECAPTCHA_SECRET'=>'Секретный ключ (ReCaptcha)'
+    'CAPTCHA_CLASS' => 'Капча',
+    'RECAPTCHA_KEY' => 'API ключ (ReCaptcha)',
+    'RECAPTCHA_SECRET' => 'Секретный ключ (ReCaptcha)'
 ];

@@ -12,6 +12,7 @@ use panix\engine\helpers\TimeZoneHelper;
 <?= $form->field($model, 'sitename'); ?>
 <?= $form->field($model, 'email'); ?>
 <?= $form->field($model, 'pagenum'); ?>
+<?= $form->field($model, 'favicon')->fileInput(['accept' => 'image/*']) ?>
 <?= $form->field($model, 'theme')->dropDownList($model->themesList(), []); ?>
 <?= $form->field($model, 'timezone')->dropDownList(TimeZoneHelper::getTimeZoneData(), []); ?>
 <?= $form->field($model, 'captcha_class')->dropDownList($model::captchaList(), ['prompt' => Yii::t('app', 'OFF')]); ?>

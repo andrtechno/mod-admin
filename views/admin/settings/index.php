@@ -11,7 +11,9 @@ use panix\engine\bootstrap\ActiveForm;
         <h5><?= $this->context->pageName ?></h5>
     </div>
     <div class="card-body">
-        <?php $form = ActiveForm::begin(); ?>
+        <?php $form = ActiveForm::begin([
+            'options' => ['enctype' => 'multipart/form-data']
+        ]); ?>
         <?php
         echo panix\engine\bootstrap\Tabs::widget([
             'items' => [
@@ -31,7 +33,7 @@ use panix\engine\bootstrap\ActiveForm;
                     'headerOptions' => [],
                 ],
                 [
-                    'label' => 'Image',
+                    'label' => 'Водяной знак',
                     'content' => $this->render('_images', ['form' => $form, 'model' => $model]),
                     'headerOptions' => [],
                 ],

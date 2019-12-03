@@ -23,11 +23,9 @@ class SettingsForm extends SettingsModel
     public $censor_words;
     public $censor_replace;
     public $timezone;
-
+    public $favicon;
 
     public $attachment_image_type;
-    public $attachment_image_resize;
-    public $attachment_wm_active;
     public $attachment_wm_path;
     public $attachment_wm_corner;
     public $attachment_wm_offsetx;
@@ -135,10 +133,11 @@ class SettingsForm extends SettingsModel
             [['email', 'sitename', 'pagenum', 'timezone', 'theme', 'attachment_wm_offsetx', 'attachment_wm_offsety', 'attachment_wm_corner', 'attachment_image_type'], "required"],
             ['email', 'email'],
             ['attachment_wm_path', 'validateWatermarkFile'],
-            [['theme', 'censor_words', 'censor_replace', 'maintenance_text', 'maintenance_allow_ips', 'maintenance_allow_users', 'timezone', 'attachment_wm_active', 'attachment_image_resize', 'recaptcha_key', 'recaptcha_secret'], "string"],
+            [['theme', 'censor_words', 'censor_replace', 'maintenance_text', 'maintenance_allow_ips', 'maintenance_allow_users', 'timezone', 'recaptcha_key', 'recaptcha_secret'], "string"],
             [['maintenance', 'censor'], 'boolean'],
 
-
+            [['attachment_wm_path'], 'file', 'skipOnEmpty' => true, 'extensions' => ['png', 'jpg']],
+            [['favicon'], 'file', 'skipOnEmpty' => true, 'extensions' => ['png', 'ico']],
             [['captcha_class'], 'default'],
 
             //[['email', 'recaptcha_key', 'recaptcha_secret'], 'filter', 'filter' => 'trim'],
