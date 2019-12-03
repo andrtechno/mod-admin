@@ -78,24 +78,28 @@ class SettingsForm extends SettingsModel
             '\panix\engine\widgets\recaptcha\v3\ReCaptcha' => 'ReCaptcha (v3)',
         ];
     }
-    public static function captchaConfig(){
+
+    public static function captchaConfig()
+    {
         return [
-            '\yii\captcha\Captcha'=>[
+            '\yii\captcha\Captcha' => [
                 'captchaAction' => '/captcha',
             ],
-            '\panix\engine\widgets\recaptcha\v2\ReCaptcha'=>[
+            '\panix\engine\widgets\recaptcha\v2\ReCaptcha' => [
 
             ],
-            '\panix\engine\widgets\recaptcha\v3\ReCaptcha'=>[
+            '\panix\engine\widgets\recaptcha\v3\ReCaptcha' => [
                 //'threshold' => 0.5,
-               // 'action' => 'homepage',
+                // 'action' => 'homepage',
             ],
         ];
     }
+
     public function renderWatermarkImage()
     {
-        if (file_exists(Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . 'watermark.png'))
-            return Html::img('/uploads/watermark.png?' . time(), ['class' => 'img-fluid']);
+        $config = Yii::$app->settings->get('app');
+        if (file_exists(Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . $config->attachment_wm_path))
+            return Html::img("/uploads/{$config->attachment_wm_path}?" . time(), ['class' => 'img-fluid']);
     }
 
     public function validateWatermarkFile($attr)
@@ -103,7 +107,7 @@ class SettingsForm extends SettingsModel
         $file = UploadedFile::getInstance($this, 'attachment_wm_path');
         if ($file) {
             $allowedExts = ['jpg', 'gif', 'png'];
-            if (!in_array($file->getExtension(), $allowedExts))
+            if (!in_array($file->extension, $allowedExts))
                 $this->addError($attr, self::t('ERROR_WM_NO_IMAGE'));
         }
     }
@@ -124,9 +128,9 @@ class SettingsForm extends SettingsModel
 
         return [
             //Mailer smtp
-            [['mailer_transport_smtp_host', 'mailer_transport_smtp_username', 'mailer_transport_smtp_password', 'mailer_transport_smtp_encryption','captcha_class'], "string"],
+            [['mailer_transport_smtp_host', 'mailer_transport_smtp_username', 'mailer_transport_smtp_password', 'mailer_transport_smtp_encryption', 'captcha_class'], "string"],
             [['mailer_transport_smtp_port'], 'integer'],
-            [['email','mailer_transport_smtp_port', 'mailer_transport_smtp_host', 'mailer_transport_smtp_username', 'mailer_transport_smtp_password', 'mailer_transport_smtp_encryption'], 'trim'],
+            [['email', 'mailer_transport_smtp_port', 'mailer_transport_smtp_host', 'mailer_transport_smtp_username', 'mailer_transport_smtp_password', 'mailer_transport_smtp_encryption'], 'trim'],
             ['mailer_transport_smtp_encryption', 'in', 'range' => ['ssl', 'tls']],
             ['mailer_transport_smtp_enabled', 'boolean'],
             [['attachment_wm_corner', 'attachment_wm_offsety', 'attachment_wm_offsetx'], 'integer'],
@@ -147,7 +151,7 @@ class SettingsForm extends SettingsModel
     public function themesList()
     {
         $themes = [];
-        $themesList = array_filter(glob(Yii::getAlias('@app/web/themes').'/*'), 'is_dir');
+        $themesList = array_filter(glob(Yii::getAlias('@app/web/themes') . '/*'), 'is_dir');
         foreach ($themesList as $theme) {
             if (basename($theme) != 'dashboard') {
                 $themes[basename($theme)] = ucfirst(basename($theme));

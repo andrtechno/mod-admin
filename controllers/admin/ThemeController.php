@@ -38,10 +38,6 @@ class ThemeController extends AdminController
 
                 if ($model->validate()) {
 
-
-
-
-
                     $model->save();
                     return $this->redirect(['/admin/app/theme']);
 
