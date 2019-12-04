@@ -99,7 +99,14 @@ class SettingsForm extends SettingsModel
     {
         $config = Yii::$app->settings->get('app');
         if (file_exists(Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . $config->attachment_wm_path))
-            return Html::img("/uploads/{$config->attachment_wm_path}?" . time(), ['class' => 'img-fluid']);
+            return Html::img("/uploads/{$config->attachment_wm_path}?" . time(), ['class' => 'img-fluid img-thumbnail mt-3']);
+    }
+
+    public function renderFaviconImage()
+    {
+        $config = Yii::$app->settings->get('app');
+        if (file_exists(Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . $config->favicon))
+            return Html::img("/uploads/{$config->favicon}?" . time(), ['class' => 'img-fluid img-thumbnail mt-3']);
     }
 
     public function validateWatermarkFile($attr)
