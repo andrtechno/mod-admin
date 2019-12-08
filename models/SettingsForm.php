@@ -67,6 +67,7 @@ class SettingsForm extends SettingsModel
             'captcha_class' => '\yii\captcha\Captcha',
             'recaptcha_key' => '',
             'recaptcha_secret' => '',
+            'favicon' => 'favicon.ico',
         ];
     }
 
@@ -98,14 +99,14 @@ class SettingsForm extends SettingsModel
     public function renderWatermarkImage()
     {
         $config = Yii::$app->settings->get('app');
-        if (file_exists(Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . $config->attachment_wm_path))
+        if (isset($config->attachment_wm_path) && file_exists(Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . $config->attachment_wm_path))
             return Html::img("/uploads/{$config->attachment_wm_path}?" . time(), ['class' => 'img-fluid img-thumbnail mt-3']);
     }
 
     public function renderFaviconImage()
     {
         $config = Yii::$app->settings->get('app');
-        if (file_exists(Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . $config->favicon))
+        if (isset($config->favicon) && file_exists(Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . $config->favicon))
             return Html::img("/uploads/{$config->favicon}?" . time(), ['class' => 'img-fluid img-thumbnail mt-3']);
     }
 
