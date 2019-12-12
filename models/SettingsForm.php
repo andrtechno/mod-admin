@@ -54,6 +54,7 @@ class SettingsForm extends SettingsModel
             'censor' => 1,
             'censor_words' => 'bad',
             'censor_replace' => '***',
+            'attachment_wm_path' => 'watermark.png',
             'attachment_image_type' => 'render',
             'attachment_wm_offsety' => 10,
             'attachment_wm_offsetx' => 10,
