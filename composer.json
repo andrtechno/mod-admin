@@ -13,8 +13,8 @@
         }
     ],
     "require": {
-        "panix/engine": "*",
-        "panix/wgt-taginput": "*"
+        "panix/engine": "dev-master",
+        "panix/wgt-taginput": "dev-master"
     },
     "autoload": {
         "psr-4": {
