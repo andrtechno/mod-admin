@@ -3,6 +3,7 @@
  * @var $form \panix\engine\bootstrap\ActiveForm
  */
 ?>
+<?= $form->field($model, 'watermark_enable')->checkbox() ?>
 <?= $form->field($model, 'attachment_image_type')->dropDownList([
     'asset' => 'Asset (Сохранение изображений в папку assets)',
     'render' => 'Render (Создание изображений на лету)'
