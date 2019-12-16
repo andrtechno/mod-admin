@@ -25,6 +25,7 @@ class SettingsForm extends SettingsModel
     public $timezone;
     public $favicon;
 
+    public $watermark_enable;
     public $attachment_image_type;
     public $attachment_wm_path;
     public $attachment_wm_corner;
@@ -54,6 +55,7 @@ class SettingsForm extends SettingsModel
             'censor' => 1,
             'censor_words' => 'bad',
             'censor_replace' => '***',
+            'watermark_enable' => true,
             'attachment_wm_path' => 'watermark.png',
             'attachment_image_type' => 'render',
             'attachment_wm_offsety' => 10,
@@ -141,7 +143,7 @@ class SettingsForm extends SettingsModel
             [['mailer_transport_smtp_port'], 'integer'],
             [['email', 'mailer_transport_smtp_port', 'mailer_transport_smtp_host', 'mailer_transport_smtp_username', 'mailer_transport_smtp_password', 'mailer_transport_smtp_encryption'], 'trim'],
             ['mailer_transport_smtp_encryption', 'in', 'range' => ['ssl', 'tls']],
-            ['mailer_transport_smtp_enabled', 'boolean'],
+            [['mailer_transport_smtp_enabled', 'watermark_enable'], 'boolean'],
             [['attachment_wm_corner', 'attachment_wm_offsety', 'attachment_wm_offsetx'], 'integer'],
             [['email', 'sitename', 'pagenum', 'timezone', 'theme', 'attachment_wm_offsetx', 'attachment_wm_offsety', 'attachment_wm_corner', 'attachment_image_type'], "required"],
             ['email', 'email'],
