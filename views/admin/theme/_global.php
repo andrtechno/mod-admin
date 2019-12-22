@@ -1,6 +1,6 @@
 <?php
 
-use panix\ext\colorpicker\Colorpicker;
+use panix\ext\colorpicker\ColorPicker;
 
 /**
  * @var $form \panix\engine\bootstrap\ActiveForm
@@ -11,4 +11,4 @@ use panix\ext\colorpicker\Colorpicker;
 
 <?= $form->field($model, 'favicon')->fileInput() ?>
 <?= $form->field($model, 'logo')->fileInput() ?>
-<?= $form->field($model, 'theme_color')->widget(Colorpicker::class)->textInput(['maxlength' => 7]); ?>
+<?= $form->field($model, 'theme_color')->widget(ColorPicker::class)->textInput(['maxlength' => 7]); ?>
