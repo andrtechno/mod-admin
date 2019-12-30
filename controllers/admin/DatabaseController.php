@@ -153,7 +153,7 @@ class DatabaseController extends AdminController
                 @unlink($filePath);
                 Yii::$app->session->setFlash("success", Yii::t('app', 'FILE_SUCCESS_DELETE'));
             } else {
-                Yii::$app->session->setFlash("danger", Yii::t('app', 'ERR_FILE_NOT_FOUND'));
+                Yii::$app->session->setFlash("danger", Yii::t('app', 'FILE_NOT_FOUND'));
             }
         }
         if (!Yii::$app->request->isPjax || !Yii::$app->request->isAjax) {

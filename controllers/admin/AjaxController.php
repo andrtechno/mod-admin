@@ -89,7 +89,7 @@ class AjaxController extends AdminController
         } else {
             return [
                 'response' => 'error',
-                'message' => Yii::t('app', 'ERR_FILE_NOT_FOUND')
+                'message' => Yii::t('app', 'FILE_NOT_FOUND')
             ];
         }
     }
