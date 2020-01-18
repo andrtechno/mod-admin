@@ -41,7 +41,7 @@ class Module extends WebModule { // implements BootstrapInterface
             'system' => [
                 'items' => [
                     [
-                        'label' => Yii::t('app', 'SETTINGS'),
+                        'label' => Yii::t('app/default', 'SETTINGS'),
                         'url' => ['/admin/app/settings'],
                         'icon' => 'settings',
                         'visible' => true

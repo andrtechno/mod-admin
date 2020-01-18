@@ -56,7 +56,7 @@ class AjaxController extends AdminController
             $model->$field = $q;
             if ($model->validate()) {
                 $model->save(false, false);
-                $response['message'] = Yii::t('app', 'SUCCESS_UPDATE');
+                $response['message'] = Yii::t('app/default', 'SUCCESS_UPDATE');
                 $response['value'] = $q;
             } else {
                 $response['message'] = 'error validate';
@@ -84,12 +84,12 @@ class AjaxController extends AdminController
             $m->save(false);
             return [
                 'response' => 'success',
-                'message' => Yii::t('app', 'FILE_SUCCESS_DELETE')
+                'message' => Yii::t('app/default', 'FILE_SUCCESS_DELETE')
             ];
         } else {
             return [
                 'response' => 'error',
-                'message' => Yii::t('app', 'FILE_NOT_FOUND')
+                'message' => Yii::t('app/default', 'FILE_NOT_FOUND')
             ];
         }
     }

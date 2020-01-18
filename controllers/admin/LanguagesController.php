@@ -82,7 +82,7 @@ class LanguagesController extends AdminController
             'url' => ['index']
         ];
 
-        $this->breadcrumbs[] = Yii::t('app', 'UPDATE');
+        $this->breadcrumbs[] = Yii::t('app/default', 'UPDATE');
 
 
         //$model->setScenario("admin");
@@ -122,7 +122,7 @@ class LanguagesController extends AdminController
     {
         $this->pageName = 'Перевод сайта';
         /*$this->breadcrumbs = array(
-            Yii::t('app', 'LANGUAGES') => array('admin/languages'),
+            Yii::t('app/default', 'LANGUAGES') => array('admin/languages'),
             $this->pageName
         );*/
         return $this->render('translate', array('lang' => Yii::$app->request->get('lang')));
@@ -255,7 +255,7 @@ class LanguagesController extends AdminController
  */
 return ' . var_export($content, true) . ';')
         ) {
-            throw new Exception(Yii::t('app', 'Error write modules setting in {file}...', ['file' => $filePath]));
+            throw new Exception(Yii::t('app/default', 'Error write modules setting in {file}...', ['file' => $filePath]));
         }
     }
 
@@ -297,7 +297,7 @@ return ' . var_export($content, true) . ';')
     {
         return [
             [
-                'label' => Yii::t('app', 'SETTINGS'),
+                'label' => Yii::t('app/default', 'SETTINGS'),
                 'url' => array('/admin/seo/settings'),
                 'icon' => Html::icon('settings'),
             ],

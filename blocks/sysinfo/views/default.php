@@ -56,13 +56,13 @@ use panix\engine\Html;
             'cached_settings' => 'settings',
             'cached_widgets' => 'cached_widgets',
             'url_manager_urls' => 'url_manager_urls'
-        ], ['prompt' => html_entity_decode(Yii::t('app', 'EMPTY_LIST')), 'class' => 'form-control'])
+        ], ['prompt' => html_entity_decode(Yii::t('app/default', 'EMPTY_LIST')), 'class' => 'form-control'])
         ?>
 
 
     </div>
     <div class="col-sm-4">
-        <input class="btn btn-sm btn-success float-right" type="submit" value="<?= Yii::t('app', 'CLEAR'); ?>">
+        <input class="btn btn-sm btn-success float-right" type="submit" value="<?= Yii::t('app/default', 'CLEAR'); ?>">
     </div>
 
 </div>
@@ -73,7 +73,7 @@ use panix\engine\Html;
     <div class="col-sm-8">
         <?= Html::hiddenInput('clear_assets', 1, array('class' => 'form-control')); ?>
         <input class="btn btn-sm btn-success float-right" style="margin-left:10px;" type="submit"
-               value="<?= Yii::t('app', 'CLEAR'); ?>">
+               value="<?= Yii::t('app/default', 'CLEAR'); ?>">
     </div>
 
 </div>

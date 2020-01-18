@@ -50,7 +50,7 @@ use panix\engine\Html;
                      if (!in_array($session['user_type'], array('Guest', 'SearchBot'))) {
                          echo Rights::getRoles()[$session['user_type']].'<br/>';
                      } else {
-                         echo Yii::t('app',strtoupper($session['user_type'])).'<br/>';
+                         echo Yii::t('app/default',strtoupper($session['user_type'])).'<br/>';
                      }
                  }
              }*/

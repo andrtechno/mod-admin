@@ -76,7 +76,7 @@ class ModulesController extends AdminController
             'url' => ['/admin/app/modules']
         ];
 
-        $this->breadcrumbs[] = Yii::t('app', 'UPDATE');
+        $this->breadcrumbs[] = Yii::t('app/default', 'UPDATE');
 
 
         $post = Yii::$app->request->post();

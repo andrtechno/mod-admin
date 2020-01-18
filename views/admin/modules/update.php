@@ -17,7 +17,7 @@ use panix\engine\bootstrap\ActiveForm;
         <?= $form->field($model, 'name')->textInput(['maxlength' => 100]) ?>
         <?= $form->field($model, 'access')->dropDownList($model::getAccessList()) ?>
         <div class="form-group text-center">
-            <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'CREATE') : Yii::t('app', 'UPDATE'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            <?= Html::submitButton($model->isNewRecord ? Yii::t('app/default', 'CREATE') : Yii::t('app/default', 'UPDATE'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
         <?php ActiveForm::end(); ?>
     </div>

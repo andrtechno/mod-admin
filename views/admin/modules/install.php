@@ -6,10 +6,10 @@ if (!empty($modules)) {
         <thead>
             <tr>
                 <th></th>
-                <th><?= Yii::t('app', 'NAME') ?></th>
-                <th><?= Yii::t('app', 'DESCRIPTION') ?></th>
-                <th><?= Yii::t('app', 'VERSION') ?></th>
-                <th><?= Yii::t('app', 'AUTHOR') ?></th>
+                <th><?= Yii::t('app/default', 'NAME') ?></th>
+                <th><?= Yii::t('app/default', 'DESCRIPTION') ?></th>
+                <th><?= Yii::t('app/default', 'VERSION') ?></th>
+                <th><?= Yii::t('app/default', 'AUTHOR') ?></th>
                 <th></th>
             </tr>
         </thead>

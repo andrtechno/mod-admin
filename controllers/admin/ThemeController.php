@@ -13,7 +13,7 @@ class ThemeController extends AdminController
     public function actionIndex() {
         $filePath = Yii::getAlias('@web_theme/settings');
         if (file_exists($filePath) && file_exists($filePath . DIRECTORY_SEPARATOR . 'ThemeForm.php')) {
-            $this->pageName = Yii::t('app', 'SETTINGS_THEME');
+            $this->pageName = Yii::t('app/default', 'SETTINGS_THEME');
             $this->breadcrumbs = [
                 [
                     'label' => $this->module->info['label'],

@@ -41,11 +41,11 @@ $this->registerJs("
                     var tmp = $.jstree.defaults.contextmenu.items();
                     console.log(tmp);
                     delete tmp.create.action;
-                    tmp.remove.label = '".Yii::t('app','DELETE')."';
+                    tmp.remove.label = '".Yii::t('app/default','DELETE')."';
                     tmp.remove.icon = 'icon-delete';
-                    tmp.rename.label = '".Yii::t('app','RENAME')."';
+                    tmp.rename.label = '".Yii::t('app/default','RENAME')."';
                     tmp.rename.icon = 'icon-rename';
-                    tmp.ccp.label = '".Yii::t('app','UPDATE')."';
+                    tmp.ccp.label = '".Yii::t('app/default','UPDATE')."';
                     tmp.ccp.icon = 'icon-edit';
                     tmp.ccp.submenu.copy.icon = 'icon-copy';
                     tmp.ccp.submenu.cut.icon = 'icon-cut';
@@ -338,7 +338,7 @@ $this->registerJs("
 
 
         <div class="form-group text-center">
-            <input type="submit" value="<?= Yii::t('app', 'SAVE') ?>" class="btn btn-success"/>
+            <input type="submit" value="<?= Yii::t('app/default', 'SAVE') ?>" class="btn btn-success"/>
         </div>
     </div>
 </div>

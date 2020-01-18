@@ -17,7 +17,7 @@ $form->field($model, 'account')->textInput();
 
 
 <div class="form-group text-center">
-    <?= Html::submitButton(Yii::t('app', 'SAVE'), ['class' => 'btn btn-success']) ?>
+    <?= Html::submitButton(Yii::t('app/default', 'SAVE'), ['class' => 'btn btn-success']) ?>
 </div>
 
 <?php ActiveForm::end(); ?>

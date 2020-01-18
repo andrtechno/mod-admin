@@ -129,7 +129,7 @@ $this->registerJs("
 
             common.ajax(uri, {}, function (data) {
                 $('#ids_' + ids).remove();
-                common.notify('" . Yii::t('app', 'SUCCESS_RECORD_DELETE') . "', 'success');
+                common.notify('" . Yii::t('app/default', 'SUCCESS_RECORD_DELETE') . "', 'success');
                 common.removeLoader();
             });
             return false;
@@ -150,7 +150,7 @@ $this->registerJs("
                         modal: true,
                         autoOpen: true,
                         width: 500,
-                        title: '" . Yii::t('app', 'DESKTOP_CREATE_WIDGET') . "',
+                        title: '" . Yii::t('app/default', 'DESKTOP_CREATE_WIDGET') . "',
                         resizable: false,
                         open: function () {
                             //var obj = $.parseJSON(data);

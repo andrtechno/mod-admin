@@ -9,13 +9,13 @@ echo GridView::widget([
     'columns' => [
         [
             'attribute' => 'title',
-            'header' => Yii::t('app', 'Название'),
+            'header' => Yii::t('app/default', 'Название'),
             'format' => 'raw',
             'contentOptions' => ['class' => 'text-left'],
         ],
         [
             'attribute' => 'alias',
-            'header' => Yii::t('app', 'Путь'),
+            'header' => Yii::t('app/default', 'Путь'),
             'format' => 'raw',
             'contentOptions' => ['class' => 'text-left'],
             'value' => function ($data) {
@@ -24,13 +24,13 @@ echo GridView::widget([
         ],
         [
             'attribute' => 'category',
-            'header' => Yii::t('app', 'category'),
+            'header' => Yii::t('app/default', 'category'),
             'format' => 'raw',
             'contentOptions' => ['class' => 'text-center'],
         ],
         [
             'attribute' => 'edit',
-            'header' => Yii::t('app', 'OPTIONS'),
+            'header' => Yii::t('app/default', 'OPTIONS'),
             'format' => 'raw',
             'contentOptions' => ['class' => 'text-center'],
         ],

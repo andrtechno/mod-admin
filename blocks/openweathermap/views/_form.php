@@ -10,7 +10,7 @@ use panix\engine\bootstrap\ActiveForm;
 <?= $form->field($model, 'lat')->textInput() ?>
 <?= $form->field($model, 'lon')->textInput() ?>
 <?=
-$form->field($model, 'apikey')->textInput()->hint(Yii::t('app', 'Для получение ключа, необходимо зарегистрироватся на сайте, {link}', array(
+$form->field($model, 'apikey')->textInput()->hint(Yii::t('app/default', 'Для получение ключа, необходимо зарегистрироватся на сайте, {link}', array(
         'link' => Html::a('openweathermap.org', 'http://openweathermap.org', array('traget' => '_blank'))
     )
 ))
@@ -23,7 +23,7 @@ $form->field($model, 'apikey')->textInput()->hint(Yii::t('app', 'Для полу
 <?= $form->field($model, 'enable_wind')->checkbox() ?>
 
 <div class="form-group text-center">
-    <?= Html::submitButton(Yii::t('app', 'SAVE'), ['class' => 'btn btn-success']) ?>
+    <?= Html::submitButton(Yii::t('app/default', 'SAVE'), ['class' => 'btn btn-success']) ?>
 </div>
 
 <?php ActiveForm::end(); ?>

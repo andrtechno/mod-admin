@@ -32,7 +32,7 @@ use panix\engine\Html;
 
 <?= $form->field($model, 'theme')->dropDownList($model->themesList(), []); ?>
 <?= $form->field($model, 'timezone')->dropDownList(TimeZoneHelper::getTimeZoneData(), []); ?>
-<?= $form->field($model, 'captcha_class')->dropDownList($model::captchaList(), ['prompt' => Yii::t('app', 'OFF')]); ?>
+<?= $form->field($model, 'captcha_class')->dropDownList($model::captchaList(), ['prompt' => Yii::t('app/default', 'OFF')]); ?>
 
 <?= $form->field($model, 'recaptcha_secret'); ?>
 <?= $form->field($model, 'recaptcha_key'); ?>

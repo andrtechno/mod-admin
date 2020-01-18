@@ -13,8 +13,8 @@ class SysInfoWidget extends Widget
     {
 
         $memorylimit = CMS::fileSize(str_replace("M", "", ini_get('memory_limit')) * 1024 * 1024);
-        $globals = (ini_get('register_globals') == 1) ? $this->labelHtml(Yii::t('app', 'ON'), 'danger') : $this->labelHtml(Yii::t('app', 'OFF'), 'success');
-        $magic_quotes = (ini_get('magic_quotes_gpc') == 1) ? $this->labelHtml(Yii::t('app', 'ON'), 'danger') : $this->labelHtml(Yii::t('app', 'OFF'), 'success');
+        $globals = (ini_get('register_globals') == 1) ? $this->labelHtml(Yii::t('app/default', 'ON'), 'danger') : $this->labelHtml(Yii::t('app/default', 'OFF'), 'success');
+        $magic_quotes = (ini_get('magic_quotes_gpc') == 1) ? $this->labelHtml(Yii::t('app/default', 'ON'), 'danger') : $this->labelHtml(Yii::t('app/default', 'OFF'), 'success');
 
         $p_max = $this->labelHtml(CMS::fileSize(str_replace("M", "", ini_get('post_max_size')) * 1024 * 1024));
         $u_max = $this->labelHtml(CMS::fileSize(str_replace("M", "", ini_get('upload_max_filesize')) * 1024 * 1024));
@@ -27,8 +27,8 @@ class SysInfoWidget extends Widget
         }
 
         $phpver = phpversion();
-        $gd = (extension_loaded('gd')) ? $this->labelHtml(Yii::t('app', 'ON', 0), 'success') : $this->labelHtml(Yii::t('app', 'OFF'), 'danger');
-        $pdo = (extension_loaded('pdo')) ? $this->labelHtml(Yii::t('app', 'ON', 0), 'success') : $this->labelHtml("<span style=\"color:red\">" . Yii::t('app', 'OFF') . "</span>", 'danger');
+        $gd = (extension_loaded('gd')) ? $this->labelHtml(Yii::t('app/default', 'ON', 0), 'success') : $this->labelHtml(Yii::t('app/default', 'OFF'), 'danger');
+        $pdo = (extension_loaded('pdo')) ? $this->labelHtml(Yii::t('app/default', 'ON', 0), 'success') : $this->labelHtml("<span style=\"color:red\">" . Yii::t('app/default', 'OFF') . "</span>", 'danger');
         $php = ($phpver >= "5.1") ? $this->labelHtml(PHP_VERSION, 'success') : $this->labelHtml("$phpver (" . @php_sapi_name() . ")", 'danger');
 
 

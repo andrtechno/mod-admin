@@ -59,9 +59,9 @@ class MailTemplateController extends AdminController
                 if ($system->load($post) && $system->validate()) {
 
                     $system->saveSettings($alias, $post);
-                    Yii::$app->session->setFlash('success', Yii::t('app', 'SUCCESS_UPDATE'));
+                    Yii::$app->session->setFlash('success', Yii::t('app/default', 'SUCCESS_UPDATE'));
                 } else {
-                    Yii::$app->session->setFlash('error', Yii::t('app', 'ERROR_UPDATE'));
+                    Yii::$app->session->setFlash('error', Yii::t('app/default', 'ERROR_UPDATE'));
                 }
             }
         }

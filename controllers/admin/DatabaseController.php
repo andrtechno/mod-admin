@@ -112,7 +112,7 @@ class DatabaseController extends AdminController
                 $totaltotal += $total;
 
                 $rresult = Yii::$app->db->createCommand("REPAIR TABLE " . $row['Name'] . "")->query();
-                $otitle = (!$rresult) ? '<span class="badge badge-danger">' . Yii::t('app', 'ERROR') . '</span>' : '<span class="badge badge-success">OK</span>';
+                $otitle = (!$rresult) ? '<span class="badge badge-danger">' . Yii::t('app/default', 'ERROR') . '</span>' : '<span class="badge badge-success">OK</span>';
                 $dataRepair[] = array(
                     'status' => $otitle,
                     'table' => str_replace(Yii::$app->db->tablePrefix, '', $row['Name']),
@@ -151,9 +151,9 @@ class DatabaseController extends AdminController
             $filePath = Yii::getAlias(Yii::$app->db->backupPath) . DIRECTORY_SEPARATOR . $file;
             if (file_exists($filePath)) {
                 @unlink($filePath);
-                Yii::$app->session->setFlash("success", Yii::t('app', 'FILE_SUCCESS_DELETE'));
+                Yii::$app->session->setFlash("success", Yii::t('app/default', 'FILE_SUCCESS_DELETE'));
             } else {
-                Yii::$app->session->setFlash("danger", Yii::t('app', 'FILE_NOT_FOUND'));
+                Yii::$app->session->setFlash("danger", Yii::t('app/default', 'FILE_NOT_FOUND'));
             }
         }
         if (!Yii::$app->request->isPjax || !Yii::$app->request->isAjax) {

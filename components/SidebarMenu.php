@@ -19,11 +19,11 @@ class SidebarMenu extends Widget
         // Minimum configuration
         $this->_items = array(
             'system' => array(
-                'label' => Yii::t('app', 'SYSTEM'),
+                'label' => Yii::t('app/default', 'SYSTEM'),
                 'icon' => 'icon-wrench'
             ),
             'modules' => array(
-                'label' => Yii::t('app', 'MODULES'),
+                'label' => Yii::t('app/default', 'MODULES'),
                 'icon' => 'icon-menu'
             ),
         );

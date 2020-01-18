@@ -43,7 +43,7 @@ if (!$db->checkLimit()) {
 
             </div>
             <div class="card-footer text-center">
-                <?= Html::submitButton(Yii::t('app', 'SAVE'), ['class' => 'btn btn-success']) ?>
+                <?= Html::submitButton(Yii::t('app/default', 'SAVE'), ['class' => 'btn btn-success']) ?>
             </div>
         </div>
         <?php ActiveForm::end(); ?>
@@ -65,31 +65,31 @@ if (!$db->checkLimit()) {
             'columns' => [
                 [
                     'attribute' => 'filename',
-                    'header' => Yii::t('app', 'FILENAME'),
+                    'header' => Yii::t('app/default', 'FILENAME'),
                     'format' => 'raw',
                     'contentOptions' => ['class' => 'text-left'],
                 ],
                 [
                     'attribute' => 'filesize',
-                    'header' => Yii::t('app', 'SIZE'),
+                    'header' => Yii::t('app/default', 'SIZE'),
                     'format' => 'raw',
                     'contentOptions' => ['class' => 'text-center'],
                 ],
                 [
                     'attribute' => 'url',
-                    'header' => Yii::t('app', 'OPTIONS'),
+                    'header' => Yii::t('app/default', 'OPTIONS'),
                     'format' => 'raw',
                     'contentOptions' => ['class' => 'text-center'],
                 ],
                 [
                     'class' => 'panix\engine\grid\columns\ActionColumn',
                     'template' => '{active}',
-                    'header' => Yii::t('app', 'OPTIONS'),
+                    'header' => Yii::t('app/default', 'OPTIONS'),
                     'buttons' => [
                         'delete' => function ($url, $model, $key) {
 
                             return Html::a('<i class="icon-delete"></i>', $url, [
-                                'title' => Yii::t('app', 'DELETE'),
+                                'title' => Yii::t('app/default', 'DELETE'),
                                 'class' => 'btn btn-sm btn-danger']);
                         },
                         "active" => function ($url, $model) {
@@ -98,7 +98,7 @@ if (!$db->checkLimit()) {
 
                             return Html::a('dsadas', $url, [
                                 'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
-                                'title' => Yii::t('app', 'Toogle Active'),
+                                'title' => Yii::t('app/default', 'Toogle Active'),
                                 'data-pjax' => '#pjax-container-backup',
                                 'data-method' => 'post'
                             ]);
@@ -183,25 +183,25 @@ if (!$db->checkLimit()) {
                                 ],
                                 [
                                     'attribute' => 'table',
-                                    'header' => Yii::t('app', 'TABLE'),
+                                    'header' => Yii::t('app/default', 'TABLE'),
                                     'format' => 'raw',
                                     'contentOptions' => ['class' => 'text-left'],
                                 ],
                                 [
                                     'attribute' => 'total_size',
-                                    'header' => Yii::t('app', 'SIZE'),
+                                    'header' => Yii::t('app/default', 'SIZE'),
                                     'format' => 'raw',
                                     'contentOptions' => ['class' => 'text-center'],
                                 ],
                                 [
                                     'attribute' => 'status',
-                                    'header' => Yii::t('app', 'OPTIONS'),
+                                    'header' => Yii::t('app/default', 'OPTIONS'),
                                     'format' => 'raw',
                                     'contentOptions' => ['class' => 'text-center'],
                                 ],
                                 [
                                     'attribute' => 'free',
-                                    'header' => Yii::t('app', 'free'),
+                                    'header' => Yii::t('app/default', 'free'),
                                     'format' => 'raw',
                                     'contentOptions' => ['class' => 'text-center'],
                                 ],
@@ -236,19 +236,19 @@ if (!$db->checkLimit()) {
                                 ],
                                 [
                                     'attribute' => 'table',
-                                    'header' => Yii::t('app', 'TABLE'),
+                                    'header' => Yii::t('app/default', 'TABLE'),
                                     'format' => 'raw',
                                     'contentOptions' => ['class' => 'text-left'],
                                 ],
                                 [
                                     'attribute' => 'total_size',
-                                    'header' => Yii::t('app', 'SIZE'),
+                                    'header' => Yii::t('app/default', 'SIZE'),
                                     'format' => 'raw',
                                     'contentOptions' => ['class' => 'text-center'],
                                 ],
                                 [
                                     'attribute' => 'status',
-                                    'header' => Yii::t('app', 'OPTIONS'),
+                                    'header' => Yii::t('app/default', 'OPTIONS'),
                                     'format' => 'raw',
                                     'contentOptions' => ['class' => 'text-center'],
                                 ],

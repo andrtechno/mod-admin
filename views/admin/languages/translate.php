@@ -9,7 +9,7 @@ $langModel = new Languages;
 ?>
     <div style="padding: 15px">
         <?php
-        //   Yii::app()->tpl->alert('info',Yii::t('app','TRANSLATE_ALERT_INFO'),false);
+        //   Yii::app()->tpl->alert('info',Yii::t('app/default','TRANSLATE_ALERT_INFO'),false);
 
         $lang = Yii::$app->request->get('lang');
         if (!$lang) {
@@ -91,7 +91,7 @@ if ($lang) {
                 <thead>
                 <th width="70%">Файл</th>
                 <th width="15%">Раздел</th>
-                <th width="15%"><?= Yii::t('app', 'STATUS') ?></th>
+                <th width="15%"><?= Yii::t('app/default', 'STATUS') ?></th>
                 </thead>
                 <tbody></tbody>
             </table>

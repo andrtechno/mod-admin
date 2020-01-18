@@ -20,7 +20,7 @@ class DesktopController extends AdminController
             'sortable' => [
                 'class' => 'panix\engine\grid\sortable\Action',
                 'modelClass' => DesktopWidgets::class,
-                'successMessage' => Yii::t('app', 'SORT_PRODUCT_SUCCESS_MESSAGE')
+                'successMessage' => Yii::t('app/default', 'SORT_PRODUCT_SUCCESS_MESSAGE')
             ],
         ];
     }
