@@ -51,10 +51,10 @@ class SettingsController extends AdminController
                     $model->favicon = $oldFavicon;
                 }
 
-
                 $model->save();
-                return $this->redirect(['/admin/app/settings']);
+                Yii::$app->session->setFlash("success", Yii::t('app/default', 'SUCCESS_UPDATE'));
             }
+            return $this->refresh();
         }
         return $this->render('index', [
             'model' => $model
