@@ -126,11 +126,16 @@ class SettingsForm extends SettingsModel
     public function getWatermarkCorner()
     {
         return [
-            1 => self::t('CORNER_LEFT_TOP'),
-            2 => self::t('CORNER_RIGHT_TOP'),
-            3 => self::t('CORNER_LEFT_BOTTOM'),
-            4 => self::t('CORNER_RIGHT_BOTTOM'),
-            5 => self::t('CORNER_CENTER'),
+            1 => self::t('WM_POS_LEFT_TOP'),
+            2 => self::t('WM_POS_RIGHT_TOP'),
+            3 => self::t('WM_POS_LEFT_BOTTOM'),
+            4 => self::t('WM_POS_RIGHT_BOTTOM'),
+            5 => self::t('WM_POS_CENTER'),
+            6 => self::t('WM_POS_CENTER_TOP'),
+            7 => self::t('WM_POS_CENTER_BOTTOM'),
+            8 => self::t('WM_POS_LEFT_CENTER'),
+            9 => self::t('WM_POS_RIGHT_CENTER'),
+            10 => self::t('WM_POS_REPEAT'),
         ];
     }
 
