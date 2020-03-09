@@ -96,7 +96,7 @@ class DesktopController extends AdminController
                     ],
                     [
                         'label' => Yii::t('admin/default', 'DESKTOP_CREATE_WIDGET'),
-                        'url' => ['/admin/app/desktop/create-widget'],
+                        'url' => ['/admin/app/desktop/widget-create','id'=>1],
                         'visible' => true
                     ],
                 ]

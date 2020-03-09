@@ -181,8 +181,8 @@ class DefaultController extends AdminController
         return [
             [
                 'label' => Yii::t('admin/default', 'DESKTOP'),
-                //'url' => ['/admin/shop/attribute-group'],
                 'visible' => true,
+                'dropDownOptions'=>['class'=>'dropdown-menu-right'],
                 'items' => [
                     [
                         'label' => Yii::t('admin/default', 'DESKTOP_CREATE'),
@@ -191,8 +191,9 @@ class DefaultController extends AdminController
                     ],
                     [
                         'label' => Yii::t('admin/default', 'DESKTOP_CREATE_WIDGET'),
-                        'url' => ['/admin/app/desktop/create-widget'],
-                        'visible' => true
+                        'url' => ['/admin/app/desktop/widget-create','id'=>1],
+                        'visible' => true,
+
                     ],
                 ]
             ],
