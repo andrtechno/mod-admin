@@ -85,27 +85,21 @@ class DesktopController extends AdminController
     {
         return [
             [
-                'label' => Yii::t('admin/default', 'Рабочий стол'),
-                'url' => ['/admin/shop/attribute-group'],
-                'visible' => true
-            ],
-            [
-                'label' => Yii::t('admin/default', 'еуые'),
+                'label' => Yii::t('admin/default', 'DESKTOP'),
                 //'url' => ['/admin/shop/attribute-group'],
                 'visible' => true,
                 'items' => [
                     [
-                        'label' => Yii::t('admin/default', 'ATTRIBUTE_GROUP'),
-                        'url' => ['/admin/app/default/desktop-create'],
+                        'label' => Yii::t('admin/default', 'DESKTOP_CREATE'),
+                        'url' => ['/admin/app/desktop/desktop-create'],
                         'visible' => true
                     ],
                     [
-                        'label' => Yii::t('admin/default', 'Add widget'),
-                        'url' => ['/admin/app/default/create-widget'],
+                        'label' => Yii::t('admin/default', 'DESKTOP_CREATE_WIDGET'),
+                        'url' => ['/admin/app/desktop/create-widget'],
                         'visible' => true
                     ],
                 ]
-
             ],
         ];
     }
