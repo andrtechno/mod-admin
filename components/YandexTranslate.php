@@ -116,7 +116,8 @@ class YandexTranslate
         $params['text'] = $text;
         $query = $this->api_url . '?' . $this->params($params);
         $res = $this->curl_get_contents($query);
-        return Json::decode($res, true);
+
+        return $res;
 
     }
 
@@ -127,7 +128,7 @@ class YandexTranslate
         $params['format'] = 'html';
         $query = $this->api_url . '?' . $this->params($params);
         $res = $this->curl_get_contents($query);
-        return Json::decode($res, false);
+        return $res;
     }
 
     private function curl_get_contents($url)
@@ -140,6 +141,8 @@ class YandexTranslate
 
         if ($response->isOk) {
             return $response->data;
+        }else{
+            return [];
         }
     }
 

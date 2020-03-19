@@ -2,6 +2,7 @@
 
 namespace panix\mod\admin\controllers\admin;
 
+use panix\engine\CMS;
 use panix\engine\Html;
 use panix\mod\admin\components\YandexTranslate;
 use Yii;
@@ -97,13 +98,43 @@ class LanguagesController extends AdminController
         ]);
     }
 
-    public function actionEditFile($file)
+    /**
+     * @param string $path "@user/messages"
+     * @param string $file Example "default.php"
+     * @return string
+     */
+    public function actionEditFile($path,$file)
     {
-
+        $path = Yii::getAlias($path);
+        $absolutePath=$path.'/ru/'.$file;
+        $newAbsolutePath= $path.'/en/'.$file;
+        $translateApi = new YandexTranslate;
+        $response=[];
+        $result=[];
         //echo VarDumper::dump(Yii::$app->i18n->translations,10,true);die;
+        if (file_exists($absolutePath)) {
+            $contentList = require_once($absolutePath);
+
+
+            $response = $translateApi->translatefile(['ru', 'en'], $contentList, true);
+            $i=0;
+            foreach ($contentList as $key => $value) {
+                $result[$key]=$response['text'][$i];
+                $i++;
+                //$response[] = $translateApi->translatefile(['ru', 'en'], $value, true);
+            }
+
+            FileHelper::copyDirectory($path.'/ru', $path.'/en', [
+                'only' => ['*.php'],
+                'recursive' => true
+            ]);
+            $this->writeLanguageContent($newAbsolutePath, $result);
+        }
+
 
         $r = [];
         $i18n = Yii::$app->i18n;
+       // CMS::dump($i18n->translations);die;
         foreach ($i18n->translations as $key => $translation) {
             if (isset($i18n->translations[$key])) {
                 $basePath = (isset($i18n->translations[$key]->basePath)) ? $i18n->translations[$key]->basePath : $i18n->translations[$key]['basePath'];
@@ -125,7 +156,8 @@ class LanguagesController extends AdminController
             Yii::t('app/default', 'LANGUAGES') => array('admin/languages'),
             $this->pageName
         );*/
-        return $this->render('translate', array('lang' => Yii::$app->request->get('lang')));
+        $this->breadcrumbs[] = $this->pageName;
+        return $this->render('translate', ['lang' => Yii::$app->request->get('lang')]);
     }
 
     public function actionAjaxApplication()
@@ -148,12 +180,12 @@ class LanguagesController extends AdminController
         $newPath = Yii::getAlias($path) . DIRECTORY_SEPARATOR . $this->target_locale;
 
         if (!file_exists($newPath)) {
-            FileHelper::copyDirectory($pathDefault, $newPath, array(
+            FileHelper::copyDirectory($pathDefault, $newPath, [
                 'only' => ['*.php'],
-            ));
+            ]);
         }
         $contentList = require($newPath . DIRECTORY_SEPARATOR . $file);
-        $contentListTranslated = array();
+        $contentListTranslated = [];
         foreach ($contentList as $pkey => $val) {
             if (!empty($val)) {
 
@@ -169,26 +201,17 @@ class LanguagesController extends AdminController
 
 
         }
-
+        $result['success']=false;
         if (!isset($response['hasError'])) {
-
             $this->writeLanguageContent($newPath . DIRECTORY_SEPARATOR . $file, $contentListTranslated);
-            $response = [
-                'status' => 'success',
-                'message' => 'ОК',
-            ];
-
+            $result['success'] = true;
+            $result['message'] = 'ОК';
         } else {
-
-            $response = [
-                'status' => 'error',
-                'message' => $response['message'],
-            ];
-
+            $result['message'] = $response['message'];
         }
-        $response['test'] = 'dasa';
+
         Yii::$app->response->format = Response::FORMAT_JSON;
-        return $response;
+        return $result;
     }
 
     public function generateMessagesModules($locale)
@@ -293,19 +316,33 @@ return ' . var_export($content, true) . ';')
     }
 
 
-    public function getAddonsMenu()
+    public function getAddonsMenu2()
     {
         return [
             [
                 'label' => Yii::t('app/default', 'SETTINGS'),
-                'url' => array('/admin/seo/settings'),
+                'url' => ['/admin/seo/settings'],
                 'icon' => Html::icon('settings'),
             ],
             [
                 'label' => Yii::t('seo/default', 'REDIRECTS'),
-                'url' => array('/admin/seo/redirects'),
+                'url' => ['/admin/seo/redirects'],
                 'icon' => Html::icon('refresh'),
             ],
         ];
+    }
+
+
+    public function getAllFiles(){
+        $i18n = Yii::$app->i18n;
+        $result=[];
+        foreach ($i18n->translations as $key => $translation) {
+            if (isset($translation->basePath) && isset($translation->fileMap)) {
+                if($translation->fileMap){
+                    $result[$translation->basePath] = $translation->fileMap;
+                }
+            }
+        }
+        return $result;
     }
 }

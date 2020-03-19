@@ -24,64 +24,35 @@ $langModel = new Languages;
             // return;
         } ?>
     </div>
-    <div style="padding: 15px">
+
 <?php
 
 
-$result = array();
+$result = [];
 
 if ($lang) {
     $defaultLang = Yii::$app->languageManager->default->code;
-    $modules = Yii::$app->getModules();
 
-    // $this->remove_old_lang_dir("webroot.protected.messages.{$lang}");
-    //$result = Yii::$app->cache->get('CACHE_LANGUAGE_TRANSLATE');
-    //if ($result === false) {
-
-
-    //  $dir = Yii::getPathOfAlias("webroot.protected.messages.{$defaultLang}");
-    $engineFiles = $this->context->getFindFiles('@vendor/panix/engine/messages/' . $defaultLang);
-    foreach ($engineFiles as $file) {
-     //  $result['application'][] = array('file' => basename($file), 'path' => '@vendor/panix/engine/messages');
-    }
-
-
-
-    foreach ($modules as $mod => $obj) {
-
-        $this->context->remove_old_lang_dir("@{$mod}/messages/" . $lang);
-        $files = $this->context->getFindFiles("@{$mod}/messages/" . $defaultLang);
-        if ($files) {
-            foreach ($files as $file) {
-                $result[$mod][] = array('file' => basename($file), 'path' => "@{$mod}/messages");
-                break;
-            }
+    foreach ($this->context->getAllFiles() as $path => $files) {
+        foreach ($files as $file) {
+            $result[$path][] = ['file' => basename($file), 'path' => $path];
+            break;
         }
     }
-//print_r($result);die;
 
-    // Yii::app()->cache->set('CACHE_LANGUAGE_TRANSLATE', $result, 3600);
-    //}
     ?>
-
-    <?php
-    // Yii::app()->tpl->alert('info', 'Пожалуйста дождитесь окончание результата.', false);
-    ?>
-
-    <div class="card card-default">
+    <div class="card">
         <div class="card-header">
-            <div class="panel-title" style="padding-right: 15px;">
+            <div class="container-fluid pt-2 pb-2">
                 <div class="row">
                     <div class="col-sm-4">
-                        <h5 id="progress-send"></h5>
+                        <h5>Переведино: <span id="current-send">0</span> из <span id="total-files">0</span></h5>
                     </div>
                     <div class="col-sm-8 d-flex align-items-center">
-
                         <div class="progress d-none w-100">
                             <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-animated"
                                  style="width: 0%;"></div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -97,7 +68,7 @@ if ($lang) {
             </table>
         </div>
     </div>
-    </div>
+
 <?php } ?>
 
 
@@ -141,18 +112,16 @@ $this->registerJs("
 console.log(end_time);
 console.timeEnd(\"concatenation\");
 console.time();
-                    var status = (data.status == 'success')?data.status:'danger';
+                    var status = (data.success)?'success':'danger';
                     var result = Math.round((num / getFilesTotalCount() * 100), 2);
                     $('.progress .progress-bar').css({'width': result + '%'}).html(result + '%');
-                    $('#sended').text(num - 1 + 1);
+                    $('#current-send').text(num - 1 + 1);
                     $('#result tbody #row' + num).html('<td>' + taskNum[i].file + ' </td><td class=\"text-center\">' + mod + '</td><td class=\"text-center\"><span class=\"badge badge-' + status + '\">' + data.message + '</span></td>');
                     next();
                 },
                 beforeSend: function () {
-
                     $('#result tbody').prepend($('<tr/>', {'id': 'row' + num}));
                     $('#result tbody #row' + num).html('<td><div class=\"ajax-loading\"></div>Подождите, идет процес перевода.</td><td colspan=\"2\"><div id=\"progress'+ num + '\" class=\"progress\"><div class=\"progress-bar progress-bar-success\" style=\"width: 0%;\"></div></div></td>');
-                    //$('.senden-row' + i).text('Идет отправка...');
                 },
                 complate: function () {
 
@@ -174,9 +143,8 @@ console.time();
             doTask(taskNum, next, i, mod, num);
         };
     }
-
-    $('#progress-send').html('Переведино: <span id=\"sended\">0</span> из ' + getFilesTotalCount());
     
+    $('#total-files').html(getFilesTotalCount());
 
     $.each(json, function (mod, files) {
         for (var i = 0; i < files.length; i++) {
