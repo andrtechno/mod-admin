@@ -15,6 +15,7 @@ class AuthController extends AdminController
 {
 
     public $layout = '@theme/views/layouts/auth';
+    public $enableStatistic = false;
 
     /**
      * @inheritdoc
@@ -37,11 +38,12 @@ class AuthController extends AdminController
      */
     public function actionIndex()
     {
+
         if (!Yii::$app->user->isGuest)
             return $this->redirect(['/admin']);
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login((int) Yii::$app->settings->get('user', 'login_duration')  * 86400)) {
+        if ($model->load(Yii::$app->request->post()) && $model->login((int)Yii::$app->settings->get('user', 'login_duration') * 86400)) {
             return $this->goBack(['/admin']);
         }
 
