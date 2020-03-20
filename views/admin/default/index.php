@@ -63,19 +63,38 @@ use yii\helpers\Url;
         </div>
 
     </div>
-    <?php if (Yii::$app->hasModule('stats')) { ?>
+
+
+    <?php
+
+
+
+    ?>
+    <?php if (Yii::$app->hasModule('stats')) {
+        $data = Yii::$app->stats->countVisits();
+
+        ?>
         <div class="col-md-6 col-lg-3 col-sm-6">
             <div class="card bg-warning o-hidden">
                 <div class="card-body" style="padding: 1rem">
                     <div class="row">
                         <i class="icon-stats"></i>
                         <div class="col">
-                            <h2>47</h2>
+                            <div class="row">
+                                <div class="col-6">
+                                    <h2><small>хосты:</small> <?= $data['hosts']; ?></h2>
+                                </div>
+                                <div class="col-6">
+                                    <h2><small>хиты:</small> <?= $data['hits']; ?></h2>
+                                </div>
+                            </div>
+
+
                             <div>Посетило</div>
                         </div>
                     </div>
                 </div>
-                <a href="<?= Url::to(['/stats']); ?>" class="card-footer z-1">
+                <a href="<?= Url::to(['/admin/stats']); ?>" class="card-footer z-1">
                     <span class="float-left">Подробней</span>
                     <span class="float-right"><i class="icon-arrow-right"></i></span>
                 </a>
