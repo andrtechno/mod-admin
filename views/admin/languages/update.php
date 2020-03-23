@@ -14,6 +14,7 @@ $form = ActiveForm::begin([
     <div class="card-body">
         <?= $form->field($model, 'name')->textInput(['maxlength' => 100]) ?>
         <?= $form->field($model, 'code')->textInput(['maxlength' => 2]) ?>
+        <?= $form->field($model, 'slug')->textInput(['maxlength' => 4]) ?>
         <?= $form->field($model, 'locale')->textInput(['maxlength' => 5]) ?>
         <?= $form->field($model, 'is_default')->checkbox() ?>
     </div>
