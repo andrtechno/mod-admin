@@ -141,6 +141,7 @@ $icons = [
         ['name' => 'icon-location-marker', 'unicode' => 'f041'],
         ['name' => 'icon-puzzle', 'unicode' => 'f044'],
         ['name' => 'icon-warning', 'unicode' => 'f053'],
+        ['name' => 'icon-warning-outline', 'unicode' => 'f187'],
         ['name' => 'icon-info', 'unicode' => 'f054'],
         ['name' => 'icon-check', 'unicode' => 'f055'],
         ['name' => 'icon-envelope', 'unicode' => 'f058'],
@@ -222,7 +223,9 @@ $icons = [
                     }
                     ?>
                     </span>
-                    <div><code><?php echo $icon['name']; //echo htmlspecialchars('<i class="' . $icon['name'] . '"></i>'); ?></code></div>
+                    <div>
+                        <code><?php echo $icon['name']; //echo htmlspecialchars('<i class="' . $icon['name'] . '"></i>'); ?></code>
+                    </div>
                 </div>
             </div>
         <?php } ?>
