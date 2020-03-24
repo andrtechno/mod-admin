@@ -16,7 +16,7 @@ $icons = [
         ['name' => 'icon-whatsapp-2', 'unicode' => 'f178'],
         ['name' => 'icon-telegram-outline', 'unicode' => 'f179'],
         ['name' => 'icon-google-disk', 'unicode' => 'f117'],
-        ['name' => 'icon-telegram', 'unicode' => 'f179'],
+        ['name' => 'icon-telegram', 'unicode' => 'f139'],
         ['name' => 'icon-twitter', 'unicode' => 'f154'],
         ['name' => 'icon-skype', 'unicode' => 'f155'],
         ['name' => 'icon-exit', 'unicode' => 'f180'],
@@ -128,8 +128,8 @@ $icons = [
         ['name' => 'icon-language', 'unicode' => 'f024'],
         ['name' => 'icon-key', 'unicode' => 'f025'],
         ['name' => 'icon-home', 'unicode' => 'f026'],
-        ['name' => 'icon-edit', 'unicode' => 'f027'],
-        ['name' => 'icon-delete', 'unicode' => 'f028'],
+        ['name' => 'icon-edit', 'unicode' => 'f028'],
+        ['name' => 'icon-delete', 'unicode' => 'f029'],
         ['name' => 'icon-trashcan', 'unicode' => 'f030'],
         ['name' => 'icon-comments', 'unicode' => 'f032'],
         ['name' => 'icon-add', 'unicode' => 'f034'],
@@ -222,7 +222,7 @@ $icons = [
                     }
                     ?>
                     </span>
-                    <div><code><?= htmlspecialchars('<i class="' . $icon['name'] . '"></i>'); ?></code></div>
+                    <div><code><?php echo $icon['name']; //echo htmlspecialchars('<i class="' . $icon['name'] . '"></i>'); ?></code></div>
                 </div>
             </div>
         <?php } ?>
