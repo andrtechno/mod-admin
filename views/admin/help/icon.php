@@ -7,7 +7,7 @@ $icons = [
         ['name' => 'icon-vk', 'unicode' => 'f045'],
         ['name' => 'icon-dropbox', 'unicode' => 'f046'],
         ['name' => 'icon-facebook', 'unicode' => 'f047'],
-        ['name' => 'icon-google-plus', 'unicode' => 'f048'],
+
         ['name' => 'icon-instagram', 'unicode' => 'f049'],
         ['name' => 'icon-youtube', 'unicode' => 'f050'],
         ['name' => 'icon-youtube-play', 'unicode' => 'f051'],
@@ -102,11 +102,23 @@ $icons = [
         ['name' => 'icon-refresh', 'unicode' => 'f043'],
         ['name' => 'icon-move', 'unicode' => 'f057'],
         ['name' => 'icon-resize', 'unicode' => 'f128'],
-        ['name' => 'icon-', 'unicode' => 'f144'],
+        ['name' => 'icon-return-back', 'unicode' => 'f144'],
         ['name' => 'icon-sort', 'unicode' => 'f027'],
         ['name' => 'icon-reply', 'unicode' => 'f165'],
     ],
+    'Погода' => [
+        ['name' => 'icon-flash', 'unicode' => 'f188'],
+        ['name' => 'icon-flash-outline', 'unicode' => 'f189'],
+        ['name' => 'icon-sun', 'unicode' => 'f190'],
+        ['name' => 'icon-sun-outline', 'unicode' => 'f191'],
+        ['name' => 'icon-moon', 'unicode' => 'f192'],
+        ['name' => 'icon-moon-outline', 'unicode' => 'f193'],
+        ['name' => 'icon-cloud-rain', 'unicode' => 'f166'],
+        ['name' => 'icon-cloud-rain-heavy', 'unicode' => 'f167'],
+        ['name' => 'icon-wind', 'unicode' => 'f194'],
+    ],
     'Разное' => [
+        ['name' => 'icon-user-card', 'unicode' => 'f048'],
         ['name' => 'icon-user', 'unicode' => 'f004'],
         ['name' => 'icon-user-outline', 'unicode' => 'f182'],
         ['name' => 'icon-menu', 'unicode' => 'f009'],
@@ -198,14 +210,21 @@ $icons = [
         ['name' => 'icon-loader', 'unicode' => 'f158'],
         ['name' => 'icon-smile', 'unicode' => 'f159'],
         ['name' => 'icon-calculator', 'unicode' => 'f163'],
-        ['name' => 'icon-water166', 'unicode' => 'f166'],
-        ['name' => 'icon-water167', 'unicode' => 'f167'],
+
         ['name' => 'icon-sliders', 'unicode' => 'f168'],
         ['name' => 'icon-megaphone', 'unicode' => 'f169'],
         ['name' => 'icon-hand-up', 'unicode' => 'f170'],
         ['name' => 'icon-hand-down', 'unicode' => 'f171'],
         ['name' => 'icon-tag', 'unicode' => 'f176'],
         ['name' => 'icon-cart-add', 'unicode' => 'f184'],
+
+
+        ['name' => 'icon-mobile', 'unicode' => 'f195'],
+        ['name' => 'icon-tablet', 'unicode' => 'f196'],
+        ['name' => 'icon-notification-outline', 'unicode' => 'f197'],
+        ['name' => 'icon-quote-right', 'unicode' => 'f198'],
+        ['name' => 'icon-quote-left', 'unicode' => 'f199'],
+
     ],
 
 ]
@@ -213,18 +232,24 @@ $icons = [
 <div class="row">
     <?php foreach ($icons as $gn => $group) { ?>
         <div class="col-sm-12 pt-3"><h3 class="text-center"><?= $gn; ?></h3></div>
-        <?php foreach ($group as $icon) { ?>
+        <?php foreach ($group as $icon) {
+            $unicode = '&#x' . $icon['unicode'] . ';';
+            ?>
             <div class="col-sm-2">
                 <div class="card2 pb-3 text-center">
                 <span style="font-family: Pixelion;font-size:26px">
                     <?php
                     if (isset($icon['unicode'])) {
-                        echo '&#x' . $icon['unicode'] . ';';
+
+                        echo Html::decode($unicode);
                     }
                     ?>
                     </span>
                     <div>
-                        <code><?php echo $icon['name']; //echo htmlspecialchars('<i class="' . $icon['name'] . '"></i>'); ?></code>
+                        <code><?php echo htmlspecialchars('<i class="' . $icon['name'] . '"></i>'); ?></code>
+                    </div>
+                    <div>
+                        <code><?= Html::encode($unicode); ?></code> <?=  $icon['unicode']; ?>
                     </div>
                 </div>
             </div>
