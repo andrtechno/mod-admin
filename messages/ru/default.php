@@ -16,6 +16,7 @@ return [
     'REPAIR_DB' => 'Ремонт базы данных',
     'TOTAL_SIZE_DB' => 'Общий размер базы данных',
     'TOTAL_OVERHEAD' => 'Общие накладные расходы',
+    'SETTINGS_THEME' => 'Настройки темы',
     'DB_OPTIMIZE_REPAIR' => 'Оптимизация или ремонт базы данных',
     'BACKUP_LIMIT' => 'Лимит на резервное копирование исчерпан {current_size} из {maxsize}',
     'NO_MODULES_INSTALL' => 'Нет доступных модулей для установки.',
