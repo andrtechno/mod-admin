@@ -11,7 +11,7 @@ use yii\data\ArrayDataProvider;
 use yii\helpers\Json;
 use yii\web\Response;
 use panix\engine\controllers\AdminController;
-use panix\mod\admin\models\Notifications;
+use panix\mod\admin\models\Notification;
 use panix\engine\Html;
 use panix\engine\FileSystem;
 use yii\web\UnauthorizedHttpException;
@@ -52,8 +52,8 @@ class DefaultController extends AdminController
     public function actionAjaxCounters()
     {
 
-        $notificationsAll = Notifications::find()->read([Notifications::STATUS_NO_READ, Notifications::STATUS_NOTIFY])->all();
-        $notificationsLimit = Notifications::find()->read([Notifications::STATUS_NO_READ, Notifications::STATUS_NOTIFY])->limit(5)->all();
+        $notificationsAll = Notification::find()->read([Notification::STATUS_NO_READ, Notification::STATUS_NOTIFY])->all();
+        $notificationsLimit = Notification::find()->limit(5)->all();
        // $notificationsCount = Notifications::find()->read([Notifications::STATUS_NO_READ, Notifications::STATUS_NOTIFY])->count();
         $result = [];
         foreach (Yii::$app->counters as $key=>$count){
@@ -63,7 +63,7 @@ class DefaultController extends AdminController
 
         $result['notify'] = [];
         foreach ($notificationsAll as $notify) {
-            /** @var $notify Notifications */
+            /** @var $notify Notification */
             $result['notify'][$notify->id] = [
                 'text' => $notify->text,
                 'status' => $notify->status,
@@ -72,14 +72,14 @@ class DefaultController extends AdminController
                 'sound' => $notify->sound
             ];
         }
-        $result['content'] = $this->render('notifications', ['notifications' => $notificationsLimit]);
+        $result['content'] = $this->render('@admin/views/admin/notification/_notifications', ['notifications' => $notificationsLimit]);
         Yii::$app->response->format = Response::FORMAT_JSON;
         return $result;
     }
 
     public function actionAjaxNotificationStatus($id, $status)
     {
-        $notifications = Notifications::findOne($id);
+        $notifications = Notification::findOne($id);
         $notifications->status = $status;
         $notifications->save(false);
 

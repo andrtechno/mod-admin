@@ -3,13 +3,13 @@
 namespace panix\mod\admin\models;
 
 use Yii;
-use panix\mod\admin\models\query\NotificationsQuery;
+use panix\mod\admin\models\query\NotificationQuery;
 use panix\engine\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\ArrayHelper;
 
 /**
- * Class Notifications
+ * Class Notification
  * @property integer $id ID
  * @property string $type Type
  * @property string $sound Sound Path
@@ -18,7 +18,7 @@ use yii\helpers\ArrayHelper;
  * @property string $url
  * @package panix\mod\admin\models
  */
-class Notifications extends ActiveRecord
+class Notification extends ActiveRecord
 {
 
     const MODULE_ID = 'admin';
@@ -28,7 +28,7 @@ class Notifications extends ActiveRecord
 
     public static function find()
     {
-        return new NotificationsQuery(get_called_class());
+        return new NotificationQuery(get_called_class());
     }
 
     public static function tableName()

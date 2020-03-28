@@ -4,15 +4,8 @@ use yii\helpers\Html;
 use panix\engine\grid\GridView;
 use panix\engine\widgets\Pjax;
 
-
-
-?>
-
-<?php
 Pjax::begin([
-    'timeout' => 50000,
-    'id' => 'pjax-' . strtolower(basename($dataProvider->query->modelClass)),
-    'linkSelector' => 'a:not(.linkTarget)'
+    'dataProvider' => $dataProvider,
 ]);
 
 
