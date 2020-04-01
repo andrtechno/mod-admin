@@ -210,21 +210,21 @@ $icons = [
         ['name' => 'icon-loader', 'unicode' => 'f158'],
         ['name' => 'icon-smile', 'unicode' => 'f159'],
         ['name' => 'icon-calculator', 'unicode' => 'f163'],
-
         ['name' => 'icon-sliders', 'unicode' => 'f168'],
         ['name' => 'icon-megaphone', 'unicode' => 'f169'],
         ['name' => 'icon-hand-up', 'unicode' => 'f170'],
         ['name' => 'icon-hand-down', 'unicode' => 'f171'],
         ['name' => 'icon-tag', 'unicode' => 'f176'],
         ['name' => 'icon-cart-add', 'unicode' => 'f184'],
-
-
         ['name' => 'icon-mobile', 'unicode' => 'f195'],
         ['name' => 'icon-tablet', 'unicode' => 'f196'],
         ['name' => 'icon-notification-outline', 'unicode' => 'f197'],
         ['name' => 'icon-quote-right', 'unicode' => 'f198'],
         ['name' => 'icon-quote-left', 'unicode' => 'f199'],
-
+        ['name' => 'icon-crown', 'unicode' => 'f200'],
+        ['name' => 'icon-cup', 'unicode' => 'f201'],
+        ['name' => 'icon-soccer', 'unicode' => 'f202'],
+        ['name' => 'icon-soccer-2', 'unicode' => 'f203'],
     ],
 
 ]
@@ -255,6 +255,10 @@ $icons = [
             </div>
         <?php } ?>
     <?php } ?>
+
+    <div class="position-relative">
+    <span class="badge badge-success badge-pulse">3</span>
+    </div>
 </div>
 
 
