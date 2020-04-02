@@ -192,7 +192,7 @@ $icons = [
         ['name' => 'icon-calendar', 'unicode' => 'f124'],
         ['name' => 'icon-external-link', 'unicode' => 'f126'],
         ['name' => 'icon-laptop', 'unicode' => 'f127'],
-        ['name' => 'icon-ban', 'unicode' => 'f129'],
+        ['name' => 'icon-cancel', 'unicode' => 'f129'],
         ['name' => 'icon-bug', 'unicode' => 'f130'],
         ['name' => 'icon-camera-movie', 'unicode' => 'f137'],
         ['name' => 'icon-camera-photo', 'unicode' => 'f138'],
@@ -206,7 +206,7 @@ $icons = [
         ['name' => 'icon-log', 'unicode' => 'f151'],
         ['name' => 'icon-notification', 'unicode' => 'f152'],
         ['name' => 'icon-rss', 'unicode' => 'f153'],
-        ['name' => 'icon-blocked', 'unicode' => 'f157'],
+        ['name' => 'icon-brush', 'unicode' => 'f157'],
         ['name' => 'icon-loader', 'unicode' => 'f158'],
         ['name' => 'icon-smile', 'unicode' => 'f159'],
         ['name' => 'icon-calculator', 'unicode' => 'f163'],
@@ -225,6 +225,7 @@ $icons = [
         ['name' => 'icon-cup', 'unicode' => 'f201'],
         ['name' => 'icon-soccer', 'unicode' => 'f202'],
         ['name' => 'icon-soccer-2', 'unicode' => 'f203'],
+        ['name' => 'icon-google', 'unicode' => 'f204'],
     ],
 
 ]
