@@ -88,6 +88,7 @@ $icons = [
         ['name' => 'icon-kyivstar', 'unicode' => 'f175'],
         ['name' => 'icon-apple', 'unicode' => 'f031'],
         ['name' => 'icon-yandex', 'unicode' => 'f040'],
+        ['name' => 'icon-mailchimp', 'unicode' => 'f205'],
     ],
     'Стрелки' => [
         ['name' => 'icon-arrow-left', 'unicode' => 'f005'],
