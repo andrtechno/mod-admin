@@ -16,13 +16,27 @@ echo GridView::widget([
     'dataProvider' => $dataProvider,
     'layoutOptions' => ['title' => $this->context->pageName],
     'columns' => [
-        'time',
-        'ip',
-        'cmd',
-
+        [
+            'attribute' => 'time',
+            'header' => Yii::t('app/default', 'TIME'),
+            'format' => 'raw',
+            'contentOptions' => ['class' => 'text-center','style'=>'width:100px']
+        ],
+        [
+            'attribute' => 'ip',
+            'header' => Yii::t('app/default', 'IP'),
+            'format' => 'raw',
+            'contentOptions' => ['class' => 'text-center','style'=>'width:100px']
+        ],
+        [
+            'attribute' => 'cmd',
+            'header' => Yii::t('admin/default', 'LOG_CMD'),
+            'format' => 'raw',
+            'contentOptions' => ['class' => 'text-center','style'=>'width:100px']
+        ],
         [
             'attribute' => 'type',
-            'header' => Yii::t('app/default', 'type'),
+            'header' => Yii::t('admin/default', 'LOG_TYPE'),
             'format' => 'raw',
             'contentOptions' => ['class' => 'text-center','style'=>'width:100px']
         ],
@@ -34,7 +48,7 @@ echo GridView::widget([
         ],
         [
             'attribute' => 'session',
-            'header' => Yii::t('app/default', 'session'),
+            'header' => Yii::t('admin/default', 'LOG_SESSION'),
             'format' => 'raw',
             'contentOptions' => ['class' => 'text-center','style'=>'width:100px']
         ],

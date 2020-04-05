@@ -77,7 +77,7 @@ class LogsController extends AdminController
                 $log = preg_split("/([0-9]{4}-[0-9]{2}-[0-9]{2})\s/", $log, -1, PREG_SPLIT_NO_EMPTY);
                 // $pop = array_pop($log);
                 $log = array_reverse($log);
-               //  CMS::dump($log);die;
+                //  CMS::dump($log);die;
             } else {
                 $log = [];
             }
@@ -88,7 +88,7 @@ class LogsController extends AdminController
 
                 if ($preg) {
                     $data[] = [
-                        'time' => Yii::$app->formatter->asTime(strtotime($match[1]),'H:mm'),
+                        'time' => Yii::$app->formatter->asTime(strtotime($match[1]), 'H:mm'),
                         'ip' => $match[2],
                         'user_id' => $match[3],
                         'session' => $match[4],
@@ -118,23 +118,40 @@ class LogsController extends AdminController
             ]);
         } else {
 
-            $e = explode(DIRECTORY_SEPARATOR, $folder);
-            $this->pageName = CMS::date(strtotime($e[0]), false) . ' / ' . $e[1];
+            if (strpos(DIRECTORY_SEPARATOR, $folder)) {
+                $e = explode(DIRECTORY_SEPARATOR, $folder);
+                $this->pageName = CMS::date(strtotime($e[0]), false) . ' / ' . $e[1];
+            } else {
+                $this->pageName = $folder;
+            }
+
             $this->breadcrumbs[] = [
                 'label' => Yii::t('admin/default', 'LOGS'),
                 'url' => ['index']
             ];
             $this->breadcrumbs[] = $this->pageName;
-
-            $files = FileHelper::findFiles($logPath);
+            $pathInfo = pathinfo($logPath);
             $data = [];
+            if (!isset($pathInfo['extension'])) {
+                $folders = FileHelper::findDirectories($logPath, ['recursive' => false]);
+                foreach ($folders as $folder) {
+                    $data[] = [
+                        'sub_folders' => null,
+                        'folder' => basename($folder)
+                    ];
+                }
+                $view = 'view_folders';
+            } else {
+                $files = FileHelper::findFiles($logPath, ['recursive' => false]);
+                foreach ($files as $file) {
 
-            foreach ($files as $file) {
+                    $data[] = [
+                        'size' => CMS::fileSize(filesize($file)),
+                        'file' => $file
+                    ];
+                }
 
-                $data[] = [
-                    'size' => CMS::fileSize(filesize($file)),
-                    'file' => $file
-                ];
+                $view = 'view';
             }
 
             $dataProvider = new ArrayDataProvider([
@@ -144,13 +161,11 @@ class LogsController extends AdminController
                 ],
             ]);
 
-
-            return $this->render('view', [
+            return $this->render($view, [
                 'dataProvider' => $dataProvider,
                 'folder' => $folder
             ]);
         }
-
     }
 
     public function actionDelete($folder, $file)
