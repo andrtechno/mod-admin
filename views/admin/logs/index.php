@@ -27,7 +27,7 @@ echo GridView::widget([
             'format' => 'raw',
             'contentOptions' => ['class' => 'text-left'],
             'value' => function ($model) {
-                return implode(' ',$model['sub_folders']);
+                return implode('<br/>',$model['sub_folders']);
             }
         ],
 

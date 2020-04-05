@@ -4,7 +4,7 @@ namespace panix\mod\admin\controllers\admin;
 
 use Yii;
 use yii\helpers\FileHelper;
-use yii\helpers\Html;
+use panix\engine\Html;
 use yii\data\ArrayDataProvider;
 use panix\engine\controllers\AdminController;
 use panix\engine\CMS;
@@ -22,19 +22,13 @@ class LogsController extends AdminController
 
         $logPath = Yii::getAlias(Yii::$app->runtimePath) . DIRECTORY_SEPARATOR . 'logs';
 
-        //  $fdir = opendir(Yii::getAlias(Yii::$app->runtimePath).DIRECTORY_SEPARATOR.'logs');
         $folders = FileHelper::findDirectories($logPath, ['recursive' => false]);
         $data = [];
         foreach ($folders as $folder) {
             $foldersSub = FileHelper::findDirectories($folder, ['recursive' => false]);
             $foldersSubList = [];
             foreach ($foldersSub as $sub_folder) {
-                $foldersSubList[] = Html::a(basename($sub_folder), ['view', 'folder' => basename(dirname($sub_folder)) . DIRECTORY_SEPARATOR . basename($sub_folder)]);
-                //$filesList=[];
-                //$files = FileHelper::findFiles($sub_folder);
-                //foreach ($files as $file){
-                //    $filesList[]=basename($file);
-                //}
+                $foldersSubList[] = Html::a(Html::icon('folder-open').' '.basename($sub_folder), ['view', 'folder' => basename(dirname($sub_folder)) . DIRECTORY_SEPARATOR . basename($sub_folder)]);
             }
             $data[] = [
                 'sub_folders' => $foldersSubList,
@@ -42,9 +36,6 @@ class LogsController extends AdminController
                 'folder' => basename($folder)
             ];
         }
-        // CMS::dump($folders);
-        // CMS::dump($data);
-        // die;
 
 
         $dataProvider = new ArrayDataProvider([
@@ -52,7 +43,6 @@ class LogsController extends AdminController
             'pagination' => [
                 'pageSize' => 10,
             ],
-            // 'sort' => $sort,
         ]);
 
 
@@ -93,15 +83,20 @@ class LogsController extends AdminController
 
             $data = [];
             foreach ($log as $l) {
-                preg_match('/\[(\w.*)\]\[(\d)\]\[(.*)\]\[(\w+)\]\[(\w.+)\]\s(\w.*)+/', $l, $match);
-                $data[] = [
-                    'ip' => isset($match[1]) ? $match[1] : null,
-                    'user_id' => $match[2],
-                    'session' => $match[3],
-                    'type' => Html::tag('span', $match[4], $this->showStatus($match[4])),
-                    'cmd' => $match[5],
-                    'log' => $match[6]
-                ];
+                $preg=preg_match('/\[(.*)\]\[(.*)\]\[(.*)\]\[(\w+)\]\[(\w.+)\]\s(\w.*)+/', $l, $match);
+                if($preg){
+                    $data[] = [
+                        'ip' => isset($match[1]) ? $match[1] : null,
+                        'user_id' => $match[2],
+                        'session' => $match[3],
+                        'type' => Html::tag('span', $match[4], $this->showStatus($match[4])),
+                        'cmd' => $match[5],
+                        'log' => $match[6]
+                    ];
+                }else{
+                    echo $l;die;
+                }
+
 
             }
 
