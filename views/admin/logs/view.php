@@ -14,17 +14,30 @@ echo GridView::widget([
     'columns' => [
         [
             'attribute' => 'file',
-            'header' => Yii::t('app/default', 'file'),
+            'header' => Yii::t('app/default', 'FILENAME'),
             'format' => 'raw',
             'contentOptions' => ['class' => 'text-left'],
             'value' => function ($model) use ($folder) {
                 $file = basename($model['file']);
-                return Html::a($file, ['view', 'folder' => $folder, 'file' => $file]);
+                $pathInfo = pathinfo($file);
+
+                if ($pathInfo['extension'] == 'log') {
+                    return Html::icon('external-link') . ' ' . Html::a($file, ['view', 'folder' => $folder, 'file' => $file]);
+                } elseif($pathInfo['extension'] == 'zip') {
+                    $zip = new ZipArchive();
+                    $filename = [];
+                    if ($zip->open($model['file']) == true) {
+                        for ($i = 0; $i < $zip->numFiles; $i++) {
+                            $filename[] = '&mdash; ' . $zip->getNameIndex($i);
+                        }
+                    }
+                    return '<strong>' . $file . '</strong> ' . Html::tag('span', 'Архив', ['class' => 'badge badge-secondary']) . '<br/>' . implode('<br/>', $filename);
+                }
             }
         ],
         [
             'attribute' => 'size',
-            'header' => Yii::t('app/default', 'size'),
+            'header' => Yii::t('app/default', 'SIZE'),
             'format' => 'raw',
             'contentOptions' => ['class' => 'text-center']
         ],

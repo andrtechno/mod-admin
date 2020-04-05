@@ -28,7 +28,7 @@ class LogsController extends AdminController
             $foldersSub = FileHelper::findDirectories($folder, ['recursive' => false]);
             $foldersSubList = [];
             foreach ($foldersSub as $sub_folder) {
-                $foldersSubList[] = Html::a(Html::icon('folder-open').' '.basename($sub_folder), ['view', 'folder' => basename(dirname($sub_folder)) . DIRECTORY_SEPARATOR . basename($sub_folder)]);
+                $foldersSubList[] = Html::a(Html::icon('folder-open') . ' ' . basename($sub_folder), ['view', 'folder' => basename(dirname($sub_folder)) . DIRECTORY_SEPARATOR . basename($sub_folder)]);
             }
             $data[] = [
                 'sub_folders' => $foldersSubList,
@@ -74,17 +74,19 @@ class LogsController extends AdminController
                 $log = file_get_contents($logPath . DIRECTORY_SEPARATOR . $getFile);
             }
             if (isset($log)) {
-                $log = preg_split("/([0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-9]{2}:[0-9]{2}:[0-9]{2}\s)+/", $log, -1, PREG_SPLIT_NO_EMPTY);
+                $log = preg_split("/[0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-9]{2}:[0-9]{2}:[0-9]{2}\s/", $log, -1, PREG_SPLIT_NO_EMPTY);
                 // $pop = array_pop($log);
                 $log = array_reverse($log);
+                //CMS::dump($log);die;
             } else {
                 $log = [];
             }
 
             $data = [];
             foreach ($log as $l) {
-                $preg=preg_match('/\[(.*)\]\[(.*)\]\[(.*)\]\[(\w+)\]\[(\w.+)\]\s(\w.*)+/', $l, $match);
-                if($preg){
+                $preg = preg_match('/\[(.*)\]\[(.*)\]\[(.*)\]\[(.*)\]\[(\w.+)\]\s(\w.*)+/', $l, $match);
+
+                if ($preg) {
                     $data[] = [
                         'ip' => isset($match[1]) ? $match[1] : null,
                         'user_id' => $match[2],
@@ -93,8 +95,9 @@ class LogsController extends AdminController
                         'cmd' => $match[5],
                         'log' => $match[6]
                     ];
-                }else{
-                    echo $l;die;
+                } else {
+                    echo $l;
+                    die;
                 }
 
 
@@ -124,7 +127,9 @@ class LogsController extends AdminController
 
             $files = FileHelper::findFiles($logPath);
             $data = [];
+
             foreach ($files as $file) {
+
                 $data[] = [
                     'size' => CMS::fileSize(filesize($file)),
                     'file' => $file
