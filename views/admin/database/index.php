@@ -1,7 +1,7 @@
 <?php
 
 use panix\engine\bootstrap\ActiveForm;
-use yii\widgets\Pjax;
+use panix\engine\widgets\Pjax;
 use panix\engine\Html;
 use panix\engine\CMS;
 use panix\engine\grid\GridView;
@@ -50,10 +50,8 @@ if (!$db->checkLimit()) {
 
 
         <?php
-        yii\widgets\Pjax::begin([
-            'id' => 'pjax-container-backup',
-            'enablePushState' => false,
-            'enableReplaceState' => false,
+        Pjax::begin([
+            'dataProvider' => $data_db,
         ]);
         ?>
         <?=
