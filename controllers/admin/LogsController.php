@@ -74,26 +74,27 @@ class LogsController extends AdminController
                 $log = file_get_contents($logPath . DIRECTORY_SEPARATOR . $getFile);
             }
             if (isset($log)) {
-                $log = preg_split("/[0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-9]{2}:[0-9]{2}:[0-9]{2}\s/", $log, -1, PREG_SPLIT_NO_EMPTY);
+                $log = preg_split("/([0-9]{4}-[0-9]{2}-[0-9]{2})\s/", $log, -1, PREG_SPLIT_NO_EMPTY);
                 // $pop = array_pop($log);
                 $log = array_reverse($log);
-                //CMS::dump($log);die;
+               //  CMS::dump($log);die;
             } else {
                 $log = [];
             }
 
             $data = [];
             foreach ($log as $l) {
-                $preg = preg_match('/\[(.*)\]\[(.*)\]\[(.*)\]\[(.*)\]\[(\w.+)\]\s(\w.*)+/', $l, $match);
+                $preg = preg_match('/([0-9]{2}:[0-9]{2}:[0-9]{2}\s)\[(.*)\]\[(.*)\]\[(.*)\]\[(.*)\]\[(\w.+)\]\s(\w.*)+/', $l, $match);
 
                 if ($preg) {
                     $data[] = [
-                        'ip' => isset($match[1]) ? $match[1] : null,
-                        'user_id' => $match[2],
-                        'session' => $match[3],
-                        'type' => Html::tag('span', $match[4], $this->showStatus($match[4])),
-                        'cmd' => $match[5],
-                        'log' => $match[6]
+                        'time' => Yii::$app->formatter->asTime(strtotime($match[1]),'H:mm'),
+                        'ip' => $match[2],
+                        'user_id' => $match[3],
+                        'session' => $match[4],
+                        'type' => Html::tag('span', $match[5], $this->showStatus($match[5])),
+                        'cmd' => $match[6],
+                        'log' => $match[7]
                     ];
                 } else {
                     echo $l;
@@ -117,8 +118,8 @@ class LogsController extends AdminController
             ]);
         } else {
 
-
-            $this->pageName = $folder;
+            $e = explode(DIRECTORY_SEPARATOR, $folder);
+            $this->pageName = CMS::date(strtotime($e[0]), false) . ' / ' . $e[1];
             $this->breadcrumbs[] = [
                 'label' => Yii::t('admin/default', 'LOGS'),
                 'url' => ['index']

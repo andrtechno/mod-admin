@@ -16,8 +16,10 @@ echo GridView::widget([
     'dataProvider' => $dataProvider,
     'layoutOptions' => ['title' => $this->context->pageName],
     'columns' => [
+        'time',
         'ip',
         'cmd',
+
         [
             'attribute' => 'type',
             'header' => Yii::t('app/default', 'type'),
