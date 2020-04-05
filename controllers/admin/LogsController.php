@@ -168,22 +168,32 @@ class LogsController extends AdminController
         // }
     }
 
+    public function actionDeleteFolder($folder)
+    {
+
+        $path = Yii::getAlias(Yii::$app->runtimePath) . DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR . $folder;
+        if (file_exists($path)) {
+            FileHelper::removeDirectory($path);
+            Yii::$app->session->setFlash("success", Yii::t('app/default', 'FILE_SUCCESS_DELETE'));
+        } else {
+            Yii::$app->session->setFlash("danger", Yii::t('app/default', 'FILE_NOT_FOUND'));
+        }
+
+        return $this->redirect(['index']);
+    }
+
     public function showStatus($text)
     {
         if (preg_match('%error%', $text)) {
-            //  $this->last_status = '[error]';
-            return array('status' => 'error', 'class' => 'badge badge-danger');
+            return ['status' => 'error', 'class' => 'badge badge-danger'];
         } elseif (preg_match('%warning%', $text)) {
-            // $this->last_status = '[warning]';
-            return array('status' => 'warning', 'class' => 'badge badge-warning');
+            return ['status' => 'warning', 'class' => 'badge badge-warning'];
         } elseif (preg_match('%info%', $text)) {
-            // $this->last_status = '[info]';
-            return array('status' => 'info', 'class' => 'badge badge-info');
+            return ['status' => 'info', 'class' => 'badge badge-info'];
         } elseif (preg_match('%trace%', $text)) {
-            // $this->last_status = '[sql]';
-            return array('status' => 'trace', 'class' => 'badge badge-primary');
+            return ['status' => 'trace', 'class' => 'badge badge-primary'];
         } else {
-            return array('status' => 'undefined', 'class' => '');
+            return ['status' => 'undefined', 'class' => ''];
         }
     }
 }

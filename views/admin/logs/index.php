@@ -37,7 +37,7 @@ echo GridView::widget([
             'header' => Yii::t('app/default', 'OPTIONS'),
             'buttons' => [
                 'delete' => function ($url, $model, $key) {
-                    $url = ['delete', 'folder' => $model['folder']];
+                    $url = ['delete-folder', 'folder' => $model['folder']];
                     return Html::a(Html::icon('delete'), $url, [
                         'title' => Yii::t('app/default', 'DELETE'),
                         'class' => 'btn btn-sm btn-danger']);
