@@ -8,22 +8,25 @@ use panix\engine\data\ActiveDataProvider;
 use panix\mod\admin\models\Languages;
 
 
-class LanguagesSearch extends Languages {
+class LanguagesSearch extends Languages
+{
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             [['id'], 'integer'],
-            [['name','code'], 'safe'],
+            [['name', 'code'], 'safe'],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function scenarios() {
+    public function scenarios()
+    {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -35,13 +38,14 @@ class LanguagesSearch extends Languages {
      *
      * @return ActiveDataProvider
      */
-    public function search($params) {
+    public function search($params)
+    {
         $query = Languages::find();
 
         $dataProvider = new ActiveDataProvider([
-                    'query' => $query,
+            'query' => $query,
 
-                ]);
+        ]);
 
         $this->load($params);
 

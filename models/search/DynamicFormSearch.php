@@ -5,10 +5,10 @@ namespace panix\mod\admin\models\search;
 use Yii;
 use yii\base\Model;
 use panix\engine\data\ActiveDataProvider;
-use panix\mod\admin\models\Notification;
+use panix\mod\admin\models\DynamicForm;
 
 
-class NotificationSearch extends Notification
+class DynamicFormSearch extends DynamicForm
 {
 
     /**
@@ -18,7 +18,7 @@ class NotificationSearch extends Notification
     {
         return [
             [['id'], 'integer'],
-            [['text'], 'safe'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class NotificationSearch extends Notification
      */
     public function search($params)
     {
-        $query = Notification::find();
+        $query = DynamicForm::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -55,11 +55,8 @@ class NotificationSearch extends Notification
             return $dataProvider;
         }
 
-        $query->andFilterWhere([
-            'id' => $this->id,
-        ]);
-
-        $query->andFilterWhere(['like', 'text', $this->text]);
+        $query->andFilterWhere(['id' => $this->id]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

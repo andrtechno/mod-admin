@@ -18,7 +18,7 @@ echo GridView::widget([
             'format' => 'raw',
             'contentOptions' => ['class' => 'text-left'],
             'value' => function ($model) {
-                return \panix\engine\CMS::date(strtotime($model['folder']), false);
+                return $model['folder'];
             }
         ],
         [

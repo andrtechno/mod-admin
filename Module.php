@@ -82,6 +82,12 @@ class Module extends WebModule { // implements BootstrapInterface
                         'visible' => YII_DEBUG
                     ],
                     [
+                        'label' => Yii::t('admin/default', 'DYNAMIC_FORM'),
+                        'url' => ['/admin/app/dynamic-form'],
+                        'icon' => 'arrow-right',
+                        'visible' => YII_DEBUG
+                    ],
+                    [
                         'label' => Yii::t('admin/default', 'HELP'),
                         'url' => ['/admin/app/help'],
                         'icon' => 'info',

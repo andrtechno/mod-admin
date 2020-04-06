@@ -1,11 +1,9 @@
 <?php
 
-use yii\helpers\Html;
+use panix\engine\Html;
 use panix\engine\bootstrap\ActiveForm;
 
-$form = ActiveForm::begin([
-    'options' => ['class' => 'form-horizontal']
-]);
+$form = ActiveForm::begin();
 ?>
 <div class="card">
     <div class="card-header">

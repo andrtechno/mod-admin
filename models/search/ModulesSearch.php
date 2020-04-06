@@ -8,12 +8,14 @@ use panix\engine\data\ActiveDataProvider;
 use panix\mod\admin\models\Modules;
 
 
-class ModulesSearch extends Modules {
+class ModulesSearch extends Modules
+{
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             [['id'], 'integer'],
             [['name'], 'safe'],
@@ -23,7 +25,8 @@ class ModulesSearch extends Modules {
     /**
      * @inheritdoc
      */
-    public function scenarios() {
+    public function scenarios()
+    {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -35,13 +38,14 @@ class ModulesSearch extends Modules {
      *
      * @return ActiveDataProvider
      */
-    public function search($params) {
+    public function search($params)
+    {
         $query = Modules::find();
 
         $dataProvider = new ActiveDataProvider([
-                    'query' => $query,
+            'query' => $query,
 
-                ]);
+        ]);
 
         $this->load($params);
 

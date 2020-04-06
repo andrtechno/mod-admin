@@ -13,12 +13,12 @@ echo GridView::widget([
     'layoutOptions' => ['title' => $this->context->pageName],
     'columns' => [
         [
-            'attribute' => 'folder',
+            'attribute' => 'folder_name',
             'header' => Yii::t('app/default', 'folder'),
             'format' => 'raw',
             'contentOptions' => ['class' => 'text-left'],
             'value' => function ($model) {
-                return \panix\engine\CMS::date(strtotime($model['folder']), false);
+                return \panix\engine\CMS::date(strtotime($model['folder_name']), false);
             }
         ],
         [
@@ -37,7 +37,7 @@ echo GridView::widget([
             'header' => Yii::t('app/default', 'OPTIONS'),
             'buttons' => [
                 'delete' => function ($url, $model, $key) {
-                    $url = ['delete-folder', 'folder' => $model['folder']];
+                    $url = ['delete-folder', 'folder' => $model['folder_name']];
                     return Html::a(Html::icon('delete'), $url, [
                         'title' => Yii::t('app/default', 'DELETE'),
                         'class' => 'btn btn-sm btn-danger']);

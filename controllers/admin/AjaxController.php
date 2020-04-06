@@ -2,13 +2,9 @@
 
 namespace panix\mod\admin\controllers\admin;
 
-
 use Yii;
 use yii\base\Exception;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
 use yii\helpers\Json;
-use panix\engine\CMS;
 use yii\web\Response;
 use panix\engine\controllers\AdminController;
 
@@ -32,9 +28,10 @@ class AjaxController extends AdminController
 
     public function actionGeo($ip)
     {
+        /** @var \panix\engine\components\geoip\GeoIP $geoIp */
         $geoIp = Yii::$app->geoip->ip($ip);
         return $this->render('_geo', [
-            'ip'=>$ip,
+            'ip' => $ip,
             'geoIp' => $geoIp,
         ]);
     }
@@ -137,34 +134,26 @@ class AjaxController extends AdminController
       }
      */
 
-    public function actionAutocomplete()
+    public function actionAutoComplete()
     {
+        /** @var yii\db\ActiveRecord $model */
         $model = $_GET['modelClass'];
         $string = $_GET['string'];
         $field = $_GET['field'];
-        $criteria = new CDbCriteria;
-        $criteria->addSearchCondition('t.' . $field, $string);
-        $results = $model::model()->findAll($criteria);
+        $query = $model::find();
+        $query->where('LIKE', [$field => $string]);
+        $results = $query->all();
 
-        $json = array();
+        $json = [];
         foreach ($results as $item) {
-            $json[] = array(
+            $json[] = [
                 'label' => $item->title,
                 'value' => $item->title,
                 'test' => 'test.param'
-            );
+            ];
         }
-        echo Json::encode($json);
-        Yii::$app->end();
+        return $this->asJson($json);
     }
 
-    public function actionSendMailForm()
-    {
-        Yii::import('mod.admin.models.MailForm');
-        $model = new MailForm;
-        $model->toemail = $_GET['mail'];
-        $form = new CMSForm($model->config, $model);
-        $this->renderPartial('_sendMailForm', array('form' => $form));
-    }
 
 }

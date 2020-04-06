@@ -2,6 +2,7 @@
 
 namespace panix\mod\admin\controllers\admin;
 
+use panix\mod\user\models\Session;
 use Yii;
 use yii\helpers\FileHelper;
 use panix\engine\Html;
@@ -24,6 +25,7 @@ class LogsController extends AdminController
 
         $folders = FileHelper::findDirectories($logPath, ['recursive' => false]);
         $data = [];
+        $folders = array_reverse($folders);
         foreach ($folders as $folder) {
             $foldersSub = FileHelper::findDirectories($folder, ['recursive' => false]);
             $foldersSubList = [];
@@ -33,7 +35,7 @@ class LogsController extends AdminController
             $data[] = [
                 'sub_folders' => $foldersSubList,
                 //'files'=>$filesList,
-                'folder' => basename($folder)
+                'folder_name' => basename($folder)
             ];
         }
 
@@ -54,119 +56,135 @@ class LogsController extends AdminController
     public function actionView($folder)
     {
         $logPath = Yii::getAlias(Yii::$app->runtimePath) . DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR . $folder;
-        $getFile = Yii::$app->request->get('file');
 
 
-        if ($getFile) {
-
-            $this->pageName = basename(ucfirst($getFile), '.log');
-            $this->breadcrumbs[] = [
-                'label' => Yii::t('admin/default', 'LOGS'),
-                'url' => ['index']
-            ];
-            $this->breadcrumbs[] = [
-                'label' => $folder,
-                'url' => ['view', 'folder' => $folder]
-            ];
-            $this->breadcrumbs[] = $this->pageName;
-
-            if (file_exists($logPath . DIRECTORY_SEPARATOR . $getFile)) {
-                $log = file_get_contents($logPath . DIRECTORY_SEPARATOR . $getFile);
-            }
-            if (isset($log)) {
-                $log = preg_split("/([0-9]{4}-[0-9]{2}-[0-9]{2})\s/", $log, -1, PREG_SPLIT_NO_EMPTY);
-                // $pop = array_pop($log);
-                $log = array_reverse($log);
-                //  CMS::dump($log);die;
-            } else {
-                $log = [];
-            }
-
-            $data = [];
-            foreach ($log as $l) {
-                $preg = preg_match('/([0-9]{2}:[0-9]{2}:[0-9]{2}\s)\[(.*)\]\[(.*)\]\[(.*)\]\[(.*)\]\[(\w.+)\]\s(\w.*)+/', $l, $match);
-
-                if ($preg) {
-                    $data[] = [
-                        'time' => Yii::$app->formatter->asTime(strtotime($match[1]), 'H:mm'),
-                        'ip' => $match[2],
-                        'user_id' => $match[3],
-                        'session' => $match[4],
-                        'type' => Html::tag('span', $match[5], $this->showStatus($match[5])),
-                        'cmd' => $match[6],
-                        'log' => $match[7]
-                    ];
-                } else {
-                    echo $l;
-                    die;
-                }
-
-
-            }
-
-            $dataProvider = new ArrayDataProvider([
-                'allModels' => $data,
-                'pagination' => [
-                    'pageSize' => 300,
-                ],
-            ]);
-
-
-            return $this->render('view_file', [
-                'content' => $log,
-                'dataProvider' => $dataProvider
-            ]);
+        if (strpos(DIRECTORY_SEPARATOR, $folder)) {
+            $e = explode(DIRECTORY_SEPARATOR, $folder);
+            $this->pageName = CMS::date(strtotime($e[0]), false) . ' / ' . $e[1];
         } else {
+            $this->pageName = $folder;
+        }
 
-            if (strpos(DIRECTORY_SEPARATOR, $folder)) {
-                $e = explode(DIRECTORY_SEPARATOR, $folder);
-                $this->pageName = CMS::date(strtotime($e[0]), false) . ' / ' . $e[1];
-            } else {
-                $this->pageName = $folder;
-            }
+        $this->breadcrumbs[] = [
+            'label' => Yii::t('admin/default', 'LOGS'),
+            'url' => ['index']
+        ];
+        $this->breadcrumbs[] = $this->pageName;
+        $pathInfo = pathinfo($logPath);
+        $data = [];
 
-            $this->breadcrumbs[] = [
-                'label' => Yii::t('admin/default', 'LOGS'),
-                'url' => ['index']
+
+        $files = FileHelper::findFiles($logPath, ['recursive' => false]);
+        foreach ($files as $file) {
+            $data[] = [
+                'size' => CMS::fileSize(filesize($file)),
+                'file' => $file
             ];
-            $this->breadcrumbs[] = $this->pageName;
-            $pathInfo = pathinfo($logPath);
-            $data = [];
-            if (!isset($pathInfo['extension'])) {
-                $folders = FileHelper::findDirectories($logPath, ['recursive' => false]);
-                foreach ($folders as $folder) {
+        }
+        $view = 'view';
+
+        if (!isset($pathInfo['extension'])) {
+            $folders = FileHelper::findDirectories($logPath, ['recursive' => false]);
+            if ($folders) {
+                foreach ($folders as $dir) {
                     $data[] = [
                         'sub_folders' => null,
-                        'folder' => basename($folder)
+                        'folder' => Html::icon('folder-open') . ' ' . Html::a(basename($dir), ['view', 'folder' => $folder . DIRECTORY_SEPARATOR . basename($dir)])
                     ];
                 }
                 $view = 'view_folders';
+            }
+        }
+
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $data,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+
+        return $this->render($view, [
+            'dataProvider' => $dataProvider,
+            'folder' => $folder
+        ]);
+
+    }
+
+    public function actionViewFile($folder, $file)
+    {
+
+
+       // $geoIp = Yii::$app->geoip->ip('66.249.66.159');
+      //CMS::dump($geoIp);die;
+        $logPath = Yii::getAlias(Yii::$app->runtimePath) . DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR . $folder;
+        $this->pageName = basename(ucfirst($file), '.log');
+        $this->breadcrumbs[] = [
+            'label' => Yii::t('admin/default', 'LOGS'),
+            'url' => ['index']
+        ];
+        $this->breadcrumbs[] = [
+            'label' => $folder,
+            'url' => ['view', 'folder' => $folder]
+        ];
+        $this->breadcrumbs[] = $this->pageName;
+
+        if (file_exists($logPath . DIRECTORY_SEPARATOR . $file)) {
+            $log = file_get_contents($logPath . DIRECTORY_SEPARATOR . $file);
+        }
+        if (isset($log)) {
+            $log = preg_split("/([0-9]{4}-[0-9]{2}-[0-9]{2})\s/", $log, -1, PREG_SPLIT_NO_EMPTY);
+            // $pop = array_pop($log);
+            $log = array_reverse($log);
+            //  CMS::dump($log);die;
+        } else {
+            $log = [];
+        }
+
+        $data = [];
+        foreach ($log as $l) {
+
+            /*$l = "2020-04-06 16:33:34 [127.0.0.1][1][-][info][application] _SERVER = [
+    'REDIRECT_REDIRECT_STATUS' => '***'
+]";
+            $l = "2020-04-06 16:33:34 [127.0.0.1][1][-][info][application] \$_SERVER = [
+            'REDIRECT_REDIRECT_STATUS' => '***'
+            ]";*/
+            //$preg = preg_match('/([0-9]{2}:[0-9]{2}:[0-9]{2}\s)\[(.*)\]\[(.*)\]\[(.*)\]\[(.*)\]\[(\w.+)\]\s(\w.*)+/iu', CMS::slashNto($l,''), $match);
+            $preg = preg_match('/([0-9]{2}:[0-9]{2}:[0-9]{2}\s)\[(.*)\]\[(.*)\]\[(.*)\]\[(.*)\]\[(\w.+)\]\s(.+)/iu', CMS::slashNto($l,''), $match);
+
+            if ($preg) {
+                $data[] = [
+                    'time' => Yii::$app->formatter->asTime(strtotime($match[1]), 'H:mm'),
+                    'ip' => CMS::ip($match[2]),
+                    'user_id' => ($match[3] !== '-') ? $match[3] : Yii::t('app/default','Guest'),
+                    'session' => ($match[4] !== '-') ? $match[4]: null,
+                    'type' => Html::tag('span', $match[5], $this->showStatus($match[5])),
+                    'cmd' => $match[6],
+                    'log' => Html::decode($match[7])
+                ];
             } else {
-                $files = FileHelper::findFiles($logPath, ['recursive' => false]);
-                foreach ($files as $file) {
-
-                    $data[] = [
-                        'size' => CMS::fileSize(filesize($file)),
-                        'file' => $file
-                    ];
-                }
-
-                $view = 'view';
+                echo 'error'.PHP_EOL.PHP_EOL;
+                echo $l;
+                die;
             }
 
-            $dataProvider = new ArrayDataProvider([
-                'allModels' => $data,
-                'pagination' => [
-                    'pageSize' => 10,
-                ],
-            ]);
 
-            return $this->render($view, [
-                'dataProvider' => $dataProvider,
-                'folder' => $folder
-            ]);
         }
+
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $data,
+            'pagination' => [
+                'pageSize' => 300,
+            ],
+        ]);
+
+
+        return $this->render('view_file', [
+            'content' => $log,
+            'dataProvider' => $dataProvider
+        ]);
     }
+
 
     public function actionDelete($folder, $file)
     {
