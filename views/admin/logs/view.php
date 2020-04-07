@@ -22,7 +22,7 @@ echo GridView::widget([
                 $pathInfo = pathinfo($file);
 
                 if ($pathInfo['extension'] == 'log') {
-                    return Html::icon('external-link') . ' ' . Html::a($file, ['view-file', 'folder' => $folder, 'file' => $file]);
+                    return Html::icon('external-link') . ' ' . Html::a($file, ['view', 'folder' => $folder, 'file' => $file]);
                 } elseif($pathInfo['extension'] == 'zip') {
                     $zip = new ZipArchive();
                     $filename = [];
