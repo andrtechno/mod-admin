@@ -2,6 +2,7 @@
 
 namespace panix\mod\admin\controllers\admin;
 
+use panix\mod\admin\models\SettingsLogForm;
 use panix\mod\user\models\Session;
 use Yii;
 use yii\helpers\FileHelper;
@@ -224,15 +225,56 @@ class LogsController extends AdminController
     public function showStatus($text)
     {
         if (preg_match('%error%', $text)) {
-            return ['status' => 'error', 'class' => 'badge badge-danger'];
+            return ['class' => 'badge badge-danger'];
         } elseif (preg_match('%warning%', $text)) {
-            return ['status' => 'warning', 'class' => 'badge badge-warning'];
+            return ['class' => 'badge badge-warning'];
         } elseif (preg_match('%info%', $text)) {
-            return ['status' => 'info', 'class' => 'badge badge-info'];
+            return ['class' => 'badge badge-info'];
         } elseif (preg_match('%trace%', $text)) {
-            return ['status' => 'trace', 'class' => 'badge badge-primary'];
+            return ['class' => 'badge badge-primary'];
         } else {
             return ['status' => 'undefined', 'class' => ''];
         }
     }
+    public function actionSettings()
+    {
+        $this->pageName = Yii::t('app/default', 'SETTINGS');
+        $this->breadcrumbs = [
+            [
+                'label' => $this->module->info['label'],
+                'url' => $this->module->info['url'],
+            ],
+            [
+                'label' => Yii::t('admin/default', 'LOGS'),
+                'url' => ['index'],
+            ],
+            $this->pageName
+        ];
+
+        $model = new SettingsLogForm();
+
+        //Yii::$app->request->post()
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                $model->save();
+                Yii::$app->session->setFlash("success", Yii::t('app/default', 'SUCCESS_UPDATE'));
+            }
+            return $this->refresh();
+        }
+        return $this->render('settings', [
+            'model' => $model
+        ]);
+    }
+
+    public function getAddonsMenu()
+    {
+        return [
+            [
+                'label' => Yii::t('app/default', 'SETTINGS'),
+                'url' => ['/admin/app/logs/settings'],
+                'visible' => true,
+            ],
+        ];
+    }
+
 }
