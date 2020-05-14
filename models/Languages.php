@@ -33,7 +33,7 @@ class Languages extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'code', 'locale'], 'required'],
+            [['name', 'code', 'locale', 'slug'], 'required'],
             [['name'], 'string', 'max' => 100],
             [['code'], 'string', 'max' => 2],
             [['locale'], 'string', 'max' => 5],

@@ -31,28 +31,40 @@ class SettingsController extends AdminController
         //Yii::$app->request->post()
         if ($model->load(Yii::$app->request->post())) {
 
-
+            $model->favicon = UploadedFile::getInstance($model, 'favicon');
+            $model->attachment_wm_path = UploadedFile::getInstance($model, 'attachment_wm_path');
             if ($model->validate()) {
 
-                $attachment_wm_path = UploadedFile::getInstance($model, 'attachment_wm_path');
-                if ($attachment_wm_path) {
-                    $attachment_wm_path->saveAs(Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . 'watermark.' . $attachment_wm_path->extension);
-                    $model->attachment_wm_path = 'watermark.' . $attachment_wm_path->extension;
+
+                if ($model->attachment_wm_path) {
+                    $model->attachment_wm_path->saveAs(Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . 'watermark.' . $model->attachment_wm_path->extension);
+                    $model->attachment_wm_path = 'watermark.' . $model->attachment_wm_path->extension;
                 } else {
                     $model->attachment_wm_path = $oldWatermark;
                 }
 
-                $favicon = UploadedFile::getInstance($model, 'favicon');
 
-                if ($favicon) {
-                    $favicon->saveAs(Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . 'favicon.' . $favicon->extension);
-                    $model->favicon = 'favicon.' . $favicon->extension;
+
+                if ($model->favicon) {
+                    $faviconFile = Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . 'favicon.' . $model->favicon->extension;
+                    $model->favicon->saveAs($faviconFile);
+                    if (in_array($model->favicon->extension, ['png'])){
+                        $img = Yii::$app->img->load($faviconFile);
+                        if ($img->getHeight() > 180 || $img->getWidth() > 180) {
+                            $img->resize(180, 180);
+                        }
+                        $img->save($faviconFile);
+                    }
+
+                    $model->favicon = 'favicon.' . $model->favicon->extension;
                 } else {
                     $model->favicon = $oldFavicon;
                 }
 
                 $model->save();
                 Yii::$app->session->setFlash("success", Yii::t('app/default', 'SUCCESS_UPDATE'));
+            }else{
+               // print_r($model->errors);die;
             }
             return $this->refresh();
         }

@@ -16,10 +16,12 @@ use panix\engine\Html;
 <?php //echo $form->field($model, 'favicon')->fileInput(['accept' => 'image/*']) ?>
 
 <div class="form-group row">
-    <div class="col-sm-4 col-lg-2"><?= Html::activeLabel($model, 'favicon', ['class' => 'col-form-label']);; ?></div>
+    <div class="col-sm-4 col-lg-2"><?= Html::activeLabel($model, 'favicon', ['class' => 'col-form-label']); ?></div>
     <div class="col-sm-8 col-lg-10">
-        <?= Html::activeFileInput($model, 'favicon', ['accept' => 'image/*', 'class' => 'form-control-file']); ?>
+        <?= Html::activeFileInput($model, 'favicon', ['class' => 'form-control-file']); ?>
+        <div class="help-block">Доступные форматы: <strong>*.png, *.ico</strong></div>
         <?= $model->renderFaviconImage(); ?>
+        <?= Html::error($model, 'favicon'); ?>
     </div>
 </div>
 

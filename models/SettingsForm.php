@@ -42,6 +42,10 @@ class SettingsForm extends SettingsModel
     public $recaptcha_key;
     public $recaptcha_secret;
 
+
+    private $extensionFavicon = ['ico', 'png'];
+    private $extensionWatermark = ['png'];
+
     public static function defaultSettings()
     {
         return [
@@ -99,6 +103,33 @@ class SettingsForm extends SettingsModel
         ];
     }
 
+    public function rules()
+    {
+
+        return [
+            //Mailer smtp
+            [['mailer_transport_smtp_host', 'mailer_transport_smtp_username', 'mailer_transport_smtp_password', 'mailer_transport_smtp_encryption', 'captcha_class'], "string"],
+            [['mailer_transport_smtp_port'], 'integer'],
+            [['email', 'mailer_transport_smtp_port', 'mailer_transport_smtp_host', 'mailer_transport_smtp_username', 'mailer_transport_smtp_password', 'mailer_transport_smtp_encryption'], 'trim'],
+            ['mailer_transport_smtp_encryption', 'in', 'range' => ['ssl', 'tls']],
+            [['mailer_transport_smtp_enabled', 'watermark_enable'], 'boolean'],
+            [['attachment_wm_corner', 'attachment_wm_offsety', 'attachment_wm_offsetx'], 'integer'],
+            [['email', 'sitename', 'pagenum', 'timezone', 'theme', 'attachment_wm_offsetx', 'attachment_wm_offsety', 'attachment_wm_corner', 'attachment_image_type'], "required"],
+            ['email', 'email'],
+            ['attachment_wm_path', 'validateWatermarkFile'],
+            ['favicon', 'validateFaviconFile'],
+            [['theme', 'censor_words', 'censor_replace', 'maintenance_text', 'maintenance_allow_ips', 'maintenance_allow_users', 'timezone', 'recaptcha_key', 'recaptcha_secret'], "string"],
+            [['maintenance', 'censor'], 'boolean'],
+
+
+            [['attachment_wm_path'], 'file', 'skipOnEmpty' => true, 'extensions' => $this->extensionWatermark],
+            [['favicon'], 'file', 'skipOnEmpty' => true, 'checkExtensionByMimeType' => false, 'extensions' => $this->extensionFavicon],
+            [['captcha_class'], 'default'],
+
+            //[['email', 'recaptcha_key', 'recaptcha_secret'], 'filter', 'filter' => 'trim'],
+        ];
+    }
+
     public function renderWatermarkImage()
     {
         $config = Yii::$app->settings->get('app');
@@ -109,18 +140,28 @@ class SettingsForm extends SettingsModel
     public function renderFaviconImage()
     {
         $config = Yii::$app->settings->get('app');
-        if (isset($config->favicon) && file_exists(Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . $config->favicon))
+        if (isset($config->favicon) && file_exists(Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . $config->favicon)) {
             return Html::img("/uploads/{$config->favicon}?" . time(), ['class' => 'img-fluid img-thumbnail mt-3']);
+        } elseif (isset($config->favicon) && file_exists(Yii::getAlias('@app/web') . DIRECTORY_SEPARATOR . $config->favicon)) {
+            return Html::img("/{$config->favicon}?" . time(), ['class' => 'img-fluid img-thumbnail mt-3']);
+        }
     }
 
-    public function validateWatermarkFile($attr)
+
+    public function validateWatermarkFile($attribute)
     {
         $file = UploadedFile::getInstance($this, 'attachment_wm_path');
-        if ($file) {
-            $allowedExts = ['jpg', 'gif', 'png'];
-            if (!in_array($file->extension, $allowedExts))
-                $this->addError($attr, self::t('ERROR_WM_NO_IMAGE'));
-        }
+        if ($file && !in_array($file->extension, $this->extensionWatermark))
+            $this->addError($attribute, self::t('ERROR_WM_NO_IMAGE'));
+
+    }
+
+    public function validateFaviconFile($attribute)
+    {
+        $file = UploadedFile::getInstance($this, 'favicon');
+        if ($file && !in_array($file->extension, $this->extensionFavicon))
+            $this->addError($attribute, self::t('Error format image'));
+
     }
 
     public function getWatermarkCorner()
@@ -139,30 +180,6 @@ class SettingsForm extends SettingsModel
         ];
     }
 
-    public function rules()
-    {
-
-        return [
-            //Mailer smtp
-            [['mailer_transport_smtp_host', 'mailer_transport_smtp_username', 'mailer_transport_smtp_password', 'mailer_transport_smtp_encryption', 'captcha_class'], "string"],
-            [['mailer_transport_smtp_port'], 'integer'],
-            [['email', 'mailer_transport_smtp_port', 'mailer_transport_smtp_host', 'mailer_transport_smtp_username', 'mailer_transport_smtp_password', 'mailer_transport_smtp_encryption'], 'trim'],
-            ['mailer_transport_smtp_encryption', 'in', 'range' => ['ssl', 'tls']],
-            [['mailer_transport_smtp_enabled', 'watermark_enable'], 'boolean'],
-            [['attachment_wm_corner', 'attachment_wm_offsety', 'attachment_wm_offsetx'], 'integer'],
-            [['email', 'sitename', 'pagenum', 'timezone', 'theme', 'attachment_wm_offsetx', 'attachment_wm_offsety', 'attachment_wm_corner', 'attachment_image_type'], "required"],
-            ['email', 'email'],
-            ['attachment_wm_path', 'validateWatermarkFile'],
-            [['theme', 'censor_words', 'censor_replace', 'maintenance_text', 'maintenance_allow_ips', 'maintenance_allow_users', 'timezone', 'recaptcha_key', 'recaptcha_secret'], "string"],
-            [['maintenance', 'censor'], 'boolean'],
-
-            [['attachment_wm_path'], 'file', 'skipOnEmpty' => true, 'extensions' => ['png', 'jpg']],
-            [['favicon'], 'file', 'skipOnEmpty' => true, 'extensions' => ['png', 'ico']],
-            [['captcha_class'], 'default'],
-
-            //[['email', 'recaptcha_key', 'recaptcha_secret'], 'filter', 'filter' => 'trim'],
-        ];
-    }
 
     public function themesList()
     {
