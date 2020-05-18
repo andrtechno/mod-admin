@@ -9,16 +9,20 @@ use yii\helpers\Url;
     <?php if (Yii::$app->hasModule('cart')) { ?>
         <div class="col-md-6 col-lg-3 col-sm-6">
             <?php
+            $year = date('Y');
+            $month = date('m');
+            $monthDaysCount = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+            $query = (new \yii\db\Query())->from(\panix\mod\cart\models\Order::tableName())
+                ->where(['between', 'created_at', strtotime("{$year}-{$month}-01 00:00:00"), strtotime("{$year}-{$month}-{$monthDaysCount} 23:59:59")])
+                ->andWhere(['status_id' => 1])
+                ->select([
+                    'SUM(total_price_purchase - total_price) as income',
+                ]);
 
-            $orders = \panix\mod\cart\models\Order::find()->status()->all();
-            if ($orders) {
-                $orders_total_cash = 0;
-                $orders_products = 0;
-                foreach ($orders as $order) {
-                    $orders_total_cash += $order->total_price;
-                    $orders_products += $order->productsCount;
 
-                }
+            $order = $query->one();
+
+            if ($order) {
                 ?>
                 <div class="card bg-primary text-white o-hidden">
                     <div class="card-body" style="padding: 1rem">
@@ -30,8 +34,7 @@ use yii\helpers\Url;
                                     <span class="lead">новых заказов</span>
                                 </h2>
                                 <div>
-                                    <strong><?= $orders_products; ?></strong> товаров на сумму
-                                    <strong><?= Yii::$app->currency->number_format($orders_total_cash); ?></strong> <?= Yii::$app->currency->active['iso']; ?>
+                                    <strong><?= Yii::$app->currency->number_format($order['income']); ?></strong> <?= Yii::$app->currency->active['iso']; ?>
                                 </div>
                             </div>
                         </div>

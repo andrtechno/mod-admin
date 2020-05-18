@@ -68,7 +68,7 @@ class Languages extends ActiveRecord
 
     public function getFlagUrl()
     {
-        return '/uploads/language/' . $this->code . '.png';
+        return '/uploads/language/' . $this->slug . '.png';
     }
 
     static $current = null;

@@ -151,7 +151,7 @@ $this->registerJs("
                         if (d && typeof d.type !== 'undefined') {
                             $('#filename').val(data.selected.join(':'));
                             $('#data .contentTree').hide();
-
+                            var themePath = '/themes/".Yii::$app->settings->get('app','theme')."';
                             
                             
                             var mode = 'application/x-httpd-php';
@@ -232,10 +232,16 @@ $this->registerJs("
                                     cm.setSize('100%', '100%');
                                     //cm.refresh();
                                     break;
-                                case 'svg':
                                 case 'html':
                                     $('#data .code').show();
                                     $('#code').val(d.content).attr('readonly', d.readonly);
+                                    break;
+                                case 'svg':
+                                console.log(data);
+                                    $('#data .image img').one('load', function () {
+                                       // $(this).css({'marginTop': '-' + $(this).height() / 2 + 'px', 'marginLeft': '-' + $(this).width() / 2 + 'px'});
+                                    }).attr('src', themePath+'/'+data.node.id);
+                                    $('#data .image').show();
                                     break;
                                 case 'ico':
                                 case 'png':
