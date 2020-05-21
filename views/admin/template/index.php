@@ -317,22 +317,14 @@ $this->registerJs("
 
         <div id="data">
             <div class="contentTree code" style="display:none;">
-
                 <?php
-                /*$this->widget('ext.codemirror.CodeMirrorWidget', array(
-                    'name' => 'code',
-                    'target' => 'code',
-                    'htmlOptions' => array('id' => 'code','class'=>'form-control')
-                ));*/
-
-                echo \panix\engine\widgets\CodeMirrorWidget::widget([
+                echo \panix\engine\widgets\CodeMirrorInput::widget([
                     'name' => 'code',
                     'attribute' => 'code',
+                    'modes' => ['php','css','xml','javascript'],
                     'options' => ['id' => 'code', 'class' => 'form-control']
                 ])
                 ?>
-
-
             </div>
             <div class="contentTree folder" style="display:none;"></div>
             <div class="contentTree image" style="display:none; position:relative;">
