@@ -29,10 +29,12 @@ use yii\helpers\Url;
                         <div class="row">
                             <i class="icon-shopcart"></i>
                             <div class="col">
-                                <h2>
-                                    <?= Yii::$app->getModule('cart')->count['num']; ?>
-                                    <span class="lead">новых заказов</span>
-                                </h2>
+                                <?php if (isset(Yii::$app->getModule('cart')->count['num'])) { ?>
+                                    <h2>
+                                        <?= Yii::$app->getModule('cart')->count['num']; ?>
+                                        <span class="lead">новых заказов</span>
+                                    </h2>
+                                <?php } ?>
                                 <div>
                                     <strong><?= Yii::$app->currency->number_format($order['income']); ?></strong> <?= Yii::$app->currency->active['iso']; ?>
                                 </div>
