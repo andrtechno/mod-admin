@@ -33,12 +33,12 @@ class BackendNav extends \yii\bootstrap4\Nav
                 'system' => [
                     'label' => Yii::t('admin/default', 'SYSTEM'),
                     'icon' => 'tools',
-                    // 'visible' => count($found['system']['items'])
+                    'visible' => count($found['system']['items'])
                 ],
                 'modules' => [
                     'label' => Yii::t('admin/default', 'MODULES'),
                     'icon' => 'puzzle',
-                    // 'visible' => count($found['modules']['items'])
+                    'visible' => count($found['modules']['items'])
                     //  'items'=>$found['modules']['items']
                 ],
             ];
