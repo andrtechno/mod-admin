@@ -340,4 +340,10 @@ return ' . var_export($content, true) . ';')
         }
         return $result;
     }
+
+
+    public function actionCreate()
+    {
+        return $this->actionUpdate(false);
+    }
 }
