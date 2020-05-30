@@ -16,14 +16,16 @@ class DynamicFormController extends AdminController
     public function actionIndex()
     {
         $this->pageName = Yii::t('admin/default', 'DYNAMIC_FORM');
-        $this->buttons = [
-            [
-                'icon' => 'add',
-                'label' => Yii::t('admin/default', 'create'),
-                'url' => ['create'],
-                'options' => ['class' => 'btn btn-success']
-            ]
-        ];
+        if (Yii::$app->user->can("/{$this->module->id}/{$this->id}/*") || Yii::$app->user->can("/{$this->module->id}/{$this->id}/create")) {
+            $this->buttons = [
+                [
+                    'icon' => 'add',
+                    'label' => Yii::t('admin/default', 'create'),
+                    'url' => ['create'],
+                    'options' => ['class' => 'btn btn-success']
+                ]
+            ];
+        }
         $this->breadcrumbs = [
             $this->pageName
         ];
@@ -41,14 +43,7 @@ class DynamicFormController extends AdminController
         $model = DynamicForm::findModel($id);
         $isNew = $model->isNewRecord;
         $this->pageName = Yii::t('admin/default', 'DYNAMIC_FORM');
-        $this->buttons = [
-            [
-                'icon' => 'add',
-                'label' => Yii::t('admin/default', 'DynamicForm create'),
-                'url' => ['create'],
-                'options' => ['class' => 'btn btn-success']
-            ]
-        ];
+
         $this->breadcrumbs[] = [
             'label' => $this->pageName,
             'url' => ['index']

@@ -44,14 +44,16 @@ class LanguagesController extends AdminController
     public function actionIndex()
     {
         $this->pageName = Yii::t('admin/default', 'LANGUAGES');
-        $this->buttons = [
-            [
-                'icon' => 'add',
-                'label' => Yii::t('admin/default', 'CREATE_LANG'),
-                'url' => ['create'],
-                'options' => ['class' => 'btn btn-success']
-            ]
-        ];
+        if (Yii::$app->user->can("/{$this->module->id}/{$this->id}/*") || Yii::$app->user->can("/{$this->module->id}/{$this->id}/create")) {
+            $this->buttons = [
+                [
+                    'icon' => 'add',
+                    'label' => Yii::t('admin/default', 'CREATE_LANG'),
+                    'url' => ['create'],
+                    'options' => ['class' => 'btn btn-success']
+                ]
+            ];
+        }
         $this->breadcrumbs = [
             $this->pageName
         ];
@@ -70,14 +72,7 @@ class LanguagesController extends AdminController
         $model = Languages::findModel($id);
         $isNew = $model->isNewRecord;
         $this->pageName = Yii::t('admin/default', 'LANGUAGES');
-        $this->buttons = [
-            [
-                'icon' => 'add',
-                'label' => Yii::t('admin/default', 'CREATE_LANG'),
-                'url' => ['create'],
-                'options' => ['class' => 'btn btn-success']
-            ]
-        ];
+
         $this->breadcrumbs[] = [
             'label' => $this->pageName,
             'url' => ['index']
