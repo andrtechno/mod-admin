@@ -54,7 +54,7 @@ class LanguagesController extends AdminController
                 ]
             ];
         }
-        $this->breadcrumbs = [
+        $this->view->params['breadcrumbs'] = [
             $this->pageName
         ];
 
@@ -73,12 +73,12 @@ class LanguagesController extends AdminController
         $isNew = $model->isNewRecord;
         $this->pageName = Yii::t('admin/default', 'LANGUAGES');
 
-        $this->breadcrumbs[] = [
+        $this->view->params['breadcrumbs'][] = [
             'label' => $this->pageName,
             'url' => ['index']
         ];
 
-        $this->breadcrumbs[] = Yii::t('app/default', 'UPDATE');
+        $this->view->params['breadcrumbs'][] = Yii::t('app/default', 'UPDATE');
 
 
         //$model->setScenario("admin");
@@ -147,11 +147,11 @@ class LanguagesController extends AdminController
     public function actionTranslate()
     {
         $this->pageName = 'Перевод сайта';
-        /*$this->breadcrumbs = array(
+        /*$this->view->params['breadcrumbs'] = array(
             Yii::t('app/default', 'LANGUAGES') => array('admin/languages'),
             $this->pageName
         );*/
-        $this->breadcrumbs[] = $this->pageName;
+        $this->view->params['breadcrumbs'][] = $this->pageName;
         return $this->render('translate', ['lang' => Yii::$app->request->get('lang')]);
     }
 

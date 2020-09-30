@@ -21,7 +21,7 @@ class TemplateController extends AdminController
     public function actionIndex()
     {
         $this->pageName = Yii::t('admin/default', 'TEMPLATE');
-        $this->breadcrumbs = [$this->pageName];
+        $this->view->params['breadcrumbs'] = [$this->pageName];
 
         $post = Yii::$app->request->post();
         if ($post) {

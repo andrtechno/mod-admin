@@ -21,7 +21,7 @@ class DatabaseController extends AdminController
         $this->enableCsrfValidation = false;
         $model = new SettingsDatabaseForm();
         $this->pageName = Yii::t('admin/default', 'DATABASE');
-        $this->breadcrumbs[] = $this->pageName;
+        $this->view->params['breadcrumbs'][] = $this->pageName;
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {

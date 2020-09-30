@@ -21,7 +21,7 @@ class HelpController extends AdminController
     public function actionIndex()
     {
         $this->pageName = Yii::t('admin/default', 'HELP');
-        $this->breadcrumbs = [$this->pageName];
+        $this->view->params['breadcrumbs'] = [$this->pageName];
 
         return $this->render('index', []);
     }

@@ -22,7 +22,7 @@ class BlocksmeController extends \panix\engine\controllers\AdminController {
 
     public function actionIndex() {
         $this->pageName = Yii::t('app/default', 'BLOCKS');
-        $this->breadcrumbs = array($this->pageName);
+        $this->view->params['breadcrumbs'] = array($this->pageName);
         $model = new BlocksModel('search');
         $model->unsetAttributes();  // clear any default values    
         if (isset($_GET['BlocksModel'])) {
@@ -35,7 +35,7 @@ class BlocksmeController extends \panix\engine\controllers\AdminController {
         $model = ($new === true) ? new BlocksModel : BlocksModel::model()->findByPk($_GET['id']);
         if (isset($model)) {
             $this->pageName = Yii::t('app/default', 'BLOCKS');
-            $this->breadcrumbs = array(
+            $this->view->params['breadcrumbs'] = array(
                 $this->pageName => Yii::app()->createUrl('admin/app/blocks'),
                 ($new === true) ? Yii::t('app/default', 'CREATE', 1) : Yii::t('app/default', 'UPDATE', 1)
             );

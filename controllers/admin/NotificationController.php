@@ -16,12 +16,12 @@ class NotificationController extends AdminController
     public function actionIndex()
     {
         $this->pageName = Yii::t('admin/default', 'NOTIFICATION');
-        $this->breadcrumbs[] = [
+        $this->view->params['breadcrumbs'][] = [
             'label' => Yii::t('admin/default', 'SYSTEM'),
             'url' => ['admin/default']
         ];
 
-        $this->breadcrumbs[] = $this->pageName;
+        $this->view->params['breadcrumbs'][] = $this->pageName;
 
         $searchModel = new NotificationSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());

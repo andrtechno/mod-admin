@@ -26,7 +26,7 @@ class DynamicFormController extends AdminController
                 ]
             ];
         }
-        $this->breadcrumbs = [
+        $this->view->params['breadcrumbs'] = [
             $this->pageName
         ];
 
@@ -44,12 +44,12 @@ class DynamicFormController extends AdminController
         $isNew = $model->isNewRecord;
         $this->pageName = Yii::t('admin/default', 'DYNAMIC_FORM');
 
-        $this->breadcrumbs[] = [
+        $this->view->params['breadcrumbs'][] = [
             'label' => $this->pageName,
             'url' => ['index']
         ];
 
-        $this->breadcrumbs[] = Yii::t('app/default', 'UPDATE');
+        $this->view->params['breadcrumbs'][] = Yii::t('app/default', 'UPDATE');
 
 
 

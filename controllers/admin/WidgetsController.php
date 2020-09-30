@@ -19,7 +19,7 @@ class WidgetsController extends AdminController
     {
 
         $this->pageName = Yii::t('admin/default', 'WIDGETS');
-        $this->breadcrumbs = [$this->pageName];
+        $this->view->params['breadcrumbs'] = [$this->pageName];
 
 
         // $result = Yii::$app->cache->get(self::CHACHEID);
@@ -102,7 +102,7 @@ class WidgetsController extends AdminController
             return $this->redirect(['index']);
         }
         $this->pageName = Yii::t('admin/default', 'WIDGETS_UPDATE');
-        $this->breadcrumbs = [
+        $this->view->params['breadcrumbs'] = [
             [
                 'label' => Yii::t('admin/default', 'WIDGETS'),
                 'url' => ['index']

@@ -17,7 +17,7 @@ class MailTemplateController extends AdminController
     {
 
         $this->pageName = Yii::t('admin/default', 'WIDGETS');
-        $this->breadcrumbs = [$this->pageName];
+        $this->view->params['breadcrumbs'] = [$this->pageName];
 
 
         return $this->render('index', []);
@@ -29,7 +29,7 @@ class MailTemplateController extends AdminController
             return $this->redirect(['index']);
         }
         $this->pageName = Yii::t('admin/default', 'WIDGETS_UPDATE');
-        $this->breadcrumbs = [
+        $this->view->params['breadcrumbs'] = [
             [
                 'label' => Yii::t('admin/default', 'WIDGETS'),
                 'url' => ['index']

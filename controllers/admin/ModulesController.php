@@ -15,12 +15,12 @@ class ModulesController extends AdminController
     public function actionIndex()
     {
         $this->pageName = Yii::t('admin/default', 'MODULES');
-        $this->breadcrumbs[] = [
+        $this->view->params['breadcrumbs'][] = [
             'label' => Yii::t('admin/default', 'SYSTEM'),
             'url' => ['admin/default']
         ];
 
-        $this->breadcrumbs[] = $this->pageName;
+        $this->view->params['breadcrumbs'][] = $this->pageName;
 
         $searchModel = new ModulesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
@@ -49,7 +49,7 @@ class ModulesController extends AdminController
 
 
         $this->pageName = Yii::t('admin/default', 'LIST_MODULES');
-        $this->breadcrumbs = [
+        $this->view->params['breadcrumbs'] = [
             [
                 'label' => Yii::t('admin/default', 'MODULES'),
                 'url' => ['index']
@@ -71,12 +71,12 @@ class ModulesController extends AdminController
         $model = Modules::findOne($_GET['id']);
         $this->pageName = Yii::t('admin/default', 'MODULES');
 
-        $this->breadcrumbs[] = [
+        $this->view->params['breadcrumbs'][] = [
             'label' => $this->pageName,
             'url' => ['/admin/app/modules']
         ];
 
-        $this->breadcrumbs[] = Yii::t('app/default', 'UPDATE');
+        $this->view->params['breadcrumbs'][] = Yii::t('app/default', 'UPDATE');
 
 
         $post = Yii::$app->request->post();

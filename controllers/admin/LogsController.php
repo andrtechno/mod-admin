@@ -20,7 +20,7 @@ class LogsController extends AdminController
     {
 
         $this->pageName = Yii::t('admin/default', 'LOGS');
-        $this->breadcrumbs[] = $this->pageName;
+        $this->view->params['breadcrumbs'][] = $this->pageName;
 
         $logPath = Yii::getAlias(Yii::$app->runtimePath) . DIRECTORY_SEPARATOR . 'logs';
 
@@ -61,15 +61,15 @@ class LogsController extends AdminController
         $view = 'view';
         if ($file) {
             $this->pageName = basename(ucfirst($file), '.log');
-            $this->breadcrumbs[] = [
+            $this->view->params['breadcrumbs'][] = [
                 'label' => Yii::t('admin/default', 'LOGS'),
                 'url' => ['index']
             ];
-            $this->breadcrumbs[] = [
+            $this->view->params['breadcrumbs'][] = [
                 'label' => $folder,
                 'url' => ['view', 'folder' => $folder]
             ];
-            $this->breadcrumbs[] = $this->pageName;
+            $this->view->params['breadcrumbs'][] = $this->pageName;
 
             if (file_exists($logPath . DIRECTORY_SEPARATOR . $file)) {
                 $log = file_get_contents($logPath . DIRECTORY_SEPARATOR . $file);
@@ -121,11 +121,11 @@ class LogsController extends AdminController
                 $this->pageName = $folder;
             }
 
-            $this->breadcrumbs[] = [
+            $this->view->params['breadcrumbs'][] = [
                 'label' => Yii::t('admin/default', 'LOGS'),
                 'url' => ['index']
             ];
-            $this->breadcrumbs[] = $this->pageName;
+            $this->view->params['breadcrumbs'][] = $this->pageName;
             $pathInfo = pathinfo($logPath);
             $data = [];
 
@@ -239,7 +239,7 @@ class LogsController extends AdminController
     public function actionSettings()
     {
         $this->pageName = Yii::t('app/default', 'SETTINGS');
-        $this->breadcrumbs = [
+        $this->view->params['breadcrumbs'] = [
             [
                 'label' => $this->module->info['label'],
                 'url' => $this->module->info['url'],
