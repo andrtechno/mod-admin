@@ -27,6 +27,46 @@ class WidgetsController extends AdminController
         $result = [];
 
 
+        foreach (Yii::$app->extensions as $extension) {
+
+            foreach ($extension['alias'] as $key => $alias) {
+
+                $modulesfile = array_filter(glob($alias . DIRECTORY_SEPARATOR . '*' . DIRECTORY_SEPARATOR . '*'), 'is_file');
+
+                $files = FileHelper::findFiles($alias, ['only' => ['*Widget.php']]);
+                $test = [];
+                foreach ($files as $file) {
+                    $ss = mb_substr($file, mb_strlen(Yii::getAlias($key)), mb_strlen($file));
+                    $classNamespace2 = $key . str_replace(['.php', '/', DIRECTORY_SEPARATOR], ['', '\\', '\\'], $ss);
+                    $classNamespace = '\\' . str_replace(['.php', '/', '@'], ['', '\\', ''], $classNamespace2);
+
+
+                    $reflect = new \ReflectionClass($classNamespace);
+
+                    // $class = new $classNamespace;
+                    // if ($class instanceof \panix\engine\data\Widget) {
+                    //     $test[] = $classNamespace;
+                    // }
+
+                        if ($reflect->getParentClass()->getName() == 'panix\\engine\\data\\Widget') {
+                      //  $test[] = $classNamespace;
+                            $result[] = [
+                                'title' => $reflect->getShortName(),
+                                'alias' => $classNamespace,
+                                'category' => 'widget',
+                                'edit' => Html::a(Html::icon('edit'), ['update', 'alias' => $classNamespace], ['class' => 'btn btn-sm btn-secondary'])
+                            ];
+                    }
+                  //  print_r($test);
+                }
+
+                //  if($files){
+
+                // }
+
+            }
+        }
+
         $manager = new WidgetSystemManager;
 
         foreach (Yii::$app->getModules() as $mod => $module) {
@@ -76,7 +116,7 @@ class WidgetsController extends AdminController
         $dataProvider = new \yii\data\ArrayDataProvider([
             'allModels' => $result,
             'pagination' => [
-                'pageSize' => 10,
+                'pageSize' => 50,
             ],
             // 'sort' => $sort,
         ]);
