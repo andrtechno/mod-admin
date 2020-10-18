@@ -7,7 +7,7 @@ use panix\engine\Html;
  * @var $form \panix\engine\bootstrap\ActiveForm
  * @var $model \panix\mod\admin\models\SettingsForm
  */
-
+$session = Yii::$app->session;
 ?>
 
 <?= $form->field($model, 'sitename'); ?>
@@ -24,13 +24,12 @@ use panix\engine\Html;
         <?= Html::error($model, 'favicon'); ?>
     </div>
 </div>
-
-<div class="row">
-    <div class="col-sm-4 col-lg-2"></div>
-    <div class="col-sm-8 col-lg-10">
-
-    </div>
-</div>
+<?= $form->field($model, 'session_timeout')
+    ->textInput(['maxlength'=>strlen($session->timeout_default)])
+    ->hint("Если оставить поле пустым, будет использоваться значение указанные сервером по умолчанию Максимальное доступное время сервера {$session->timeout_default}"); ?>
+<?= $form->field($model, 'cookie_lifetime')
+    ->textInput(['maxlength'=>strlen($session->lifetime_default)])
+    ->hint("Если оставить поле пустым, будет использоваться значение указанные сервером по умолчанию Максимальное доступное время сервера {$session->lifetime_default}"); ?>
 
 <?= $form->field($model, 'theme')->dropDownList($model->themesList(), []); ?>
 <?= $form->field($model, 'timezone')->dropDownList(TimeZoneHelper::getTimeZoneData(), []); ?>

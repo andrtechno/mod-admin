@@ -13,6 +13,8 @@ return [
     'TIMEZONE' => 'Часовой пояс',
     'THEME' => 'Шаблон',
     'FAVICON' => 'Favicon',
+    'COOKIE_LIFETIME' => 'Время куки',
+    'SESSION_TIMEOUT' => 'Время сессии',
     'ADMIN_THEME' => 'Цвет темы админ-панели',
     'WATERMARK_ENABLE' => 'Активировать водяной знак?',
     'ATTACHMENT_IMAGE_TYPE' => 'Тип сохраний изображений',

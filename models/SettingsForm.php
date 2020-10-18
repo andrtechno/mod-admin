@@ -24,6 +24,8 @@ class SettingsForm extends SettingsModel
     public $censor_replace;
     public $timezone;
     public $favicon;
+    public $session_timeout;
+    public $cookie_lifetime;
 
     public $watermark_enable;
     public $attachment_image_type;
@@ -57,6 +59,8 @@ class SettingsForm extends SettingsModel
             'timezone' => 'Europe/Kiev',
             'site_close' => 0,
             'censor' => 1,
+            'session_timeout' => 86000,
+            'cookie_lifetime' => 86000,
             'censor_words' => 'bad',
             'censor_replace' => '***',
             'watermark_enable' => true,
@@ -114,6 +118,12 @@ class SettingsForm extends SettingsModel
             ['mailer_transport_smtp_encryption', 'in', 'range' => ['ssl', 'tls']],
             [['mailer_transport_smtp_enabled', 'watermark_enable'], 'boolean'],
             [['attachment_wm_corner', 'attachment_wm_offsety', 'attachment_wm_offsetx'], 'integer'],
+
+            [['session_timeout'], 'integer','max'=>Yii::$app->session->timeout_default],
+            [['cookie_lifetime'], 'integer','max'=>Yii::$app->session->lifetime_default],
+
+
+
             [['email', 'sitename', 'pagenum', 'timezone', 'theme', 'attachment_wm_offsetx', 'attachment_wm_offsety', 'attachment_wm_corner', 'attachment_image_type'], "required"],
             ['email', 'email'],
             ['attachment_wm_path', 'validateWatermarkFile'],

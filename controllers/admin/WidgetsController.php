@@ -20,7 +20,7 @@ class WidgetsController extends AdminController
 
         $this->pageName = Yii::t('admin/default', 'WIDGETS');
         $this->view->params['breadcrumbs'] = [$this->pageName];
-
+        $manager = new WidgetSystemManager;
 
         // $result = Yii::$app->cache->get(self::CHACHEID);
         // if ($result === false) {
@@ -48,26 +48,27 @@ class WidgetsController extends AdminController
                     //     $test[] = $classNamespace;
                     // }
 
-                        if ($reflect->getParentClass()->getName() == 'panix\\engine\\data\\Widget') {
-                      //  $test[] = $classNamespace;
+                    if ($reflect->getParentClass()->getName() == 'panix\\engine\\data\\Widget') {
+                        $edit = false;
+                        $system = $manager->getClass($classNamespace);
+                        if ($system) {
+                            $edit = true;
+
+
+
                             $result[] = [
-                                'title' => $reflect->getShortName(),
+                                'title' => (isset($reflect->getStaticProperties()['widget_name']))?$reflect->getStaticProperties()['widget_name']:$reflect->getShortName(),
                                 'alias' => $classNamespace,
-                                'category' => 'widget',
-                                'edit' => Html::a(Html::icon('edit'), ['update', 'alias' => $classNamespace], ['class' => 'btn btn-sm btn-secondary'])
+                                'category' => 'module',
+                                'edit' => ($edit) ? Html::a(Html::icon('edit'), ['update', 'alias' => $classNamespace], ['class' => 'btn btn-sm btn-secondary']) : Yii::$app->formatter->asText(null)
                             ];
+
+                        }
                     }
-                  //  print_r($test);
                 }
-
-                //  if($files){
-
-                // }
-
             }
         }
 
-        $manager = new WidgetSystemManager;
 
         foreach (Yii::$app->getModules() as $mod => $module) {
             $reflect = new \ReflectionClass($module);
