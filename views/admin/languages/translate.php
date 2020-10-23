@@ -39,7 +39,7 @@ if ($lang) {
             break;
         }
     }
-
+   // \panix\engine\CMS::dump($result);die;
     ?>
     <div class="card">
         <div class="card-header">

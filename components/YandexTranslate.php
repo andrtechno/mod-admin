@@ -2,6 +2,7 @@
 
 namespace panix\mod\admin\components;
 
+use panix\engine\CMS;
 use panix\engine\Curl;
 use Yii;
 use yii\db\Exception;
@@ -18,14 +19,13 @@ class YandexTranslate
     public function translitUrl($lang = array(), $text)
     {
         //if (!$params)
-        $params = array();
-        $params['key'] = self::API_KEY;
+        $params = [];
+      //  $params['key'] = self::API_KEY;
         $params['format'] = 'json';
         $params['text'] = $text;
         $params['lang'] = $lang[0] . '-' . $lang[1];
-        $query = $this->api_url . '?' . $this->params($params);
 
-        $res = $this->curl_get_contents($query);
+        $res = $this->checkConnect($params);
         $json = Json::decode($res, true);
         $array = array(
             '/' => '',
@@ -56,7 +56,6 @@ class YandexTranslate
     public function translate($lang = array(), $text, $each = false)
     {
         $params = array();
-        $params['key'] = self::API_KEY;
         $params['format'] = 'html';
         $params['lang'] = $lang[0] . '-' . $lang[1];
 
@@ -72,8 +71,8 @@ class YandexTranslate
                 foreach (array_slice($text, $offset, $nb_elem_per_page) as $k => $val) {
                     $params['text'][$k] = $val;
                 }
-                $query = $this->api_url . '?' . $this->params($params);
-                $resp = $this->curl_get_contents($query);
+
+                $resp = $this->checkConnect($params);
                 $result['response'][$offset] = Json::decode($resp, true);
 
             }
@@ -98,68 +97,44 @@ class YandexTranslate
             return $response;
         } else {
             $params['text'] = $text;
-            $query = $this->api_url . '?' . $this->params($params);
-            $res = $this->curl_get_contents($query);
-            return $res;
+            return $this->checkConnect($params);
         }
     }
 
 
     public function translatefile($lang = array(), $text, $each = false)
     {
-        $params = array();
-        $params['key'] = self::API_KEY;
-        $params['format'] = 'html';
+        $params = [];
         $params['lang'] = $lang[0] . '-' . $lang[1];
-
-
         $params['text'] = $text;
-        $query = $this->api_url . '?' . $this->params($params);
-        $res = $this->curl_get_contents($query);
-
-        return $res;
+        return $this->checkConnect($params);
 
     }
 
-    public function checkConnect()
+    public function checkConnect($params)
     {
-        $params = array();
-        $params['key'] = self::API_KEY;
-        $params['format'] = 'html';
-        $query = $this->api_url . '?' . $this->params($params);
-        $res = $this->curl_get_contents($query);
-        return $res;
-    }
+        if (!isset($params['key']))
+            $params['key'] = self::API_KEY;
 
-    private function curl_get_contents($url)
-    {
-        $client = new Client(['baseUrl' => $url]);
+        if (!isset($params['format']))
+            $params['format'] = 'html';
+
+        $client = new Client();
         $response = $client->createRequest()
+            ->setMethod('GET')
             ->setFormat(Client::FORMAT_JSON)
-            //->addHeaders(['content-type' => 'application/json'])
+            ->setUrl($this->api_url)
+            ->setData($params)
             ->send();
-
         if ($response->isOk) {
-            return $response->data;
-        }else{
-            return [];
+            return ['success' => true, 'data' => $response->data];
+        } else {
+            return ['success' => false, 'message' => $response->data['message']];
         }
+
     }
 
-    private function params($params)
-    {
-        $pice = array();
-        foreach ($params as $k => $v) {
-            if (is_array($v)) {
-                foreach ($v as $t) {
-                    $pice[] = $k . '=' . urlencode($t);
-                }
-            } else {
-                $pice[] = $k . '=' . urlencode($v);
-            }
-        }
-        return implode('&', $pice);
-    }
+
     /*
         public static function onlineLangs() {
             return array(

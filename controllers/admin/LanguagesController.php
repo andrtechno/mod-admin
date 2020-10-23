@@ -98,28 +98,28 @@ class LanguagesController extends AdminController
      * @param string $file Example "default.php"
      * @return string
      */
-    public function actionEditFile($path,$file)
+    public function actionEditFile($path, $file)
     {
         $path = Yii::getAlias($path);
-        $absolutePath=$path.'/ru/'.$file;
-        $newAbsolutePath= $path.'/en/'.$file;
+        $absolutePath = $path . '/ru/' . $file;
+        $newAbsolutePath = $path . '/en/' . $file;
         $translateApi = new YandexTranslate;
-        $response=[];
-        $result=[];
+        $response = [];
+        $result = [];
         //echo VarDumper::dump(Yii::$app->i18n->translations,10,true);die;
         if (file_exists($absolutePath)) {
             $contentList = require_once($absolutePath);
 
 
             $response = $translateApi->translatefile(['ru', 'en'], $contentList, true);
-            $i=0;
+            $i = 0;
             foreach ($contentList as $key => $value) {
-                $result[$key]=$response['text'][$i];
+                $result[$key] = $response['text'][$i];
                 $i++;
                 //$response[] = $translateApi->translatefile(['ru', 'en'], $value, true);
             }
 
-            FileHelper::copyDirectory($path.'/ru', $path.'/en', [
+            FileHelper::copyDirectory($path . '/ru', $path . '/en', [
                 'only' => ['*.php'],
                 'recursive' => true
             ]);
@@ -129,7 +129,7 @@ class LanguagesController extends AdminController
 
         $r = [];
         $i18n = Yii::$app->i18n;
-       // CMS::dump($i18n->translations);die;
+        // CMS::dump($i18n->translations);die;
         foreach ($i18n->translations as $key => $translation) {
             if (isset($i18n->translations[$key])) {
                 $basePath = (isset($i18n->translations[$key]->basePath)) ? $i18n->translations[$key]->basePath : $i18n->translations[$key]['basePath'];
@@ -185,10 +185,13 @@ class LanguagesController extends AdminController
             if (!empty($val)) {
 
                 $response = $t->translatefile([$this->sources_locale, $this->target_locale], $val, true);
-                if (!isset($response['hasError'])) {
-                    $contentListTranslated[$pkey] = $response['text'][0];
-                } else {
-                    $contentListTranslated[$pkey] = '';
+                if ($response['success']) {
+                    if (!isset($response['hasError'])) {
+
+                        $contentListTranslated[$pkey] = $response['text'][0];
+                    } else {
+                        $contentListTranslated[$pkey] = '';
+                    }
                 }
             } else {
                 $contentListTranslated[$pkey] = '';
@@ -196,7 +199,7 @@ class LanguagesController extends AdminController
 
 
         }
-        $result['success']=false;
+        $result['success'] = false;
         if (!isset($response['hasError'])) {
             $this->writeLanguageContent($newPath . DIRECTORY_SEPARATOR . $file, $contentListTranslated);
             $result['success'] = true;
@@ -328,12 +331,13 @@ return ' . var_export($content, true) . ';')
     }
 
 
-    public function getAllFiles(){
+    public function getAllFiles()
+    {
         $i18n = Yii::$app->i18n;
-        $result=[];
+        $result = [];
         foreach ($i18n->translations as $key => $translation) {
             if (isset($translation->basePath) && isset($translation->fileMap)) {
-                if($translation->fileMap){
+                if ($translation->fileMap) {
                     $result[$translation->basePath] = $translation->fileMap;
                 }
             }
