@@ -14,7 +14,8 @@
     ],
     "require": {
         "panix/engine": "dev-master",
-        "panix/wgt-taginput": "dev-master"
+        "panix/wgt-taginput": "dev-master",
+        "panix/wgt-leaflet": "dev-master"
     },
     "autoload": {
         "psr-4": {

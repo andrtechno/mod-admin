@@ -13,18 +13,26 @@ use panix\engine\Html;
         <div class="row">
             <div class="col-sm-6">
                 <?php if (isset($geoIp->location->lat) && isset($geoIp->location->lng)) { ?>
-                    <img class="img-fluid img-thumbnail"
-                         src="//maps.googleapis.com/maps/api/staticmap?center=<?= $geoIp->location->lat ?>,<?= $geoIp->location->lng ?>&zoom=13&key=AIzaSyBfXgobbZPa6KOHExMBdsC4EvIuKsOQ0DE&size=500x500&scale=1&maptype=roadmap&format=png&language=<?= Yii::$app->language ?>&markers=color:red|<?= $geoIp->location->lat ?>,<?= $geoIp->location->lng ?>"
-                         alt="">
+                    <?php
+                    echo \panix\ext\leaflet\LeafletWidget::widget([
+                        'lat' => $geoIp->location->lat,
+                        'lng' => $geoIp->location->lng,
+                        'containerOptions' => ['class' => 'img-fluid img-thumbnail'],
+                        'markers' => [
+                            [
+                                'coords' => [$geoIp->location->lat, $geoIp->location->lng],
+                                'draggable'=>false,
+                            ]
+                        ]
+                    ]);
+                    ?>
 
                     <div class="row">
                         <div class="col-sm-6">lat: <?= $geoIp->location->lat; ?></div>
                         <div class="col-sm-6 text-xl-right">lng: <?= $geoIp->location->lng; ?></div>
                     </div>
 
-                    <?php
 
-                    ?>
                 <?php } ?>
 
             </div>
@@ -35,11 +43,11 @@ use panix\engine\Html;
                 ?>
                 <?php if ($geoIp->country) { ?>
                     <strong>Страна/город:</strong> <?= $geoIp->country; ?>
-                <?php
-                if ($geoIp->city) {
-                    echo '/'.Yii::t('app/geoip_city', $geoIp->city);
-                }
-                ?>
+                    <?php
+                    if ($geoIp->city) {
+                        echo '/' . Yii::t('app/geoip_city', $geoIp->city);
+                    }
+                    ?>
                 <?php } ?>
 
                 <?php if ($geoIp->region) { ?>
@@ -59,8 +67,6 @@ use panix\engine\Html;
                 <?php if ($geoIp->timezone) { ?>
                     <div><strong>Часовой пояс:</strong> <?= $geoIp->timezone; ?></div>
                 <?php } ?>
-
-
 
 
                 <hr/>
