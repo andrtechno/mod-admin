@@ -49,14 +49,43 @@ class DefaultController extends AdminController
         }
     }
 
+    public function actionQueueCounter()
+    {
+        $queueAllCount = (new \yii\db\Query())->select(['pushed_at', 'ttr', 'delay', 'priority', 'reserved_at', 'attempt', 'done_at'])
+            ->from(Yii::$app->queue->tableName)
+            ->where(['done_at' => null])
+            ->createCommand()
+            ->query()
+            ->count();
+
+
+        $queueDoneCount = (new \yii\db\Query())->select(['pushed_at', 'ttr', 'delay', 'priority', 'reserved_at', 'attempt', 'done_at'])
+            ->from(Yii::$app->queue->tableName)
+            ->where(['not', ['done_at' => null]])
+            ->createCommand()
+            ->query()
+            ->count();
+
+        $percent = round($queueDoneCount / ($queueDoneCount + $queueAllCount) * 100, 1);
+        return $this->asJson([
+            'percent' => $percent,
+            'message' => "Выполнено: <strong>{$percent}</strong>%",
+            'total' => $queueAllCount,
+            'done' => $queueDoneCount
+        ]);
+
+    }
+
     public function actionAjaxCounters()
     {
 
         $notificationsAll = Notification::find()->read([Notification::STATUS_NO_READ, Notification::STATUS_NOTIFY])->all();
+
         $notificationsLimit = Notification::find()->limit(5)->all();
-       // $notificationsCount = Notifications::find()->read([Notifications::STATUS_NO_READ, Notifications::STATUS_NOTIFY])->count();
+
+        // $notificationsCount = Notifications::find()->read([Notifications::STATUS_NO_READ, Notifications::STATUS_NOTIFY])->count();
         $result = [];
-        foreach (Yii::$app->counters as $key=>$count){
+        foreach (Yii::$app->counters as $key => $count) {
             $result['count'][$key] = $count;
         }
         $result['count']['notifications'] = count($notificationsAll);
@@ -72,9 +101,10 @@ class DefaultController extends AdminController
                 'sound' => $notify->sound
             ];
         }
-        $result['content'] = $this->render('@admin/views/admin/notification/_notifications', ['notifications' => $notificationsLimit]);
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return $result;
+
+
+        $result['content'] = $this->renderPartial('@admin/views/admin/notification/_notifications', ['notifications' => $notificationsLimit]);
+        return $this->asJson($result);
     }
 
     public function actionAjaxNotificationStatus($id, $status)
@@ -83,8 +113,7 @@ class DefaultController extends AdminController
         $notifications->status = $status;
         $notifications->save(false);
 
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return ['success' => true];
+        return $this->asJson(['success' => true]);
     }
 
 
@@ -182,7 +211,7 @@ class DefaultController extends AdminController
             [
                 'label' => Yii::t('admin/default', 'DESKTOP'),
                 'visible' => true,
-                'dropDownOptions'=>['class'=>'dropdown-menu-right'],
+                'dropDownOptions' => ['class' => 'dropdown-menu-right'],
                 'items' => [
                     [
                         'label' => Yii::t('admin/default', 'DESKTOP_CREATE'),
@@ -191,7 +220,7 @@ class DefaultController extends AdminController
                     ],
                     [
                         'label' => Yii::t('admin/default', 'DESKTOP_CREATE_WIDGET'),
-                        'url' => ['/admin/app/desktop/widget-create','id'=>1],
+                        'url' => ['/admin/app/desktop/widget-create', 'id' => 1],
                         'visible' => true,
 
                     ],
