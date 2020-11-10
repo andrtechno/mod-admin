@@ -13,8 +13,8 @@ class SettingsLogForm extends SettingsModel
     public static $category = 'logs';
 
     public $emails;
-
-
+    public $query_execute;
+    public $query_query;
 
     public static function defaultSettings()
     {
@@ -27,13 +27,14 @@ class SettingsLogForm extends SettingsModel
     {
         return [
             [['emails'], "string"],
+
             //[['email'], 'trim'],
             //[['mailer_transport_smtp_enabled', 'watermark_enable'], 'boolean'],
             //[['attachment_wm_corner', 'attachment_wm_offsety', 'attachment_wm_offsetx'], 'integer'],
             //[['email', 'sitename'], "required"],
             //['email', 'email'],
             //[['theme', 'censor_words'], "string"],
-            //[['maintenance', 'censor'], 'boolean'],
+            [['query_query', 'query_execute'], 'boolean'],
 
             //[['captcha_class'], 'default'],
 

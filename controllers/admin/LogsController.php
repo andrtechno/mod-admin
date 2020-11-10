@@ -44,7 +44,7 @@ class LogsController extends AdminController
         $dataProvider = new ArrayDataProvider([
             'allModels' => $data,
             'pagination' => [
-                'pageSize' => 10,
+                'pageSize' => 50,
             ],
         ]);
 
@@ -155,7 +155,7 @@ class LogsController extends AdminController
         $dataProvider = new ArrayDataProvider([
             'allModels' => $data,
             'pagination' => [
-                'pageSize' => 10,
+                'pageSize' => 50,
             ],
         ]);
 

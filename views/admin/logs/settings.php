@@ -17,6 +17,9 @@ use panix\ext\taginput\TagInput;
             ->widget(TagInput::class, ['placeholder' => 'E-mail'])
             ->hint('Введите E-mail и нажмите Enter');
         ?>
+        <?= $form->field($model, 'query_execute')->checkbox(); ?>
+        <?= $form->field($model, 'query_query')->checkbox(); ?>
+
         <div class="card-footer text-center">
             <?= Html::submitButton(Yii::t('app/default', 'SAVE'), ['class' => 'btn btn-success']) ?>
         </div>
