@@ -318,11 +318,13 @@ $this->registerJs("
         <div id="data">
             <div class="contentTree code" style="display:none;">
                 <?php
-                echo \panix\engine\widgets\CodeMirrorInput::widget([
+                echo \panix\ext\codemirror\CodeMirrorTextArea::widget([
                     'name' => 'code',
                     'attribute' => 'code',
-                    'modes' => ['php','css','xml','javascript'],
-                    'options' => ['id' => 'code', 'class' => 'form-control']
+                    'options' => ['id' => 'code', 'class' => 'form-control'],
+                    'clientOptions'=>[
+                        'modes' => ['php','css','xml','javascript'],
+                    ]
                 ])
                 ?>
             </div>

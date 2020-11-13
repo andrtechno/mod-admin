@@ -2,7 +2,6 @@
 
 namespace panix\mod\admin\controllers\admin;
 
-use panix\engine\assets\codemirror\CodeMirrorPhpAsset;
 use panix\engine\FileSystem;
 use Yii;
 use panix\engine\controllers\AdminController;
