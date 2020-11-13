@@ -10,6 +10,7 @@ use panix\engine\controllers\AdminController;
 use panix\mod\admin\models\Languages;
 use panix\mod\admin\models\search\LanguagesSearch;
 use yii\base\Exception;
+use yii\helpers\ArrayHelper;
 use yii\helpers\FileHelper;
 use yii\helpers\Json;
 use yii\helpers\VarDumper;
@@ -34,6 +35,56 @@ class LanguagesController extends AdminController
     {
         parent::init();
         $this->sources_locale = Yii::$app->languageManager->default->code;
+    }
+
+    public function actionAjaxOpen()
+    {
+        $dl = Yii::$app->languageManager->default['code'];
+        $current = [];
+
+        $path = Yii::$app->request->get('path');
+        $file = Yii::$app->request->get('file');
+        $lang = Yii::$app->request->get('lang');
+        $type = Yii::$app->request->get('type');
+        $filePath = Yii::getAlias($path) . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . $file;
+        // $filePath = Yii::getAlias($path) . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . $file;
+
+
+      //  $ss = Yii::$app->i18n->getMessageSource('admin/*');
+
+    //  CMS::dump(Yii::$app->i18n->translations);
+//die;
+        if (Yii::$app->request->post('TranslateForm')) {
+            $trans = [];
+            foreach (Yii::$app->request->post('TranslateForm') as $key => $val) {
+                if (is_array($val)) {
+                    $param = [];
+                    foreach ($val as $key2 => $value) {
+                        $param[] = $key2 . '#' . $value;
+                    }
+                    $trans[stripslashes($key)] = implode('|', $param);
+                } else {
+                    $trans[stripslashes($key)] = $val;
+                }
+            }
+            $this->writeContent($path, Yii::$app->request->post('lang'), $file, $trans);
+        }
+
+
+
+        $defaultPath = Yii::getAlias($path) . DIRECTORY_SEPARATOR . $dl . DIRECTORY_SEPARATOR . $file;
+        $default = include_once($defaultPath);
+        if (file_exists($filePath)) {
+            $current = include_once($filePath);
+        }
+        return $this->render('_ajaxOpen', [
+                'return' => ArrayHelper::merge($default, $current),
+
+                //'locale' => $this->_tl,
+                'file' => $file,
+                'type' => $type
+            ]
+        );
     }
 
     public function actionTester()
@@ -349,5 +400,37 @@ return ' . var_export($content, true) . ';')
     public function actionCreate()
     {
         return $this->actionUpdate(false);
+    }
+
+
+    /**
+     * @param string $path @path/messages
+     * @param string $lang en|fr etc
+     * @param string $file default.php
+     * @param array $array
+     * @return bool
+     */
+    private function writeContent($path, $lang, $file, $array)
+    {
+
+        $array = VarDumper::export($array);
+        $content = <<<EOD
+<?php
+/**
+ * Message translations. (auto generation translate)
+ * 
+ * @author PIXELION CMS development team <info@pixelion.com.ua>
+ * @link https://pixelion.com.ua PIXELION CMS
+ * @ignore
+ */
+return $array;
+
+EOD;
+
+        if (FileHelper::createDirectory(Yii::getAlias($path) . DIRECTORY_SEPARATOR . $lang) === false || file_put_contents(Yii::getAlias($path) . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . $file, $content, LOCK_EX) === false) {
+            //echo "Configuration file was NOT created: ''.\n\n";
+            return false;
+        }
+        return true;
     }
 }
