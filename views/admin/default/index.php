@@ -3,6 +3,9 @@
 use panix\engine\Html;
 use yii\helpers\Url;
 
+use panix\engine\emoji\Emoji2;
+use panix\engine\emoji\Emoji;
+
 ?>
 
 <div class="row">
