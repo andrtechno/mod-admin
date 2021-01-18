@@ -62,8 +62,8 @@ class Module extends WebModule { // implements BootstrapInterface
                         'label' => Yii::t('admin/default', 'Mails tpl'),
                         'url' => ['/admin/app/mail-template'],
                         'icon' => 'envelope',
-                        'visible'=>YII_DEBUG
-                        //'visible' => Yii::$app->user->can('/admin/admin/mail-template/index') || Yii::$app->user->can('/admin/admin/mail-template/*')
+                       // 'visible'=>YII_DEBUG,
+                        'visible' => Yii::$app->user->can('/admin/admin/mail-template/index') || Yii::$app->user->can('/admin/admin/mail-template/*')
                     ],
                     [
                         'label' => Yii::t('admin/default', 'DATABASE'),
@@ -87,8 +87,8 @@ class Module extends WebModule { // implements BootstrapInterface
                         'label' => Yii::t('admin/default', 'DYNAMIC_FORM'),
                         'url' => ['/admin/app/dynamic-form'],
                         'icon' => 'arrow-right',
-                        'visible'=>YII_DEBUG
-                        //'visible' => Yii::$app->user->can('/admin/admin/dynamic-form/index') || Yii::$app->user->can('/admin/admin/dynamic-form/*')
+                        'visible'=>YII_DEBUG,
+                      //  'visible' => Yii::$app->user->can('/admin/admin/dynamic-form/index') || Yii::$app->user->can('/admin/admin/dynamic-form/*')
                     ],
                     [
                         'label' => Yii::t('admin/default', 'HELP'),
