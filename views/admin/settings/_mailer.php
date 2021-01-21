@@ -13,4 +13,4 @@
     'ssl' => 'SSL',
     'tls' => 'TLS'
 ]) ?>
-
+<?= $form->field($model, 'mailer_sender_name'); ?>

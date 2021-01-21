@@ -40,6 +40,8 @@ class SettingsForm extends SettingsModel
     public $mailer_transport_smtp_password;
     public $mailer_transport_smtp_port;
     public $mailer_transport_smtp_encryption;
+    public $mailer_sender_name;
+
     public $captcha_class;
     public $recaptcha_key;
     public $recaptcha_secret;
@@ -79,6 +81,7 @@ class SettingsForm extends SettingsModel
             'recaptcha_key' => '',
             'recaptcha_secret' => '',
             'favicon' => 'favicon.ico',
+            'mailer_sender_name'=>'',
         ];
     }
 
@@ -112,7 +115,7 @@ class SettingsForm extends SettingsModel
 
         return [
             //Mailer smtp
-            [['mailer_transport_smtp_host', 'mailer_transport_smtp_username', 'mailer_transport_smtp_password', 'mailer_transport_smtp_encryption', 'captcha_class'], "string"],
+            [['mailer_transport_smtp_host', 'mailer_transport_smtp_username', 'mailer_transport_smtp_password', 'mailer_transport_smtp_encryption', 'captcha_class','mailer_sender_name'], "string"],
             [['mailer_transport_smtp_port'], 'integer'],
             [['email', 'mailer_transport_smtp_port', 'mailer_transport_smtp_host', 'mailer_transport_smtp_username', 'mailer_transport_smtp_password', 'mailer_transport_smtp_encryption'], 'trim'],
             ['mailer_transport_smtp_encryption', 'in', 'range' => ['ssl', 'tls']],
@@ -125,7 +128,7 @@ class SettingsForm extends SettingsModel
 
 
             [['email', 'sitename', 'pagenum', 'timezone', 'theme', 'attachment_wm_offsetx', 'attachment_wm_offsety', 'attachment_wm_corner', 'attachment_image_type'], "required"],
-            ['email', 'email'],
+            [['email'], 'email'],
             ['attachment_wm_path', 'validateWatermarkFile'],
             ['favicon', 'validateFaviconFile'],
             [['theme', 'censor_words', 'censor_replace', 'maintenance_text', 'maintenance_allow_ips', 'maintenance_allow_users', 'timezone', 'recaptcha_key', 'recaptcha_secret'], "string"],

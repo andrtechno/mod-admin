@@ -41,6 +41,7 @@ return [
     'MAILER_TRANSPORT_SMTP_HOST' => 'SMTP сервер',
     'MAILER_TRANSPORT_SMTP_PORT' => 'Порт',
     'MAILER_TRANSPORT_SMTP_ENCRYPTION' => 'Шифрування',
+    'MAILER_SENDER_NAME' => 'Ім\'я відправника',
     'CAPTCHA_CLASS' => 'Капча',
     'RECAPTCHA_KEY' => 'API ключ (ReCaptcha)',
     'RECAPTCHA_SECRET' => 'Секретний ключ (ReCaptcha)'
