@@ -18,7 +18,7 @@ return [
     'ADMIN_THEME' => 'Колір теми адмін-панелі',
     'WATERMARK_ENABLE' => 'Активувати водяний знак?',
     'ATTACHMENT_IMAGE_TYPE' => 'Тип збереглося зображення',
-    'ATTACHMENT_IMAGE_TYPE_HINT' => '<strong>Asset</strong> & mdash; Зберігає зображення з усім настройки <br/> <strong>Render</strong> & mdash; Застосовує до оригіналу зображень настройки і створюється на льоту без змін оригіналу',
+    'ATTACHMENT_IMAGE_TYPE_HINT' => '<strong>Asset</strong> &mdash; Зберігає зображення з усім настройки <br/> <strong>Render</strong> &mdash; Застосовує до оригіналу зображень настройки і створюється на льоту без змін оригіналу',
     'ATTACHMENT_INFO' => 'Дані настройки не поширюються на текстові редактори.',
     'ATTACHMENT_WM_PATH' => 'Зображення',
     'ATTACHMENT_WM_CORNER' => 'Позиція водяного знака',
