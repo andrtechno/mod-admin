@@ -3,6 +3,7 @@
 namespace panix\mod\admin\controllers\admin;
 
 
+use panix\engine\CMS;
 use panix\engine\grid\GridColumns;
 use panix\mod\admin\models\DesktopWidgets;
 use panix\mod\cart\models\Order;
@@ -51,29 +52,57 @@ class DefaultController extends AdminController
 
     public function actionQueueCounter()
     {
-        $queueAllCount = (new \yii\db\Query())->select(['pushed_at', 'ttr', 'delay', 'priority', 'reserved_at', 'attempt', 'done_at'])
+
+        $queueAllItems = (new \yii\db\Query())
+            ->select(['pushed_at', 'ttr', 'delay', 'priority', 'reserved_at', 'attempt', 'done_at', 'channel'])
             ->from(Yii::$app->queue->tableName)
             ->where(['done_at' => null])
+            ->groupBy(['channel'])
             ->createCommand()
-            ->query()
-            ->count();
+            ->queryAll();
 
 
-        $queueDoneCount = (new \yii\db\Query())->select(['pushed_at', 'ttr', 'delay', 'priority', 'reserved_at', 'attempt', 'done_at'])
-            ->from(Yii::$app->queue->tableName)
-            ->where(['not', ['done_at' => null]])
-            ->createCommand()
-            ->query()
-            ->count();
+        $result = [];
+        foreach ($queueAllItems as $item) {
 
-        $percent = round($queueDoneCount / ($queueDoneCount + $queueAllCount) * 100, 1);
-        return $this->asJson([
-            'percent' => $percent,
-            'message' => "Выполнено: <strong>{$percent}</strong>%",
-            'total' => $queueAllCount,
-            'done' => $queueDoneCount
-        ]);
+            $queueAllCount = (new \yii\db\Query())->select(['pushed_at', 'ttr', 'delay', 'priority', 'reserved_at', 'attempt', 'done_at', 'channel'])
+                ->from(Yii::$app->queue->tableName)
+                ->where(['done_at' => null])->andWhere(['channel' => $item['channel']])
+                ->createCommand()
+                ->query()
+                ->count();
 
+
+            $queryDoneCount = (new \yii\db\Query())->select(['pushed_at', 'ttr', 'delay', 'priority', 'reserved_at', 'attempt', 'done_at', 'channel'])
+                ->from(Yii::$app->queue->tableName)
+                ->where(['not', ['done_at' => null]])->andWhere(['channel' => $item['channel']])
+                ->createCommand()
+                ->query();
+            $queueDoneCount = $queryDoneCount->count();
+
+
+            $percent = round($queueDoneCount / ($queueDoneCount + $queueAllCount) * 100, 1);
+            $settings_key = 'QUEUE_CHANNEL_' . $item['channel'];
+            $hash_value = Yii::$app->settings->get('app', $settings_key);
+            if ($hash_value) {
+                $queueAllCount2 = $hash_value;
+                $diff = $queueDoneCount - $queueAllCount2;
+                $percent = round(($diff) / ($queueAllCount + $diff) * 100, 1);
+
+            }
+            if ($percent >= 100 && $hash_value) {
+                Yii::$app->settings->delete('app', $settings_key);
+            }
+            $result[] = [
+                'percent' => $percent,
+                'channel' => $item['channel'],
+                'title' => '<strong>'.ucfirst($item['channel']) . '</strong>: ',
+                'message' => ($percent) ? "Выполнено: <strong>{$percent}%</strong>" : 'Подготовка...',
+                'total' => $queueAllCount,
+                'done' => $queueDoneCount,
+            ];
+        }
+        return $this->asJson($result);
     }
 
     public function actionAjaxCounters()

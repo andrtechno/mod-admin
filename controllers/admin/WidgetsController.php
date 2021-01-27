@@ -55,9 +55,8 @@ class WidgetsController extends AdminController
                             $edit = true;
 
 
-
                             $result[] = [
-                                'title' => (isset($reflect->getStaticProperties()['widget_name']))?$reflect->getStaticProperties()['widget_name']:$reflect->getShortName(),
+                                'title' => (isset($reflect->getStaticProperties()['widget_name'])) ? $reflect->getStaticProperties()['widget_name'] : $reflect->getShortName(),
                                 'alias' => $classNamespace,
                                 'category' => 'module',
                                 'edit' => ($edit) ? Html::a(Html::icon('edit'), ['update', 'alias' => $classNamespace], ['class' => 'btn btn-sm btn-secondary']) : Yii::$app->formatter->asText(null)
@@ -156,12 +155,6 @@ class WidgetsController extends AdminController
 
         $system = $manager->getSystemClass($alias);
 
-        if (!$system) {
-            Yii::$app->session->setFlash('error', 'Виджет не использует конфигурации');
-            die('error');
-            //   return $this->redirect(['index']);
-        }
-
 
         // if (Yii::$app->request->isPost) {
         if ($system) {
@@ -178,6 +171,9 @@ class WidgetsController extends AdminController
                     Yii::$app->session->setFlash('error', Yii::t('app/default', 'ERROR_UPDATE'));
                 }
             }
+        } else {
+            Yii::$app->session->setFlash('error', 'Виджет не использует конфигурации');
+            return $this->redirect(['index']);
         }
         return $this->render('update', [
             'form' => $system->getConfigurationFormHtml($alias),
