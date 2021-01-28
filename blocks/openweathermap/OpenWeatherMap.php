@@ -18,31 +18,37 @@ class OpenWeatherMap extends Widget
 
     public function run()
     {
-        $result = Yii::$app->cache->get(__CLASS__);
+        $result = Yii::$app->cache->get(__CLASS__.Yii::$app->language);
+        $error = true;
+        if ($this->config) {
+            if ($result === false) {
 
-        if ($result === false) {
-            $client = new Client(['baseUrl' => 'http://api.openweathermap.org/data/2.5/weather']);
-            $response = $client->createRequest()
-                ->setMethod('GET')
-                ->setData([
-                    'lat' => $this->config->lat,
-                    'lon' => $this->config->lon,
-                    'units' => $this->config->units,
-                    'lang' => Yii::$app->language,
-                    'cnt' => 10,
-                    'appid' => $this->config->apikey,
-                ])
-                ->send();
+                $client = new Client(['baseUrl' => 'http://api.openweathermap.org/data/2.5/weather']);
 
-            if ($response->isOk) {
-                $result = $response->data;
-            } else {
-                $result = false;
+                $response = $client->createRequest()
+                    ->setMethod('GET')
+                    ->setData([
+                        'lat' => $this->config->lat,
+                        'lon' => $this->config->lon,
+                        'units' => $this->config->units,
+                        'lang' => Yii::$app->language,
+                        'cnt' => 10,
+                        'appid' => $this->config->apikey,
+                    ])
+                    ->send();
+
+                if ($response->isOk) {
+                    $result = $response->data;
+                } else {
+                    $result = false;
+                }
+
+                Yii::$app->cache->set(__CLASS__.Yii::$app->language, $result, 3600 * 2);
             }
-
-            Yii::$app->cache->set(__CLASS__, $result, 3600);
+        } else {
+            $error = 'Ошибка настроек.';
         }
-        return $this->render($this->skin, ['result' => $result]);
+        return $this->render($this->skin, ['result' => $result, 'error' => $error]);
     }
 
     public function degToCompass($num)

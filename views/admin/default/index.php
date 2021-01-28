@@ -60,7 +60,7 @@ use panix\engine\emoji\Emoji;
                     <i class="icon-comments"></i>
                     <div class="col">
                         <h2>Комментариев</h2>
-                        <div>123</div>
+                        <div>1231</div>
                     </div>
                 </div>
             </div>
@@ -69,7 +69,6 @@ use panix\engine\emoji\Emoji;
                 <span class="float-right"><i class="icon-arrow-right"></i></span>
             </a>
         </div>
-
     </div>
 
 
@@ -110,25 +109,7 @@ use panix\engine\emoji\Emoji;
 
         </div>
     <?php } ?>
-    <div class="col-md-6 col-lg-3 col-sm-6">
 
-
-        <div class="card bg-success text-white o-hidden">
-            <div class="card-body" style="padding: 1rem">
-                <div class="row">
-                    <i class="icon-shopcart"></i>
-                    <div class="col">
-                        <h2>Комментариев</h2>
-                        <div>123</div>
-                    </div>
-                </div>
-            </div>
-            <a href="#" class="card-footer z-1">
-                <span class="float-left">Подробней</span>
-                <span class="float-right"><i class="icon-arrow-right"></i></span>
-            </a>
-        </div>
-    </div>
 </div>
 <div class="row">
     <?php
@@ -273,6 +254,7 @@ $desktop = \panix\mod\admin\models\Desktop::findOne(1);
                     ->all();
                 if ($widgets) {
                     foreach ($widgets as $wgt) {
+                       // \panix\engine\CMS::dump($wgt);
                         ?>
                         <div class="card desktop-widget" id="ids_<?= $wgt->id ?>" data-test="test-<?= $x ?>">
 
@@ -280,9 +262,9 @@ $desktop = \panix\mod\admin\models\Desktop::findOne(1);
                                 <h5><?= (new $wgt->widget)->getTitle(); ?></h5>
                                 <div class="card-option">
                                     <?php
-                                    echo Html::a('<i class="icon-settings"></i>', ['/admin/app/widgets/update', 'alias' => $wgt->widget], array('class' => ' btn btn-link'));
-                                    echo Html::a('<i class="icon-move"></i>', 'javascript:void(0)', ['class' => 'handle btn btn-link']);
-                                    echo Html::a('<i class="icon-delete"></i>', ['delete-widget', 'id' => $wgt->id], ['data-id' => $wgt->id, 'class' => 'delete-widget btn btn-link']);
+                                    echo Html::a(Html::icon('settings'), ['/admin/app/widgets/update', 'alias' => $wgt->widget], array('class' => ' btn btn-link'));
+                                    echo Html::a(Html::icon('move'), 'javascript:void(0)', ['class' => 'handle btn btn-link']);
+                                    echo Html::a(Html::icon('delete'), ['delete-widget', 'id' => $wgt->id], ['data-id' => $wgt->id, 'class' => 'delete-widget btn btn-link']);
                                     ?>
                                 </div>
                             </div>

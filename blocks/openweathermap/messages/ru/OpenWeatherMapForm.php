@@ -8,7 +8,7 @@ return [
     'ENABLE_HUMIDITY' => 'Влажность',
     'ENABLE_SUNRISE' => 'Восход',
     'ENABLE_SUNSET' => 'Закат',
-    'UNITS' => 'Единица измерения',
+    'UNITS' => 'Единица измерения температуры',
     'N' => 'north',
     'NNE' => 'north-northeasta',
     'NE' => 'northeast',

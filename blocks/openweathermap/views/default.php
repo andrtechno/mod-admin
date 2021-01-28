@@ -63,5 +63,5 @@ use panix\engine\CMS;
         <?php } ?>
     </table>
 <?php } else { ?>
-    Error
+    <div class="alert alert-info m-3"><?= $error; ?></div>
 <?php } ?>

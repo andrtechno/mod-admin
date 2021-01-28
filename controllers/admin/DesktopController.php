@@ -42,7 +42,29 @@ class DesktopController extends AdminController
                 return $this->redirect('admin');
         }
     }
+    public function actionCreate()
+    {
+        return $this->actionUpdate(false);
+    }
+    public function actionUpdate($id)
+    {
+        $model = Desktop::findModel($id, 'no find desktop');
 
+
+
+        if ($model->load(Yii::$app->request->post())) {
+
+            if ($model->validate()) {
+                $model->save();
+
+            } else {
+                print_r($model->getErrors());
+                die;
+            }
+        }
+
+        return $this->render('update', ['model' => $model]);
+    }
     public function actionWidgetCreate($id)
     {
         $desktop = Desktop::findModel($id, 'no find desktop');
@@ -54,6 +76,7 @@ class DesktopController extends AdminController
             if ($model->validate()) {
                 $model->save();
                 //Yii::app()->cache->flush();
+                return $this->redirect(['/admin']);
             } else {
                 print_r($model->getErrors());
                 die;

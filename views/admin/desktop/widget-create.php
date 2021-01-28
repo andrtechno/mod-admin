@@ -19,6 +19,9 @@ use panix\engine\Html;
             'panix\mod\admin\blocks\chat\ChatWidget' => 'Чат',
             'panix\mod\admin\blocks\sysinfo\SysInfoWidget' => 'Информация о системе',
             'panix\mod\shop\blocks\popular\PopularBlock' => 'Популярные товары',
+            'panix\mod\admin\blocks\yourinfo\YourInfoWidget' => 'YourInfoWidget',
+            'panix\mod\admin\blocks\openweathermap\OpenWeatherMap' => 'OpenWeatherMap',
+            'panix\mod\admin\blocks\privatbank\PrivatBank'=>'PrivatBank'
         ]) ?>
         <?= $form->field($model, 'col')->dropDownList($model->getColumnsRange()) ?>
     </div>

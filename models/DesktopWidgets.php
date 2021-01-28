@@ -63,4 +63,8 @@ class DesktopWidgets extends ActiveRecord
         return parent::beforeSave($insert);
     }
 
+    public function getWidgetClass(){
+
+    }
+
 }
