@@ -9,7 +9,7 @@ class Hosting extends Widget
 {
 
     protected $result;
-
+    public static $form = 'panix\mod\admin\blocks\hosting\form\HostingForm';
     public function init()
     {
         parent::init();

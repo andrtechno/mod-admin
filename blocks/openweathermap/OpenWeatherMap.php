@@ -8,7 +8,7 @@ use yii\httpclient\Client;
 
 class OpenWeatherMap extends Widget
 {
-
+    public static $form = 'panix\mod\admin\blocks\openweathermap\form\OpenWeatherMapForm';
     public function init()
     {
         parent::init();
