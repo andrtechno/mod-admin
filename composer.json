@@ -3,7 +3,7 @@
     "description": "Module admin",
     "keywords": ["pixelion-cms", "module", "admin"],
     "homepage": "https://github.com/andrtechno/mod-admin",
-    "type": "yii2-extension",
+    "type": "pixelion-module",
     "license": "MIT",
     "authors": [
         {
