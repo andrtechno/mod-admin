@@ -49,8 +49,69 @@ class DefaultController extends AdminController
             echo \panix\mod\admin\blocks\chat\ChatWidget::sendChat($_POST);
         }
     }
-
     public function actionQueueCounter()
+    {
+
+        $queueAllItems = (new \yii\db\Query())
+            ->select(['pushed_at', 'ttr', 'delay', 'priority', 'reserved_at', 'attempt', 'done_at', 'channel'])
+            ->from(Yii::$app->queue->tableName)
+            ->where(['done_at' => null])
+            ->groupBy(['channel'])
+            ->createCommand()
+            ->queryAll();
+
+
+        $result = [];
+        foreach ($queueAllItems as $item) {
+
+            $queueAllCount = (new \yii\db\Query())->select(['pushed_at', 'ttr', 'delay', 'priority', 'reserved_at', 'attempt', 'done_at', 'channel'])
+                ->from(Yii::$app->queue->tableName)
+                ->where(['done_at' => null])
+                ->andWhere(['channel' => $item['channel']])
+                //->andWhere(['>=','pushed_at',Yii::$app->settings->get('app', 'QUEUE_date_'.$item['channel'])])
+                ->createCommand()
+                ->query()
+                ->count();
+
+
+            $queryDoneCount = (new \yii\db\Query())->select(['pushed_at', 'ttr', 'delay', 'priority', 'reserved_at', 'attempt', 'done_at', 'channel'])
+                ->from(Yii::$app->queue->tableName)
+                ->where(['not', ['done_at' => null]])
+                ->andWhere(['channel' => $item['channel']])
+               // ->andWhere(['>=','pushed_at',Yii::$app->settings->get('app', 'QUEUE_date_'.$item['channel'])])
+                ->createCommand()
+                ->query();
+            $queueDoneCount = $queryDoneCount->count();
+
+
+            $percent = 0;
+            if($queryDoneCount && $queueAllCount){
+                $percent = round($queueDoneCount / ($queueDoneCount + $queueAllCount) * 100, 1);
+            }
+            /*$settings_key = 'QUEUE_CHANNEL_' . $item['channel'];
+           $hash_value = Yii::$app->settings->get('app', $settings_key);
+           if ($hash_value) {
+               $queueAllCount2 = $hash_value;
+               $diff = $queueDoneCount - $queueAllCount2;
+               $percent = round(($diff) / ($queueAllCount + $diff) * 100, 1);
+
+           }
+           if ($percent >= 100 && $hash_value) {
+              // Yii::$app->settings->delete('app', $settings_key);
+           }*/
+            $result[$item['channel']] = [
+                'percent' => $percent,
+                'channel' => $item['channel'],
+                'title' => '<strong>'.ucfirst($item['channel']) . '</strong>: ',
+                'message' => ($queueAllCount) ? "Осталось: <strong>{$queueAllCount}</strong>" : 'Подготовка...',
+                //'message' => ($percent) ? "Выполнено: <strong>{$percent}%</strong>" : 'Подготовка...',
+                'total' => $queueAllCount,
+                'done' => $queueDoneCount,
+            ];
+        }
+        return $this->asJson($result);
+    }
+    public function actionQueueCounter3()
     {
 
         $queueAllItems = (new \yii\db\Query())
@@ -100,7 +161,7 @@ class DefaultController extends AdminController
            if ($percent >= 100 && $hash_value) {
               // Yii::$app->settings->delete('app', $settings_key);
            }*/
-            $result[] = [
+            $result[$item['channel']] = [
                 'percent' => $percent,
                 'channel' => $item['channel'],
                 'title' => '<strong>'.ucfirst($item['channel']) . '</strong>: ',

@@ -2,6 +2,7 @@
 
 namespace panix\mod\admin\controllers\admin;
 
+use panix\engine\CMS;
 use Yii;
 use panix\engine\Html;
 use panix\engine\blocks_settings\WidgetSystemManager;
@@ -155,7 +156,7 @@ class WidgetsController extends AdminController
 
         $system = $manager->getSystemClass($alias);
 
-
+//CMS::dump($system);die;
         // if (Yii::$app->request->isPost) {
         if ($system) {
             //die(basename(get_class($system)));
