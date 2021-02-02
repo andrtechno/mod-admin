@@ -16,8 +16,8 @@ class SysInfoWidget extends Widget
         $globals = (ini_get('register_globals') == 1) ? $this->labelHtml(Yii::t('app/default', 'ON'), 'danger') : $this->labelHtml(Yii::t('app/default', 'OFF'), 'success');
         $magic_quotes = (ini_get('magic_quotes_gpc') == 1) ? $this->labelHtml(Yii::t('app/default', 'ON'), 'danger') : $this->labelHtml(Yii::t('app/default', 'OFF'), 'success');
 
-        $p_max = $this->labelHtml(CMS::fileSize(str_replace("M", "", ini_get('post_max_size')) * 1024 * 1024));
-        $u_max = $this->labelHtml(CMS::fileSize(str_replace("M", "", ini_get('upload_max_filesize')) * 1024 * 1024));
+        $p_max = $this->labelHtml(ini_get('post_max_size'));
+        $u_max = $this->labelHtml(ini_get('upload_max_filesize'));
         if (CMS::getMemoryLimit() <= 64) {
             $m_max = $this->labelHtml($memorylimit, 'danger');
         } elseif (CMS::getMemoryLimit() <= 128) {
