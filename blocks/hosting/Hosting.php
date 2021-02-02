@@ -23,7 +23,6 @@ class Hosting extends Widget
         }else{
             $this->result = false;
         }
-        $this->result = $this->connect('info', 'hosting_quota');
         return $this->render($this->skin, ['result' => $this->result]);
     }
 

@@ -368,7 +368,7 @@ class DefaultController extends AdminController
                 'items' => [
                     [
                         'label' => Yii::t('admin/default', 'DESKTOP_CREATE'),
-                        'url' => ['/admin/app/desktop/desktop-create'],
+                        'url' => ['/admin/app/desktop/create'],
                         'visible' => true
                     ],
                     [

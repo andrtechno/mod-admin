@@ -12,7 +12,10 @@ use panix\mod\admin\models\DesktopWidgets;
 class DesktopController extends AdminController
 {
 
-    public $icon = 'icon-home';
+    /**
+     * @var string
+     */
+    public $icon = 'home';
 
     public function actions()
     {
@@ -42,14 +45,17 @@ class DesktopController extends AdminController
                 return $this->redirect('admin');
         }
     }
+
     public function actionCreate()
     {
+        $this->pageName = Yii::t('admin/default', 'DESKTOP_CREATE');
+        $this->view->params['breadcrumbs'][] = $this->pageName;
         return $this->actionUpdate(false);
     }
+
     public function actionUpdate($id)
     {
         $model = Desktop::findModel($id, 'no find desktop');
-
 
 
         if ($model->load(Yii::$app->request->post())) {
@@ -65,11 +71,16 @@ class DesktopController extends AdminController
 
         return $this->render('update', ['model' => $model]);
     }
+
     public function actionWidgetCreate($id)
     {
         $desktop = Desktop::findModel($id, 'no find desktop');
 
         $model = new DesktopWidgets;
+
+        $this->pageName = $desktop->name;
+
+        $this->view->params['breadcrumbs'][] = $this->pageName;
 
         if ($model->load(Yii::$app->request->post())) {
             $model->desktop_id = $desktop->id;
@@ -114,12 +125,12 @@ class DesktopController extends AdminController
                 'items' => [
                     [
                         'label' => Yii::t('admin/default', 'DESKTOP_CREATE'),
-                        'url' => ['/admin/app/desktop/desktop-create'],
+                        'url' => ['/admin/app/desktop/create'],
                         'visible' => true
                     ],
                     [
                         'label' => Yii::t('admin/default', 'DESKTOP_CREATE_WIDGET'),
-                        'url' => ['/admin/app/desktop/widget-create','id'=>1],
+                        'url' => ['/admin/app/desktop/widget-create', 'id' => 1],
                         'visible' => true
                     ],
                 ]
