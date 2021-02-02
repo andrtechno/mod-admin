@@ -44,7 +44,7 @@ class AuthController extends AdminController
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login((int)Yii::$app->settings->get('user', 'login_duration') * 86400)) {
-            return $this->goBack(['/admin']);
+            return $this->redirect(['/admin']);
         }
 
         // render
