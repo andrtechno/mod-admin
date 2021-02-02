@@ -267,7 +267,7 @@ $desktop = \panix\mod\admin\models\Desktop::findOne(1);
                                     echo Html::a(Html::icon('settings'), ['/admin/app/widgets/update', 'alias' => $wgt->widget], array('class' => ' btn btn-link'));
                                     }
                                     echo Html::a(Html::icon('move'), 'javascript:void(0)', ['class' => 'handle btn btn-link']);
-                                    echo Html::a(Html::icon('delete'), ['delete-widget', 'id' => $wgt->id], ['data-id' => $wgt->id, 'class' => 'delete-widget btn btn-link']);
+                                    echo Html::a(Html::icon('delete'), ['/admin/app/desktop/widget-delete', 'id' => $wgt->id], ['data-id' => $wgt->id, 'class' => 'delete-widget btn btn-link']);
                                     ?>
                                 </div>
                             </div>

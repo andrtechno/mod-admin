@@ -115,6 +115,16 @@ class DesktopController extends AdminController
     }
 
 
+    public function actionWidgetDelete($id)
+    {
+        $model = DesktopWidgets::findModel($id);
+        $model->delete();
+
+        if (!Yii::$app->request->isAjax)
+            return $this->redirect(['/admin']);
+    }
+
+
     public function getAddonsMenu()
     {
         return [
