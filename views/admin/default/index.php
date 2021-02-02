@@ -254,15 +254,18 @@ $desktop = \panix\mod\admin\models\Desktop::findOne(1);
                     ->all();
                 if ($widgets) {
                     foreach ($widgets as $wgt) {
-                       // \panix\engine\CMS::dump($wgt);
+                        $widgetClass = (new $wgt->widget);
+                       // \panix\engine\CMS::dump((new $wgt->widget));
                         ?>
                         <div class="card desktop-widget" id="ids_<?= $wgt->id ?>" data-test="test-<?= $x ?>">
 
                             <div class="card-header">
-                                <h5><?= (new $wgt->widget)->getTitle(); ?></h5>
+                                <h5><?= $widgetClass->getTitle(); ?></h5>
                                 <div class="card-option">
                                     <?php
+                                    if(isset($widgetClass::$form) && !empty($widgetClass::$form)){
                                     echo Html::a(Html::icon('settings'), ['/admin/app/widgets/update', 'alias' => $wgt->widget], array('class' => ' btn btn-link'));
+                                    }
                                     echo Html::a(Html::icon('move'), 'javascript:void(0)', ['class' => 'handle btn btn-link']);
                                     echo Html::a(Html::icon('delete'), ['delete-widget', 'id' => $wgt->id], ['data-id' => $wgt->id, 'class' => 'delete-widget btn btn-link']);
                                     ?>
