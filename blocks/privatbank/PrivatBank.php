@@ -9,13 +9,6 @@ use yii\httpclient\Client;
 class PrivatBank extends Widget
 {
 
-    public function init()
-    {
-        parent::init();
-        $this->view->registerCssFile($this->assetsUrl . '/css/weather.css');
-    }
-
-
     public function run()
     {
         $date = date('d.m.Y', time() - 86400 * 1); // - 86400
