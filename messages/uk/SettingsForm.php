@@ -13,6 +13,7 @@ return [
     'TIMEZONE' => 'Часовий пояс',
     'THEME' => 'Шаблон',
     'FAVICON' => 'Favicon',
+    'NO_IMAGE' => 'Немає фото',
     'COOKIE_LIFETIME' => 'Час куки',
     'SESSION_TIMEOUT' => 'Час сесії',
     'ADMIN_THEME' => 'Колір теми адмін-панелі',

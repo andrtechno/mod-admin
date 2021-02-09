@@ -19,11 +19,23 @@ $session = Yii::$app->session;
     <div class="col-sm-4 col-lg-2"><?= Html::activeLabel($model, 'favicon', ['class' => 'col-form-label']); ?></div>
     <div class="col-sm-8 col-lg-10">
         <?= Html::activeFileInput($model, 'favicon', ['class' => 'form-control-file']); ?>
-        <div class="help-block">Доступные форматы: <strong>*.png, *.ico</strong></div>
+        <div class="help-block">Доступные форматы: <strong><?= implode(', ',$model::$extensionFavicon); ?></strong></div>
         <?= $model->renderFaviconImage(); ?>
         <?= Html::error($model, 'favicon'); ?>
     </div>
 </div>
+
+<div class="form-group row">
+    <div class="col-sm-4 col-lg-2"><?= Html::activeLabel($model, 'no_image', ['class' => 'col-form-label']); ?></div>
+    <div class="col-sm-8 col-lg-10">
+        <?= Html::activeFileInput($model, 'no_image', ['class' => 'form-control-file']); ?>
+        <div class="help-block">Доступные форматы: <strong><?= implode(', ',$model::$extensionNoImage); ?></strong></div>
+        <?= $model->renderNoImage(); ?>
+        <?= Html::error($model, 'no_image'); ?>
+    </div>
+</div>
+
+
 <?= $form->field($model, 'session_timeout')
     ->textInput(['maxlength'=>strlen($session->timeout_default)])
     ->hint("Если оставить поле пустым, будет использоваться значение указанные сервером по умолчанию Максимальное доступное время сервера {$session->timeout_default}"); ?>

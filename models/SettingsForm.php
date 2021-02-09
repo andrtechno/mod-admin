@@ -46,9 +46,10 @@ class SettingsForm extends SettingsModel
     public $recaptcha_key;
     public $recaptcha_secret;
 
-
-    private $extensionFavicon = ['ico', 'png'];
-    private $extensionWatermark = ['png'];
+    public $no_image;
+    public static $extensionFavicon = ['ico', 'png'];
+    public static $extensionNoImage = ['jpg'];
+    public static $extensionWatermark = ['png'];
 
     public static function defaultSettings()
     {
@@ -58,6 +59,7 @@ class SettingsForm extends SettingsModel
             'sitename' => 'Pixelion',
             'theme' => 'basic',
             'backup_limit' => 10,
+            'no_image' => 'no-image.jpg',
             'timezone' => 'Europe/Kiev',
             'site_close' => 0,
             'censor' => 1,
@@ -81,7 +83,7 @@ class SettingsForm extends SettingsModel
             'recaptcha_key' => '',
             'recaptcha_secret' => '',
             'favicon' => 'favicon.ico',
-            'mailer_sender_name'=>'',
+            'mailer_sender_name' => '',
         ];
     }
 
@@ -115,28 +117,29 @@ class SettingsForm extends SettingsModel
 
         return [
             //Mailer smtp
-            [['mailer_transport_smtp_host', 'mailer_transport_smtp_username', 'mailer_transport_smtp_password', 'mailer_transport_smtp_encryption', 'captcha_class','mailer_sender_name'], "string"],
+            [['mailer_transport_smtp_host', 'mailer_transport_smtp_username', 'mailer_transport_smtp_password', 'mailer_transport_smtp_encryption', 'captcha_class', 'mailer_sender_name'], "string"],
             [['mailer_transport_smtp_port'], 'integer'],
             [['email', 'mailer_transport_smtp_port', 'mailer_transport_smtp_host', 'mailer_transport_smtp_username', 'mailer_transport_smtp_password', 'mailer_transport_smtp_encryption'], 'trim'],
             ['mailer_transport_smtp_encryption', 'in', 'range' => ['ssl', 'tls']],
             [['mailer_transport_smtp_enabled', 'watermark_enable'], 'boolean'],
             [['attachment_wm_corner', 'attachment_wm_offsety', 'attachment_wm_offsetx'], 'integer'],
 
-            [['session_timeout'], 'integer','max'=>Yii::$app->session->timeout_default],
-            [['cookie_lifetime'], 'integer','max'=>Yii::$app->session->lifetime_default],
-
+            [['session_timeout'], 'integer', 'max' => Yii::$app->session->timeout_default],
+            [['cookie_lifetime'], 'integer', 'max' => Yii::$app->session->lifetime_default],
 
 
             [['email', 'sitename', 'pagenum', 'timezone', 'theme', 'attachment_wm_offsetx', 'attachment_wm_offsety', 'attachment_wm_corner', 'attachment_image_type'], "required"],
             [['email'], 'email'],
             ['attachment_wm_path', 'validateWatermarkFile'],
+            ['no_image', 'validateNoImageFile'],
             ['favicon', 'validateFaviconFile'],
             [['theme', 'censor_words', 'censor_replace', 'maintenance_text', 'maintenance_allow_ips', 'maintenance_allow_users', 'timezone', 'recaptcha_key', 'recaptcha_secret'], "string"],
             [['maintenance', 'censor'], 'boolean'],
 
 
-            [['attachment_wm_path'], 'file', 'skipOnEmpty' => true, 'extensions' => $this->extensionWatermark],
-            [['favicon'], 'file', 'skipOnEmpty' => true, 'checkExtensionByMimeType' => false, 'extensions' => $this->extensionFavicon],
+            [['no_image'], 'file', 'skipOnEmpty' => true, 'extensions' => self::$extensionNoImage],
+            [['attachment_wm_path'], 'file', 'skipOnEmpty' => true, 'extensions' => self::$extensionWatermark],
+            [['favicon'], 'file', 'skipOnEmpty' => true, 'checkExtensionByMimeType' => false, 'extensions' => self::$extensionFavicon],
             [['captcha_class'], 'default'],
 
             //[['email', 'recaptcha_key', 'recaptcha_secret'], 'filter', 'filter' => 'trim'],
@@ -148,6 +151,13 @@ class SettingsForm extends SettingsModel
         $config = Yii::$app->settings->get('app');
         if (isset($config->attachment_wm_path) && file_exists(Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . $config->attachment_wm_path))
             return Html::img("/uploads/{$config->attachment_wm_path}?" . time(), ['class' => 'img-fluid img-thumbnail mt-3']);
+    }
+
+    public function renderNoImage()
+    {
+        $config = Yii::$app->settings->get('app');
+        if (isset($config->no_image) && file_exists(Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . $config->no_image))
+            return Html::img("/uploads/{$config->no_image}?" . time(), ['class' => 'img-fluid img-thumbnail mt-3']);
     }
 
     public function renderFaviconImage()
@@ -164,15 +174,23 @@ class SettingsForm extends SettingsModel
     public function validateWatermarkFile($attribute)
     {
         $file = UploadedFile::getInstance($this, 'attachment_wm_path');
-        if ($file && !in_array($file->extension, $this->extensionWatermark))
+        if ($file && !in_array($file->extension, self::$extensionWatermark))
             $this->addError($attribute, self::t('ERROR_WM_NO_IMAGE'));
+
+    }
+
+    public function validateNoImageFile($attribute)
+    {
+        $file = UploadedFile::getInstance($this, 'no_image');
+        if ($file && !in_array($file->extension, self::$extensionNoImage))
+            $this->addError($attribute, self::t('Error format image'));
 
     }
 
     public function validateFaviconFile($attribute)
     {
         $file = UploadedFile::getInstance($this, 'favicon');
-        if ($file && !in_array($file->extension, $this->extensionFavicon))
+        if ($file && !in_array($file->extension, self::$extensionFavicon))
             $this->addError($attribute, self::t('Error format image'));
 
     }

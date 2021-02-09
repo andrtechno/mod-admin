@@ -26,6 +26,7 @@ class SettingsController extends AdminController
         $model = new SettingsForm();
         $oldFavicon = $model->favicon;
         $oldWatermark = $model->attachment_wm_path;
+        $oldNoImage = $model->no_image;
 
 
         //Yii::$app->request->post()
@@ -33,14 +34,20 @@ class SettingsController extends AdminController
 
             $model->favicon = UploadedFile::getInstance($model, 'favicon');
             $model->attachment_wm_path = UploadedFile::getInstance($model, 'attachment_wm_path');
+            $model->no_image = UploadedFile::getInstance($model, 'no_image');
             if ($model->validate()) {
-
-
                 if ($model->attachment_wm_path) {
                     $model->attachment_wm_path->saveAs(Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . 'watermark.' . $model->attachment_wm_path->extension);
                     $model->attachment_wm_path = 'watermark.' . $model->attachment_wm_path->extension;
                 } else {
                     $model->attachment_wm_path = $oldWatermark;
+                }
+                if ($model->no_image) {
+                    $fileName = 'no-image.' . $model->no_image->extension;
+                    $model->no_image->saveAs(Yii::getAlias('@uploads') . DIRECTORY_SEPARATOR . $fileName);
+                    $model->no_image = $fileName;
+                } else {
+                    $model->no_image = $oldNoImage;
                 }
 
 

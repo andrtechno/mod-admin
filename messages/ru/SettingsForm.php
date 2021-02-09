@@ -13,6 +13,7 @@ return [
     'TIMEZONE' => 'Часовой пояс',
     'THEME' => 'Шаблон',
     'FAVICON' => 'Favicon',
+    'NO_IMAGE' => 'Нет фото',
     'COOKIE_LIFETIME' => 'Время куки',
     'SESSION_TIMEOUT' => 'Время сессии',
     'ADMIN_THEME' => 'Цвет темы админ-панели',
