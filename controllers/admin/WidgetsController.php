@@ -29,40 +29,41 @@ class WidgetsController extends AdminController
 
 
         foreach (Yii::$app->extensions as $extension) {
+            if (isset($extension['alias'])) {
+                foreach ($extension['alias'] as $key => $alias) {
 
-            foreach ($extension['alias'] as $key => $alias) {
+                    $modulesfile = array_filter(glob($alias . DIRECTORY_SEPARATOR . '*' . DIRECTORY_SEPARATOR . '*'), 'is_file');
 
-                $modulesfile = array_filter(glob($alias . DIRECTORY_SEPARATOR . '*' . DIRECTORY_SEPARATOR . '*'), 'is_file');
-
-                $files = FileHelper::findFiles($alias, ['only' => ['*Widget.php']]);
-                $test = [];
-                foreach ($files as $file) {
-                    $ss = mb_substr($file, mb_strlen(Yii::getAlias($key)), mb_strlen($file));
-                    $classNamespace2 = $key . str_replace(['.php', '/', DIRECTORY_SEPARATOR], ['', '\\', '\\'], $ss);
-                    $classNamespace = '\\' . str_replace(['.php', '/', '@'], ['', '\\', ''], $classNamespace2);
-
-
-                    $reflect = new \ReflectionClass($classNamespace);
-
-                    // $class = new $classNamespace;
-                    // if ($class instanceof \panix\engine\data\Widget) {
-                    //     $test[] = $classNamespace;
-                    // }
-
-                    if ($reflect->getParentClass()->getName() == 'panix\\engine\\data\\Widget') {
-                        $edit = false;
-                        $system = $manager->getClass($classNamespace);
-                        if ($system) {
-                            $edit = true;
+                    $files = FileHelper::findFiles($alias, ['only' => ['*Widget.php']]);
+                    $test = [];
+                    foreach ($files as $file) {
+                        $ss = mb_substr($file, mb_strlen(Yii::getAlias($key)), mb_strlen($file));
+                        $classNamespace2 = $key . str_replace(['.php', '/', DIRECTORY_SEPARATOR], ['', '\\', '\\'], $ss);
+                        $classNamespace = '\\' . str_replace(['.php', '/', '@'], ['', '\\', ''], $classNamespace2);
 
 
-                            $result[] = [
-                                'title' => (isset($reflect->getStaticProperties()['widget_name'])) ? $reflect->getStaticProperties()['widget_name'] : $reflect->getShortName(),
-                                'alias' => $classNamespace,
-                                'category' => 'module',
-                                'edit' => ($edit) ? Html::a(Html::icon('edit'), ['update', 'alias' => $classNamespace], ['class' => 'btn btn-sm btn-secondary']) : Yii::$app->formatter->asText(null)
-                            ];
+                        $reflect = new \ReflectionClass($classNamespace);
 
+                        // $class = new $classNamespace;
+                        // if ($class instanceof \panix\engine\data\Widget) {
+                        //     $test[] = $classNamespace;
+                        // }
+
+                        if ($reflect->getParentClass()->getName() == 'panix\\engine\\data\\Widget') {
+                            $edit = false;
+                            $system = $manager->getClass($classNamespace);
+                            if ($system) {
+                                $edit = true;
+
+
+                                $result[] = [
+                                    'title' => (isset($reflect->getStaticProperties()['widget_name'])) ? $reflect->getStaticProperties()['widget_name'] : $reflect->getShortName(),
+                                    'alias' => $classNamespace,
+                                    'category' => 'module',
+                                    'edit' => ($edit) ? Html::a(Html::icon('edit'), ['update', 'alias' => $classNamespace], ['class' => 'btn btn-sm btn-secondary']) : Yii::$app->formatter->asText(null)
+                                ];
+
+                            }
                         }
                     }
                 }
