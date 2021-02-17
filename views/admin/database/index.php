@@ -51,11 +51,12 @@ if (!$db->checkLimit()) {
 
         <?php
         Pjax::begin([
-            'dataProvider' => $data_db,
+            'id'=>'pjax-grid-db',
         ]);
         ?>
         <?=
         GridView::widget([
+                'id'=>'grid-db',
             'tableOptions' => ['class' => 'table table-striped'],
             'dataProvider' => $data_db,
             // 'filterModel' => $searchModel,
@@ -79,9 +80,9 @@ if (!$db->checkLimit()) {
                     'format' => 'raw',
                     'contentOptions' => ['class' => 'text-center'],
                 ],
-                [
+               /* [
                     'class' => 'panix\engine\grid\columns\ActionColumn',
-                    'template' => '{active}',
+                    'template' => '{delete}',
                     'header' => Yii::t('app/default', 'OPTIONS'),
                     'buttons' => [
                         'delete' => function ($url, $model, $key) {
@@ -89,20 +90,9 @@ if (!$db->checkLimit()) {
                             return Html::a('<i class="icon-delete"></i>', $url, [
                                 'title' => Yii::t('app/default', 'DELETE'),
                                 'class' => 'btn btn-sm btn-danger']);
-                        },
-                        "active" => function ($url, $model) {
-
-                            $url = Yii::$app->urlManager->createUrl(['/admin/app/database/delete', 'file' => $model['filename']]);
-
-                            return Html::a('dsadas', $url, [
-                                'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
-                                'title' => Yii::t('app/default', 'Toogle Active'),
-                                'data-pjax' => '#pjax-container-backup',
-                                'data-method' => 'post'
-                            ]);
-                        },
+                        }
                     ]
-                ]
+                ]*/
             ]
         ]);
         ?>
