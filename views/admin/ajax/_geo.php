@@ -38,9 +38,6 @@ use panix\engine\Html;
             </div>
             <div class="col-sm-6">
                 <h5><?= $ip; ?></h5>
-                <?php
-                CMS::dump($geoIp);
-                ?>
                 <?php if ($geoIp->country) { ?>
                     <strong>Страна/город:</strong> <?= $geoIp->country; ?>
                     <?php
