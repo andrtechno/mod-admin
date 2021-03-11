@@ -2,6 +2,7 @@
 
 namespace panix\mod\admin;
 
+use app\web\themes\dashboard\sidebar\BackendNav;
 use Yii;
 use yii\base\Application;
 use yii\base\BootstrapInterface;
@@ -184,7 +185,7 @@ class Module extends WebModule implements BootstrapInterface
 
     public function getAdminSidebar()
     {
-        return (new \panix\mod\admin\widgets\sidebar\BackendNav)->findMenu('system')['items'];
+        return (new BackendNav())->findMenu('system')['items'];
     }
 
 }
