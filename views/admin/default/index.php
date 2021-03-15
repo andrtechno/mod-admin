@@ -42,7 +42,7 @@ use panix\engine\emoji\Emoji;
                                     На сумму: <strong><?= Yii::$app->currency->number_format($order['income']); ?></strong> <?= Yii::$app->currency->active['iso']; ?>
                                 </div>
                                 <div>
-                                    Доход: <strong><?= Yii::$app->currency->number_format($order['income2']); ?></strong> <?= Yii::$app->currency->active['iso']; ?>
+                                    Доход: <strong><?= Yii::$app->currency->number_format($order['income'] - $order['income2']); ?></strong> <?= Yii::$app->currency->active['iso']; ?>
                                 </div>
                             </div>
                         </div>
