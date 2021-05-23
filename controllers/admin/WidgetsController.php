@@ -29,7 +29,7 @@ class WidgetsController extends AdminController
 
 
         foreach (Yii::$app->extensions as $extension) {
-            if (isset($extension['alias'])) {
+            if (isset($extension['alias']) && isset($extension['type'])) {
                 foreach ($extension['alias'] as $key => $alias) {
 
                     $modulesfile = array_filter(glob($alias . DIRECTORY_SEPARATOR . '*' . DIRECTORY_SEPARATOR . '*'), 'is_file');
