@@ -33,7 +33,7 @@ class WidgetsController extends AdminController
                 foreach ($extension['alias'] as $key => $alias) {
 
                     $modulesfile = array_filter(glob($alias . DIRECTORY_SEPARATOR . '*' . DIRECTORY_SEPARATOR . '*'), 'is_file');
-
+//CMS::dump(Yii::$app->extensions);die;
                     $files = FileHelper::findFiles($alias, ['only' => ['*Widget.php']]);
                     $test = [];
                     foreach ($files as $file) {

@@ -10,6 +10,7 @@ use panix\engine\controllers\AdminController;
 use panix\mod\admin\models\Languages;
 use panix\mod\admin\models\search\LanguagesSearch;
 use yii\base\Exception;
+use yii\data\ArrayDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\helpers\FileHelper;
 use yii\helpers\Json;
@@ -50,9 +51,9 @@ class LanguagesController extends AdminController
         // $filePath = Yii::getAlias($path) . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . $file;
 
 
-      //  $ss = Yii::$app->i18n->getMessageSource('admin/*');
+        //  $ss = Yii::$app->i18n->getMessageSource('admin/*');
 
-    //  CMS::dump(Yii::$app->i18n->translations);
+        //  CMS::dump(Yii::$app->i18n->translations);
 //die;
         if (Yii::$app->request->post('TranslateForm')) {
             $trans = [];
@@ -69,7 +70,6 @@ class LanguagesController extends AdminController
             }
             $this->writeContent($path, Yii::$app->request->post('lang'), $file, $trans);
         }
-
 
 
         $defaultPath = Yii::getAlias($path) . DIRECTORY_SEPARATOR . $dl . DIRECTORY_SEPARATOR . $file;
@@ -412,12 +412,13 @@ return ' . var_export($content, true) . ';')
      */
     private function writeContent($path, $lang, $file, $array)
     {
-
+        $date = CMS::date(time());
         $array = VarDumper::export($array);
         $content = <<<EOD
 <?php
 /**
  * Message translations. (auto generation translate)
+ * Date update $date
  * 
  * @author PIXELION CMS development team <info@pixelion.com.ua>
  * @link https://pixelion.com.ua PIXELION CMS
@@ -432,5 +433,130 @@ EOD;
             return false;
         }
         return true;
+    }
+
+
+    public function actionEditLocale()
+    {
+        $i18n = Yii::$app->i18n;
+        $data = [];
+        $res = [];
+        $languages = Yii::$app->languageManager->getLanguages();
+        $fileGet = Yii::$app->request->get('file');
+        if (Yii::$app->request->post('form')) {
+            foreach (Yii::$app->request->post('form') as $lang => $data) {
+                $basePath = $i18n->translations[Yii::$app->request->get('key')]['basePath'];
+                //  print_r($basePath);die;
+                $this->writeContent($basePath, $lang, $fileGet, $data);
+                // CMS::dump($data);die;
+                //  echo 'save';
+
+            }
+            Yii::$app->session->setFlash('success', 'OK');
+            return $this->refresh();
+        }
+
+        if (Yii::$app->request->get('key') && $fileGet) {
+            $filesMap = $i18n->translations[Yii::$app->request->get('key')];
+
+
+            $ll = [];
+            $content = [];
+            $tabs = [];
+            foreach ($languages as $lang) {
+                $tabs[$lang->code] = ['name' => $lang->name, 'slug' => $lang->slug];
+                $path = Yii::getAlias("{$filesMap['basePath']}/{$lang->code}/$fileGet");
+                if (file_exists($path)) {
+                    $content[$lang->code] = require_once($path);
+                    $ll[$lang->code] = $content[$lang->code];
+                } else {
+                    $ll[$lang->code] = $content[Yii::$app->language]; //load default language values
+                }
+
+
+            }
+
+
+            $gg = [];
+            $default = $ll[Yii::$app->language];
+//CMS::dump($ll);die;
+
+            foreach ($ll as $k => $l) {
+                // if (is_array($l)) {
+                foreach ($default as $kk => $ss) {
+                    //  CMS::dump($default);die;
+                    $res[$kk][$k] = '';
+                    // $res[$key][$k]
+                    // $res[$key][$k] = $p;
+                }
+                foreach ($l as $key => $p) {
+                    if (isset($res[$key][$k]))
+                        $res[$key][$k] = $p;
+                }
+                // }
+            }
+
+            $this->pageName = 'SS';
+            $this->view->params['breadcrumbs'][] = [
+                'label' => Yii::t('admin/default', 'LANGUAGES'),
+                'url' => ['/admin/app/languages']
+            ];
+            $this->view->params['breadcrumbs'][] = [
+                'label' => Yii::t('admin/default', 'LANGUAGES1'),
+                'url' => ['/admin/app/languages/edit-locale']
+            ];
+            $this->view->params['breadcrumbs'][] = $this->pageName;
+            //  CMS::dump($res);  die;
+            return $this->render('edit-locale-open-file', ['res' => $res, 'languages' => $languages, 'tabs' => $tabs]);
+
+        } elseif (Yii::$app->request->get('key')) {
+            $filesMap = $i18n->translations[Yii::$app->request->get('key')]['fileMap'];
+
+            foreach ($filesMap as $key => $file) {
+                $data[] = [
+                    'key' => $key,
+                    'url' => Html::a(Html::icon('edit'), ['/admin/app/languages/edit-locale', 'key' => Yii::$app->request->get('key'), 'file' => $file], ['class' => 'btn btn-sm btn-secondary'])
+                ];
+            }
+            $provider = new ArrayDataProvider([
+                'allModels' => $data,
+                'pagination' => false,
+            ]);
+            $this->pageName = 'SS2';
+            $this->view->params['breadcrumbs'][] = [
+                'label' => Yii::t('admin/default', 'LANGUAGES'),
+                'url' => ['/admin/app/languages']
+            ];
+
+            $this->view->params['breadcrumbs'][] = $this->pageName;
+            return $this->render('edit-locale-open', ['provider' => $provider]);
+        }
+        $r = [];
+
+        $data = [];
+        foreach ($i18n->translations as $key => $translation) {
+            if (isset($i18n->translations[$key])) {
+                $basePath = (isset($i18n->translations[$key]->basePath)) ? $i18n->translations[$key]->basePath : $i18n->translations[$key]['basePath'];
+                $r['path'][] = $basePath;
+                $r['s'][] = $key;
+            }
+            $data[] = [
+                //'filename' => $file,
+                //'filesize' => CMS::fileSize(filesize(Yii::getAlias($db->backupPath) . DIRECTORY_SEPARATOR . $file)),
+                'key' => $key,
+                'url' => Html::a(Html::icon('edit'), ['/admin/app/languages/edit-locale', 'key' => $key], ['class' => 'btn btn-sm btn-secondary'])
+            ];
+            //  echo $key.'<br>   ';
+        }
+        $provider = new ArrayDataProvider([
+            'allModels' => $data,
+            'pagination' => false,
+        ]);
+        // echo file_get_contents(Yii::getAlias($file));
+        return $this->render('edit-locale', [
+            'provider' => $provider,
+            'r' => $r
+        ]);
+        return $this->render('edit-locale', ['r' => $r]);
     }
 }
