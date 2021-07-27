@@ -12,12 +12,13 @@ use panix\engine\emoji\Emoji;
     <?php if (Yii::$app->hasModule('cart')) { ?>
         <div class="col-md-6 col-lg-3 col-sm-6">
             <?php
+            $modelOrder = Yii::$app->getModule("cart")->model("Order");
             $year = date('Y');
             $month = date('m');
             $monthDaysCount = cal_days_in_month(CAL_GREGORIAN, $month, $year);
-            $query = (new \yii\db\Query())->from(\panix\mod\cart\models\Order::tableName())
+            $query = (new \yii\db\Query())->from($modelOrder::tableName())
                 //->where(['between', 'created_at', strtotime("{$year}-{$month}-01 00:00:00"), strtotime("{$year}-{$month}-{$monthDaysCount} 23:59:59")])
-                ->andWhere(['status_id' => \panix\mod\cart\models\Order::STATUS_NEW])
+                ->andWhere(['status_id' => $modelOrder::STATUS_NEW])
                 ->select([
                     'SUM(total_price) as income, SUM(total_price_purchase) as income2',
                 ]);
