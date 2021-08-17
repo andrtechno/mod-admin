@@ -540,14 +540,14 @@ EOD;
                 // }
             }
 
-            $this->pageName = 'SS';
+            $this->pageName = ucfirst(basename(Yii::$app->request->get('file'),'.php'));
             $this->view->params['breadcrumbs'][] = [
                 'label' => Yii::t('admin/default', 'LANGUAGES'),
                 'url' => ['/admin/app/languages']
             ];
             $this->view->params['breadcrumbs'][] = [
-                'label' => Yii::t('admin/default', 'LANGUAGES1'),
-                'url' => ['/admin/app/languages/edit-locale']
+                'label' => Yii::$app->request->get('key'),
+                'url' => ['/admin/app/languages/edit-locale','key'=>Yii::$app->request->get('key')]
             ];
             $this->view->params['breadcrumbs'][] = $this->pageName;
             //  CMS::dump($res);  die;
@@ -567,7 +567,7 @@ EOD;
                 'allModels' => $data,
                 'pagination' => false,
             ]);
-            $this->pageName = 'SS2';
+            $this->pageName = Yii::$app->request->get('key');
             $this->view->params['breadcrumbs'][] = [
                 'label' => Yii::t('admin/default', 'LANGUAGES'),
                 'url' => ['/admin/app/languages']
