@@ -16,67 +16,72 @@ $form = ActiveForm::begin([
     'options' => ['class' => 'form-horizontal'],
 ])
 ?>
-<div class="card">
-    <div class="card-header">
-        <h5><?= $this->context->pageName; ?></h5>
-    </div>
-    <div class="card-body">
-        <table class="table table-striped">
-            <tr>
-                <th width="30%">KEY</th>
-                <th width="70%">val</th>
-            </tr>
-            <?php foreach ($res as $name => $item) { ?>
+    <div class="card">
+        <div class="card-header">
+            <h5><?= $this->context->pageName; ?></h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
                 <tr>
-                    <td>
-                        <?php
-                        //\panix\engine\CMS::dump($item);
-                        ?>
-                        <?= $name; ?>
-                    </td>
-                    <td>
-                        <?php foreach ($item as $language => $value) { ?>
-
-                        <?php } ?>
-                        <ul class="nav nav-tabs" role="tablist">
-                            <?php foreach ($item as $language => $value) { ?>
-                                <?php $active = ($language == Yii::$app->language) ? 'active' : ''; ?>
-                                <li class="nav-item" role="presentation">
-                                    <a class="nav-link <?= $active ?>" id="home-tab" data-toggle="tab"
-                                       href="#t<?= md5($name . $language); ?>" role="tab"
-                                       aria-controls="t<?= md5($name . $language); ?>"
-                                       aria-selected="true">
-
-                                        <?php echo Html::img("/uploads/language/{$tabs[$language]['slug']}.png"); ?>
-                                        <span class="d-none d-md-inline-block"><?php echo $tabs[$language]['name']; ?></span>
-                                    </a>
-                                </li>
-                            <?php } ?>
-                        </ul>
-                        <div class="tab-content" id="myTabContent">
-                            <?php foreach ($item as $language => $value) { ?>
-                                <?php $active = ($language == Yii::$app->language) ? 'show active' : ''; ?>
-                                <div class="tab-pane fade <?= $active ?>" id="t<?= md5($name . $language); ?>"
-                                     role="tabpanel"
-                                     aria-labelledby="t<?= md5($name . $language); ?>-tab">
-
-                                    <?= \yii\helpers\Html::textarea("form[{$language}][$name]", $value, ['class' => 'form-control','id'=>'textarea-'.md5($name . $language)]); ?>
-<a href="#" data-textarea="textarea-<?= md5($name . $language);?>" data-lang="<?= $language;?>" class="test">Визуальный редактор</a>
-                                </div>
-                            <?php } ?>
-                        </div>
-                    </td>
-
+                    <th width="30%">Ключ</th>
+                    <th width="70%">Значение</th>
                 </tr>
-            <?php } ?>
-        </table>
-    </div>
-    <div class="card-footer text-center">
-        <?= Html::submitButton(Yii::t('app/default', 'SAVE'), ['class' => 'btn btn-success']) ?>
-    </div>
+                <?php foreach ($res as $name => $item) { ?>
+                    <tr>
+                        <td>
+                            <?php
+                            //\panix\engine\CMS::dump($item);
+                            ?>
+                            <?= $name; ?>
+                        </td>
+                        <td>
+                            <?php foreach ($item as $language => $value) { ?>
+
+                            <?php } ?>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <?php foreach ($item as $language => $value) { ?>
+                                    <?php $active = ($language == Yii::$app->language) ? 'active' : ''; ?>
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link <?= $active ?>" id="home-tab" data-toggle="tab"
+                                           href="#t<?= md5($name . $language); ?>" role="tab"
+                                           aria-controls="t<?= md5($name . $language); ?>"
+                                           aria-selected="true">
+
+                                            <?php echo Html::img("/uploads/language/{$tabs[$language]['slug']}.png"); ?>
+                                            <span class="d-none d-md-inline-block"><?php echo $tabs[$language]['name']; ?></span>
+                                        </a>
+                                    </li>
+                                <?php } ?>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <?php foreach ($item as $language => $value) { ?>
+                                    <?php $active = ($language == Yii::$app->language) ? 'show active' : ''; ?>
+                                    <div class="tab-pane fade <?= $active ?>" id="t<?= md5($name . $language); ?>"
+                                         role="tabpanel"
+                                         aria-labelledby="t<?= md5($name . $language); ?>-tab">
+
+                                        <?= \yii\helpers\Html::textarea("form[{$language}][$name]", $value, ['class' => 'form-control', 'id' => 'textarea-' . md5($name . $language)]); ?>
+
+                                        <?= Html::button('Визуальный редактор', [
+                                            'data-textarea' => 'textarea-' . md5($name . $language),
+                                            'data-lang' => $language,
+                                            'class' => 'btn btn-sm btn-link visual-editor'
+                                        ]); ?>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                        </td>
+
+                    </tr>
+                <?php } ?>
+            </table>
+        </div>
+        <div class="card-footer text-center">
+            <?= Html::submitButton(Yii::t('app/default', 'SAVE'), ['class' => 'btn btn-success']) ?>
+        </div>
 
 
-</div>
+    </div>
 <?php ActiveForm::end() ?>
 
 <?php
@@ -88,7 +93,7 @@ $this->registerJs("
 
 
         
-$('.test').on('click',function(){
+$('.visual-editor').on('click',function(){
 var selector = $(this).data('textarea');
 var lang = $(this).data('lang');
 

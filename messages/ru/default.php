@@ -36,4 +36,5 @@ return [
     'DESKTOP' => 'Рабочий стол',
     'DESKTOP_CREATE' => 'Добавить рабочий стол',
     'DESKTOP_CREATE_WIDGET' => 'Добавить виджет',
+    'EDIT_LOCALE' => 'Редактирование файлов локалей'
 ];

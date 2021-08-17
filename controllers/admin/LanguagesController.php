@@ -29,6 +29,10 @@ class LanguagesController extends AdminController
                 'class' => 'panix\engine\actions\SwitchAction',
                 'modelClass' => LanguagesSearch::class,
             ],
+            'sortable' => [
+                'class' => 'panix\engine\grid\sortable\Action',
+                'modelClass' => Languages::class,
+            ],
         ];
     }
 
@@ -112,9 +116,40 @@ class LanguagesController extends AdminController
         $searchModel = new LanguagesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
+
+
+        $i18n = Yii::$app->i18n;
+
+        $r = [];
+
+        $data = [];
+        foreach ($i18n->translations as $key => $translation) {
+            if (isset($i18n->translations[$key])) {
+                $basePath = (isset($i18n->translations[$key]->basePath)) ? $i18n->translations[$key]->basePath : $i18n->translations[$key]['basePath'];
+                $r['path'][] = $basePath;
+                $r['s'][] = $key;
+            }
+            $data[] = [
+                //'filename' => $file,
+                //'filesize' => CMS::fileSize(filesize(Yii::getAlias($db->backupPath) . DIRECTORY_SEPARATOR . $file)),
+                'key' => $key,
+                'url' => Html::a(Html::icon('edit'), ['/admin/app/languages/edit-locale', 'key' => $key], ['class' => 'btn btn-sm btn-secondary'])
+            ];
+            //  echo $key.'<br>   ';
+        }
+        $provider = new ArrayDataProvider([
+            'allModels' => $data,
+            'pagination' => false,
+        ]);
+
+
+
+
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
+            'provider' => $provider,
+            'r' => $r
         ]);
     }
 
@@ -438,6 +473,7 @@ EOD;
 
     public function actionEditLocale()
     {
+        $this->pageName = 'Редактирование локали';
         $i18n = Yii::$app->i18n;
         $data = [];
         $res = [];
@@ -457,7 +493,9 @@ EOD;
         }
 
         if (Yii::$app->request->get('key') && $fileGet) {
-            $filesMap = $i18n->translations[Yii::$app->request->get('key')];
+            $t = $i18n->translations[Yii::$app->request->get('key')];
+            $basePath = (is_object($t)) ? $t->basePath : $t['basePath'];
+            //$filesMap = $i18n->translations[Yii::$app->request->get('key')];
 
 
             $ll = [];
@@ -465,9 +503,10 @@ EOD;
             $tabs = [];
             foreach ($languages as $lang) {
                 $tabs[$lang->code] = ['name' => $lang->name, 'slug' => $lang->slug];
-                $path = Yii::getAlias("{$filesMap['basePath']}/{$lang->code}/$fileGet");
+                $path = Yii::getAlias("{$basePath}/{$lang->code}/$fileGet");
+
                 if (file_exists($path)) {
-                    $content[$lang->code] = require_once($path);
+                    $content[$lang->code] = require($path);
                     $ll[$lang->code] = $content[$lang->code];
                 } else {
                     $ll[$lang->code] = $content[Yii::$app->language]; //load default language values
@@ -479,20 +518,25 @@ EOD;
 
             $gg = [];
             $default = $ll[Yii::$app->language];
-//CMS::dump($ll);die;
+
 
             foreach ($ll as $k => $l) {
                 // if (is_array($l)) {
-                foreach ($default as $kk => $ss) {
-                    //  CMS::dump($default);die;
-                    $res[$kk][$k] = '';
-                    // $res[$key][$k]
-                    // $res[$key][$k] = $p;
-                }
-                foreach ($l as $key => $p) {
-                    if (isset($res[$key][$k]))
-                        $res[$key][$k] = $p;
-                }
+               // if (is_array($default)) {
+                    foreach ($default as $kk => $ss) {
+                        //  CMS::dump($default);die;
+                        $res[$kk][$k] = '';
+                        // $res[$key][$k]
+                        // $res[$key][$k] = $p;
+                    }
+                //}
+               // if (is_array($l)) {
+
+                    foreach ($l as $key => $p) {
+                        if (isset($res[$key][$k]))
+                            $res[$key][$k] = $p;
+                    }
+               // }
                 // }
             }
 
@@ -510,7 +554,8 @@ EOD;
             return $this->render('edit-locale-open-file', ['res' => $res, 'languages' => $languages, 'tabs' => $tabs]);
 
         } elseif (Yii::$app->request->get('key')) {
-            $filesMap = $i18n->translations[Yii::$app->request->get('key')]['fileMap'];
+            $t = $i18n->translations[Yii::$app->request->get('key')];
+            $filesMap = (is_object($t)) ? $t->fileMap : $t['fileMap'];
 
             foreach ($filesMap as $key => $file) {
                 $data[] = [
@@ -558,5 +603,18 @@ EOD;
             'r' => $r
         ]);
         return $this->render('edit-locale', ['r' => $r]);
+    }
+
+
+    public function getAddonsMenu()
+    {
+        return [
+            [
+                'label' => Yii::t('admin/default', 'EDIT_LOCALE'),
+                'url' => ['/admin/app/languages/edit-locale'],
+                'visible' => true,
+
+            ],
+        ];
     }
 }
