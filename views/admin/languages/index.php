@@ -42,40 +42,4 @@ Pjax::end();
 ?>
 
 
-        <?=
-        GridView::widget([
-            'id'=>'grid-db',
-            'tableOptions' => ['class' => 'table table-striped'],
-            'dataProvider' => $provider,
-            'layoutOptions' => ['title' => Yii::t('admin/default', 'EDIT_LOCALE')],
-            //'layoutOptions' => ['title' => $this->context->pageName],
-            'columns' => [
-                [
-                    'attribute' => 'key',
-                    'header' => Yii::t('app/default', 'Группа'),
-                    'format' => 'raw',
-                    'contentOptions' => ['class' => 'text-left'],
-                ],
-                [
-                    'attribute' => 'url',
-                    'header' => Yii::t('app/default', 'OPTIONS'),
-                    'format' => 'raw',
-                    'contentOptions' => ['class' => 'text-center'],
-                ],
-                /* [
-                     'class' => 'panix\engine\grid\columns\ActionColumn',
-                     'template' => '{delete}',
-                     'header' => Yii::t('app/default', 'OPTIONS'),
-                     'buttons' => [
-                         'delete' => function ($url, $model, $key) {
-
-                             return Html::a('<i class="icon-delete"></i>', $url, [
-                                 'title' => Yii::t('app/default', 'DELETE'),
-                                 'class' => 'btn btn-sm btn-danger']);
-                         }
-                     ]
-                 ]*/
-            ]
-        ]);
-        ?>
 
