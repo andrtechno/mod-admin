@@ -477,6 +477,11 @@ EOD;
         $i18n = Yii::$app->i18n;
         $data = [];
         $res = [];
+        $this->view->params['breadcrumbs'][] = [
+            'label' => Yii::t('admin/default', 'LANGUAGES'),
+            'url' => ['/admin/app/languages']
+        ];
+
         $languages = Yii::$app->languageManager->getLanguages();
         $fileGet = Yii::$app->request->get('file');
         if (Yii::$app->request->post('form')) {
@@ -540,15 +545,17 @@ EOD;
                 // }
             }
 
-            $this->pageName = ucfirst(basename(Yii::$app->request->get('file'),'.php'));
+
             $this->view->params['breadcrumbs'][] = [
-                'label' => Yii::t('admin/default', 'LANGUAGES'),
-                'url' => ['/admin/app/languages']
+                'label' => $this->pageName,
+                'url' => ['/admin/app/languages/edit-locale']
             ];
+
             $this->view->params['breadcrumbs'][] = [
                 'label' => Yii::$app->request->get('key'),
                 'url' => ['/admin/app/languages/edit-locale','key'=>Yii::$app->request->get('key')]
             ];
+            $this->pageName = ucfirst(basename(Yii::$app->request->get('file'),'.php'));
             $this->view->params['breadcrumbs'][] = $this->pageName;
             //  CMS::dump($res);  die;
             return $this->render('edit-locale-open-file', ['res' => $res, 'languages' => $languages, 'tabs' => $tabs]);
@@ -567,17 +574,17 @@ EOD;
                 'allModels' => $data,
                 'pagination' => false,
             ]);
-            $this->pageName = Yii::$app->request->get('key');
-            $this->view->params['breadcrumbs'][] = [
-                'label' => Yii::t('admin/default', 'LANGUAGES'),
-                'url' => ['/admin/app/languages']
-            ];
 
+            $this->view->params['breadcrumbs'][] = [
+                'label' => $this->pageName,
+                'url' => ['/admin/app/languages/edit-locale']
+            ];
+            $this->pageName = Yii::$app->request->get('key');
             $this->view->params['breadcrumbs'][] = $this->pageName;
             return $this->render('edit-locale-open', ['provider' => $provider]);
         }
         $r = [];
-
+        $this->view->params['breadcrumbs'][] = $this->pageName;
         $data = [];
         foreach ($i18n->translations as $key => $translation) {
             if (isset($i18n->translations[$key])) {
