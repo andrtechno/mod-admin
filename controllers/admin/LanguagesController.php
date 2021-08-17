@@ -14,6 +14,7 @@ use yii\data\ArrayDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\helpers\FileHelper;
 use yii\helpers\Json;
+use yii\helpers\Url;
 use yii\helpers\VarDumper;
 use yii\web\Response;
 
@@ -117,7 +118,6 @@ class LanguagesController extends AdminController
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
 
-
         $i18n = Yii::$app->i18n;
 
         $r = [];
@@ -143,13 +143,11 @@ class LanguagesController extends AdminController
         ]);
 
 
-
-
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
             'provider' => $provider,
-            'r' => $r
+          //  'r' => $r
         ]);
     }
 
@@ -527,21 +525,21 @@ EOD;
 
             foreach ($ll as $k => $l) {
                 // if (is_array($l)) {
-               // if (is_array($default)) {
-                    foreach ($default as $kk => $ss) {
-                        //  CMS::dump($default);die;
-                        $res[$kk][$k] = '';
-                        // $res[$key][$k]
-                        // $res[$key][$k] = $p;
-                    }
+                // if (is_array($default)) {
+                foreach ($default as $kk => $ss) {
+                    //  CMS::dump($default);die;
+                    $res[$kk][$k] = '';
+                    // $res[$key][$k]
+                    // $res[$key][$k] = $p;
+                }
                 //}
-               // if (is_array($l)) {
+                // if (is_array($l)) {
 
-                    foreach ($l as $key => $p) {
-                        if (isset($res[$key][$k]))
-                            $res[$key][$k] = $p;
-                    }
-               // }
+                foreach ($l as $key => $p) {
+                    if (isset($res[$key][$k]))
+                        $res[$key][$k] = $p;
+                }
+                // }
                 // }
             }
 
@@ -553,9 +551,9 @@ EOD;
 
             $this->view->params['breadcrumbs'][] = [
                 'label' => Yii::$app->request->get('key'),
-                'url' => ['/admin/app/languages/edit-locale','key'=>Yii::$app->request->get('key')]
+                'url' => ['/admin/app/languages/edit-locale', 'key' => Yii::$app->request->get('key')]
             ];
-            $this->pageName = ucfirst(basename(Yii::$app->request->get('file'),'.php'));
+            $this->pageName = ucfirst(basename(Yii::$app->request->get('file'), '.php'));
             $this->view->params['breadcrumbs'][] = $this->pageName;
             //  CMS::dump($res);  die;
             return $this->render('edit-locale-open-file', ['res' => $res, 'languages' => $languages, 'tabs' => $tabs]);
@@ -587,19 +585,24 @@ EOD;
         $this->view->params['breadcrumbs'][] = $this->pageName;
         $data = [];
         foreach ($i18n->translations as $key => $translation) {
-            if (isset($i18n->translations[$key])) {
-                $basePath = (isset($i18n->translations[$key]->basePath)) ? $i18n->translations[$key]->basePath : $i18n->translations[$key]['basePath'];
-                $r['path'][] = $basePath;
-                $r['s'][] = $key;
+            $filesMap = (is_object($translation)) ? $translation->fileMap : $translation['fileMap'];
+
+            // --- /^[\w]+(\/\*)?$/ for slash
+            if (!in_array($key, ['yii']) && preg_match('/^[\w]+(\*)?$/', $key)) { //!preg_match('/[a-z]\/[a-z]/', $key) //
+                if (isset($i18n->translations[$key])) {
+                    $basePath = (isset($i18n->translations[$key]->basePath)) ? $i18n->translations[$key]->basePath : $i18n->translations[$key]['basePath'];
+                    $r['path'][] = $basePath;
+                    $r['s'][] = $key;
+                }
+               // print_r($filesMap);die;
+                $data[] = [
+                    'key' => $key,
+                    'url' => Url::to(['/admin/app/languages/edit-locale', 'key' => $key]),
+                    'items'=>$filesMap
+                ];
             }
-            $data[] = [
-                //'filename' => $file,
-                //'filesize' => CMS::fileSize(filesize(Yii::getAlias($db->backupPath) . DIRECTORY_SEPARATOR . $file)),
-                'key' => $key,
-                'url' => Html::a(Html::icon('edit'), ['/admin/app/languages/edit-locale', 'key' => $key], ['class' => 'btn btn-sm btn-secondary'])
-            ];
-            //  echo $key.'<br>   ';
         }
+        sort($data);
         $provider = new ArrayDataProvider([
             'allModels' => $data,
             'pagination' => false,
