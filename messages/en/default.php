@@ -10,6 +10,7 @@ return [
     'HELP' => 'Help and Support',
     'TEMPLATE' => 'Templates',
     'DATABASE' => 'Database',
+    'BLOCKS' => 'Blocks',
     'LOGS' => 'LOGS',
     'LOG_TYPE' => 'Type',
     'LOG_SESSION' => 'Session',

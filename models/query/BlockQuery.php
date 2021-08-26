@@ -2,33 +2,17 @@
 
 namespace panix\mod\admin\models\query;
 
+use panix\engine\traits\query\TranslateQueryTrait;
+use yii\db\ActiveQuery;
+use panix\engine\traits\query\DefaultQueryTrait;
+
 /**
  * This is the ActiveQuery class for [[Block]].
  *
  * @see Block
  */
-class BlockQuery extends \yii\db\ActiveQuery
+class BlockQuery extends ActiveQuery
 {
-    public function active()
-    {
-        return $this->andWhere('[[active]]=1');
-    }
+    use DefaultQueryTrait, TranslateQueryTrait;
 
-    /**
-     * @inheritdoc
-     * @return Block[]|array
-     */
-    public function all($db = null)
-    {
-        return parent::all($db);
-    }
-
-    /**
-     * @inheritdoc
-     * @return Block|array|null
-     */
-    public function one($db = null)
-    {
-        return parent::one($db);
-    }
 }

@@ -135,6 +135,12 @@ class Module extends WebModule implements BootstrapInterface
                         'visible' => Yii::$app->user->can('/admin/admin/widgets/index') || Yii::$app->user->can('/admin/admin/widgets/*')
                     ],
                     [
+                        'label' => Yii::t('admin/default', 'BLOCKS'),
+                        'url' => ['/admin/app/blocks'],
+                        'icon' => 'blocks',
+                        'visible' => Yii::$app->user->can('/admin/admin/blocks/index') || Yii::$app->user->can('/admin/admin/blocks/*')
+                    ],
+                    [
                         'label' => Yii::t('admin/default', 'Mails tpl'),
                         'url' => ['/admin/app/mail-template'],
                         'icon' => 'envelope',
