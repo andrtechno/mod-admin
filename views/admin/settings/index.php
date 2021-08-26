@@ -33,11 +33,6 @@ use panix\engine\bootstrap\ActiveForm;
                     'headerOptions' => [],
                 ],
                 [
-                    'label' => 'Водяной знак',
-                    'content' => $this->render('_images', ['form' => $form, 'model' => $model]),
-                    'headerOptions' => [],
-                ],
-                [
                     'label' => 'Почта',
                     'content' => $this->render('_mailer', ['form' => $form, 'model' => $model]),
                     'headerOptions' => [],
