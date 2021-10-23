@@ -10,9 +10,9 @@ use panix\engine\Html;
  */
 
 
-//echo \panix\engine\CMS::dump($tabs);die;
+
 $form = ActiveForm::begin([
-    'id' => 'login-form',
+    'id' => 'locale-form',
     'options' => ['class' => 'form-horizontal'],
 ])
 ?>
@@ -21,6 +21,14 @@ $form = ActiveForm::begin([
             <h5><?= $this->context->pageName; ?></h5>
         </div>
         <div class="card-body">
+            <?php
+            if ($noFindLanguages) { ?>
+                <div class="alert alert-warning">
+                    Внимаение! Не найден язык <strong>"<?= implode(', ', $noFindLanguages); ?>"</strong>
+                </div>
+            <?php }
+
+            ?>
             <table class="table table-striped">
                 <tr>
                     <th width="30%">Ключ</th>
@@ -97,21 +105,28 @@ $('.visual-editor').on('click',function(){
 var selector = $(this).data('textarea');
 var lang = $(this).data('lang');
 
-tinymce.init({
-    selector:'#'+selector,
-   // language:'ru',
-    branding:false,
-    statusbar:false,
-    forced_root_block:'',
-    menubar:false,
-   plugins: [
-            'textcolor autoresize image template advlist autolink lists link charmap print preview anchor',
-            'searchreplace visualblocks code fullscreen',
-            'insertdatetime table contextmenu paste'
-        ],
-    toolbar:'forecolor backcolor | undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link |'
-});
+
+
+    tinymce.init({
+        selector:'#'+selector,
+       // language:'ru',
+        branding:false,
+        statusbar:false,
+        forced_root_block:'',
+        menubar:false,
+        plugins: [
+                'textcolor autoresize image template advlist autolink lists link charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime table contextmenu paste'
+            ],
+        toolbar:'forecolor backcolor | undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link |'
+    });
+
 //tinymce.EditorManager.execCommand('mceAddEditor', true, \"here_place_editor_class or ID\");
+//console.log(tinymce.EditorManager.get('#'+selector));
+//console.log(tinymce.get('#'+selector));
+ // tinymce.execCommand('mceRemoveControl', false, '#'+selector);
+//tinymce.EditorManager.remove('#'+selector)
 });
 
 ");

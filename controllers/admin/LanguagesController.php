@@ -14,7 +14,6 @@ use yii\data\ArrayDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\helpers\FileHelper;
 use yii\helpers\Json;
-use yii\helpers\Url;
 use yii\helpers\VarDumper;
 use yii\web\Response;
 
@@ -123,20 +122,24 @@ class LanguagesController extends AdminController
         $r = [];
 
         $data = [];
+     //   CMS::dump($i18n->translations);die;
         foreach ($i18n->translations as $key => $translation) {
-            if (isset($i18n->translations[$key])) {
-                $basePath = (isset($i18n->translations[$key]->basePath)) ? $i18n->translations[$key]->basePath : $i18n->translations[$key]['basePath'];
-                $r['path'][] = $basePath;
-                $r['s'][] = $key;
-            }
+           // if (isset($i18n->translations[$key])) {
+           //     $basePath = (isset($i18n->translations[$key]->basePath)) ? $i18n->translations[$key]->basePath : $i18n->translations[$key]['basePath'];
+           //     $r['path'][] = $basePath;
+           //     $r['s'][] = $key;
+           // }
+           // if(!($i18n->translations[$key] instanceof yii\i18n\PhpMessageSource)){
             $data[] = [
                 //'filename' => $file,
                 //'filesize' => CMS::fileSize(filesize(Yii::getAlias($db->backupPath) . DIRECTORY_SEPARATOR . $file)),
                 'key' => $key,
                 'url' => Html::a(Html::icon('edit'), ['/admin/app/languages/edit-locale', 'key' => $key], ['class' => 'btn btn-sm btn-secondary'])
             ];
+           // }
             //  echo $key.'<br>   ';
         }
+      //  CMS::dump($data);die;
         $provider = new ArrayDataProvider([
             'allModels' => $data,
             'pagination' => false,
@@ -147,7 +150,7 @@ class LanguagesController extends AdminController
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
             'provider' => $provider,
-          //  'r' => $r
+           // 'r' => $r
         ]);
     }
 
@@ -475,11 +478,6 @@ EOD;
         $i18n = Yii::$app->i18n;
         $data = [];
         $res = [];
-        $this->view->params['breadcrumbs'][] = [
-            'label' => Yii::t('admin/default', 'LANGUAGES'),
-            'url' => ['/admin/app/languages']
-        ];
-
         $languages = Yii::$app->languageManager->getLanguages();
         $fileGet = Yii::$app->request->get('file');
         if (Yii::$app->request->post('form')) {
@@ -494,7 +492,7 @@ EOD;
             Yii::$app->session->setFlash('success', 'OK');
             return $this->refresh();
         }
-
+        $noFindLanguages = [];
         if (Yii::$app->request->get('key') && $fileGet) {
             $t = $i18n->translations[Yii::$app->request->get('key')];
             $basePath = (is_object($t)) ? $t->basePath : $t['basePath'];
@@ -504,16 +502,32 @@ EOD;
             $ll = [];
             $content = [];
             $tabs = [];
+
             foreach ($languages as $lang) {
                 $tabs[$lang->code] = ['name' => $lang->name, 'slug' => $lang->slug];
                 $path = Yii::getAlias("{$basePath}/{$lang->code}/$fileGet");
+
 
                 if (file_exists($path)) {
                     $content[$lang->code] = require($path);
                     $ll[$lang->code] = $content[$lang->code];
                 } else {
-                    $ll[$lang->code] = $content[Yii::$app->language]; //load default language values
+
+                    if(!file_exists(Yii::getAlias("{$basePath}/{$lang->code}"))){
+                      //  FileHelper::createDirectory(Yii::getAlias("{$basePath}/{$lang->code}"));
+                      //  FileHelper::copyDirectory();
+                    }
+
+                    //echo Yii::getAlias($basePath);die;
+
+                    if (isset($content[Yii::$app->language])) {
+                        $ll[$lang->code] = $content[Yii::$app->language]; //load default language values
+                    } else {
+                        $noFindLanguages[] = $lang->code;
+                    }
                 }
+
+
 
 
             }
@@ -543,20 +557,18 @@ EOD;
                 // }
             }
 
-
+            $this->pageName = 'Перевод файла ' . $fileGet;
             $this->view->params['breadcrumbs'][] = [
-                'label' => $this->pageName,
-                'url' => ['/admin/app/languages/edit-locale']
+                'label' => Yii::t('admin/default', 'LANGUAGES'),
+                'url' => ['/admin/app/languages']
             ];
-
             $this->view->params['breadcrumbs'][] = [
                 'label' => Yii::$app->request->get('key'),
                 'url' => ['/admin/app/languages/edit-locale', 'key' => Yii::$app->request->get('key')]
             ];
-            $this->pageName = ucfirst(basename(Yii::$app->request->get('file'), '.php'));
             $this->view->params['breadcrumbs'][] = $this->pageName;
             //  CMS::dump($res);  die;
-            return $this->render('edit-locale-open-file', ['res' => $res, 'languages' => $languages, 'tabs' => $tabs]);
+            return $this->render('edit-locale-open-file', ['res' => $res, 'languages' => $languages, 'tabs' => $tabs, 'noFindLanguages' => $noFindLanguages]);
 
         } elseif (Yii::$app->request->get('key')) {
             $t = $i18n->translations[Yii::$app->request->get('key')];
@@ -572,37 +584,32 @@ EOD;
                 'allModels' => $data,
                 'pagination' => false,
             ]);
-
-            $this->view->params['breadcrumbs'][] = [
-                'label' => $this->pageName,
-                'url' => ['/admin/app/languages/edit-locale']
-            ];
             $this->pageName = Yii::$app->request->get('key');
+            $this->view->params['breadcrumbs'][] = [
+                'label' => Yii::t('admin/default', 'LANGUAGES'),
+                'url' => ['/admin/app/languages']
+            ];
+
             $this->view->params['breadcrumbs'][] = $this->pageName;
             return $this->render('edit-locale-open', ['provider' => $provider]);
         }
         $r = [];
-        $this->view->params['breadcrumbs'][] = $this->pageName;
+
         $data = [];
         foreach ($i18n->translations as $key => $translation) {
-            $filesMap = (is_object($translation)) ? $translation->fileMap : $translation['fileMap'];
-
-            // --- /^[\w]+(\/\*)?$/ for slash
-            if (!in_array($key, ['yii']) && preg_match('/^[\w]+(\*)?$/', $key)) { //!preg_match('/[a-z]\/[a-z]/', $key) //
-                if (isset($i18n->translations[$key])) {
-                    $basePath = (isset($i18n->translations[$key]->basePath)) ? $i18n->translations[$key]->basePath : $i18n->translations[$key]['basePath'];
-                    $r['path'][] = $basePath;
-                    $r['s'][] = $key;
-                }
-               // print_r($filesMap);die;
-                $data[] = [
-                    'key' => $key,
-                    'url' => Url::to(['/admin/app/languages/edit-locale', 'key' => $key]),
-                    'items'=>$filesMap
-                ];
+            if (isset($i18n->translations[$key])) {
+                $basePath = (isset($i18n->translations[$key]->basePath)) ? $i18n->translations[$key]->basePath : $i18n->translations[$key]['basePath'];
+                $r['path'][] = $basePath;
+                $r['s'][] = $key;
             }
+            $data[] = [
+                //'filename' => $file,
+                //'filesize' => CMS::fileSize(filesize(Yii::getAlias($db->backupPath) . DIRECTORY_SEPARATOR . $file)),
+                'key' => $key,
+                'url' => Html::a(Html::icon('edit'), ['/admin/app/languages/edit-locale', 'key' => $key], ['class' => 'btn btn-sm btn-secondary'])
+            ];
+            //  echo $key.'<br>   ';
         }
-        sort($data);
         $provider = new ArrayDataProvider([
             'allModels' => $data,
             'pagination' => false,
