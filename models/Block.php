@@ -10,7 +10,7 @@ class Block extends ActiveRecord
 {
     const MODULE_ID = 'admin';
     public $translationClass = BlockTranslate::class;
-
+    public $disallow_delete = [1,2,3];
 
     public static function find()
     {

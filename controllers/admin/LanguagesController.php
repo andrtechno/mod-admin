@@ -594,9 +594,9 @@ EOD;
                     $filesMap = $translation['fileMap'];
                 }
             }
-            
+
             if (isset($filesMap)) {
-                if (!in_array($key, ['yii']) && preg_match('/^[\w]+\/(\*)?$/', $key)) { //!preg_match('/[a-z]\/[a-z]/', $key) //
+                if (!in_array($key, ['yii'])) { //!preg_match('/[a-z]\/[a-z]/', $key) //  && preg_match('/^[\w]+\/(\*)?$/', $key)
                     if (isset($i18n->translations[$key])) {
                         $basePath = (isset($i18n->translations[$key]->basePath)) ? $i18n->translations[$key]->basePath : $i18n->translations[$key]['basePath'];
                         $r['path'][] = $basePath;

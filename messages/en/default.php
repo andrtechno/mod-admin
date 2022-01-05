@@ -37,4 +37,5 @@ return [
     'DESKTOP' => 'Desktop',
     'DESKTOP_CREATE' => 'Add desktop',
     'DESKTOP_CREATE_WIDGET' => 'Add Widget',
+    'EDIT_LOCALE' => 'Editing locale files'
 ];

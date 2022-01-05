@@ -9,6 +9,7 @@ use panix\mod\plugins\BaseShortcode;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\web\Response;
+use yii\web\View;
 
 /**
  * Plugin Name: Blocks Shortcodes
@@ -31,7 +32,8 @@ class BlockShortcodes extends BaseShortcode
                 'callback' => function ($data) {
 
                     if ($data['id']) {
-                        $model = Block::findOne($data['id']);
+                        $model = Block::findOne((int)$data['id']);
+
                         if (!$model) {
                             return Alert::widget(['body' => "[block id=\"{$data['id']}\"] Блок не найден.", 'options' => ['class' => 'alert-danger']]);
                         }
@@ -49,7 +51,7 @@ class BlockShortcodes extends BaseShortcode
                         return Alert::widget(['body' => '[block] Обязательный параментр "id" отсуствует', 'options' => ['class' => 'alert-danger']]);
                     }
                 },
-                'tooltip' => '[block id="1" view="@theme/..."]'
+                'tooltip' => '[block id="1"]'
             ],
             'blockInline' => [
                 'config' => [
@@ -75,8 +77,41 @@ class BlockShortcodes extends BaseShortcode
                         return Alert::widget(['body' => '[block] Обязательный параментр "id" отсуствует', 'options' => ['class' => 'alert-danger']]);
                     }
                 },
-                'tooltip' => '[blockInline id="1" view="@theme/..."]'
+                'tooltip' => '[blockInline id="1"]'
             ],
         ];
     }
+
+    public static $config = [
+        'search' => 'Hello, world!',
+        'replace' => 'Hello, Yii!',
+        'color' => '#FFDB51'
+    ];
+
+    /**
+     * @return array
+     */
+    public static function events()
+    {
+        return [
+            Response::class => [
+                Response::EVENT_AFTER_PREPARE => ['hello', self::$config]
+            ]
+        ];
+    }
+
+    /**
+     * @param $event
+     */
+    public static function hello($event)
+    {
+        if (!$content = $event->sender->content) return;
+
+        $search = ArrayHelper::getValue($event->data, 'search', self::$config['search']);
+        $replace = ArrayHelper::getValue($event->data, 'replace', self::$config['replace']);
+        $color = ArrayHelper::getValue($event->data, 'color', self::$config['color']);
+
+        $event->sender->content = str_replace('foo', 'test rep', $content);
+    }
+
 }

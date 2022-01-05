@@ -21,7 +21,7 @@ echo GridView::widget([
         ['class' => 'panix\engine\grid\columns\CheckboxColumn'],
         [
             'attribute' => 'id',
-            'contentOptions' => ['class' => 'text-cen2ter'],
+            'contentOptions' => ['class' => 'text-cen2ter','style'=>'width:200px'],
             'format' => 'raw',
             'value' => function ($model) {
                 $this->registerJs("common.clipboard('.block-copy-{$model->id}');");

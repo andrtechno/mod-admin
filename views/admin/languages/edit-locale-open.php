@@ -3,7 +3,7 @@
 use yii\widgets\Pjax;
 use yii\grid\GridView;
 
-
+//echo \panix\engine\CMS::dump($r);
 ?>
 <div class="card">
     <div class="card-header">
