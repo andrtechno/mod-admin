@@ -3,7 +3,7 @@ return [
     'SYSTEM' => 'Система',
     'MODULES' => 'Модулі',
     'CREATE_LANG' => 'Додати мову',
-    'MODULE_NAME' => 'Адмін',
+    'MODULE_NAME' => 'Адмін-панель',
     'SECURITY' => 'Безпека',
     'LANGUAGES' => 'Мови',
     'WIDGETS' => 'Віджети',
