@@ -16,6 +16,11 @@ class AjaxController extends AdminController
         Yii::$app->user->setState('redirectTabsHash', $_POST['hash']);
     }
 
+    public function actionSwitchTheme()
+    {
+        Yii::$app->session->set('dashboard_theme', (Yii::$app->request->post('theme')=='light')?'dark':'light');
+        return $this->asJson(['success'=>true]);
+    }
 
     public function beforeAction($action)
     {
