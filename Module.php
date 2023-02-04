@@ -27,6 +27,7 @@ class Module extends WebModule implements BootstrapInterface
         });*/
 
     }
+
     public function getToolbarHtml()
     {
         $url = Url::toRoute([
@@ -34,13 +35,14 @@ class Module extends WebModule implements BootstrapInterface
             //'tag' => $this->logTarget->tag,
         ]);
 
-      //  if (!empty($this->skipAjaxRequestUrl)) {
-          //  foreach ($this->skipAjaxRequestUrl as $key => $route) {
-             //   $this->skipAjaxRequestUrl[$key] = Url::to($route);
-          //  }
-      //  }
+        //  if (!empty($this->skipAjaxRequestUrl)) {
+        //  foreach ($this->skipAjaxRequestUrl as $key => $route) {
+        //   $this->skipAjaxRequestUrl[$key] = Url::to($route);
+        //  }
+        //  }
         return '<div id="pixelion-toolbar" data-url="' . Html::encode($url) . '" data-skip-urls="' . htmlspecialchars(json_encode([])) . '" style="display:block" class="pixelion-toolbar">123</div>';
     }
+
     public function renderToolbar($event)
     {
         if (Yii::$app->getRequest()->getIsAjax()) {
@@ -53,8 +55,9 @@ class Module extends WebModule implements BootstrapInterface
 
         // echo is used in order to support cases where asset manager is not available
         echo '<style>' . $view->renderPhpFile(__DIR__ . '/panel/assets/css/toolbar.css') . '</style>';
-      //  echo '<script>' . $view->renderPhpFile(__DIR__ . '/panel/assets/js/toolbar.js') . '</script>';
+        //  echo '<script>' . $view->renderPhpFile(__DIR__ . '/panel/assets/js/toolbar.js') . '</script>';
     }
+
     protected function corePanels()
     {
         return [
@@ -117,72 +120,86 @@ class Module extends WebModule implements BootstrapInterface
             'system' => [
                 'items' => [
                     [
-                        'label' => Yii::t('app/default', 'SETTINGS'),
-                        'url' => ['/admin/app/settings'],
-                        'icon' => 'settings',
-                        'visible' => Yii::$app->user->can('/admin/admin/settings/index') || Yii::$app->user->can('/admin/admin/settings/*')
-                    ],
-                    [
                         'label' => Yii::t('admin/default', 'LANGUAGES'),
                         'url' => ['/admin/app/languages'],
                         'icon' => 'language',
+                        'sort' => 2,
                         'visible' => Yii::$app->user->can('/admin/admin/languages/index') || Yii::$app->user->can('/admin/admin/languages/*')
                     ],
                     [
                         'label' => Yii::t('admin/default', 'WIDGETS'),
                         'url' => ['/admin/app/widgets'],
                         'icon' => 'chip',
+                        'sort' => 1,
                         'visible' => Yii::$app->user->can('/admin/admin/widgets/index') || Yii::$app->user->can('/admin/admin/widgets/*')
                     ],
                     [
                         'label' => Yii::t('admin/default', 'BLOCKS'),
                         'url' => ['/admin/app/blocks'],
                         'icon' => 'blocks',
+                        'sort' => 1,
                         'visible' => Yii::$app->user->can('/admin/admin/blocks/index') || Yii::$app->user->can('/admin/admin/blocks/*')
                     ],
                     [
                         'label' => Yii::t('admin/default', 'Mails tpl'),
                         'url' => ['/admin/app/mail-template'],
                         'icon' => 'envelope',
-                         'visible'=>YII_DEBUG,
+                        'sort' => 1,
+                        'visible' => false,
                         //'visible' => Yii::$app->user->can('/admin/admin/mail-template/index') || Yii::$app->user->can('/admin/admin/mail-template/*')
                     ],
                     [
                         'label' => Yii::t('admin/default', 'DATABASE'),
                         'url' => ['/admin/app/database'],
                         'icon' => 'database',
+                        'sort' => 1,
                         'visible' => Yii::$app->user->can('/admin/admin/database/index') || Yii::$app->user->can('/admin/admin/database/*')
                     ],
                     [
                         'label' => Yii::t('admin/default', 'LOGS'),
                         'url' => ['/admin/app/logs'],
                         'icon' => 'log',
+                        'sort' => 1,
                         'visible' => Yii::$app->user->can('/admin/admin/logs/index') || Yii::$app->user->can('/admin/admin/logs/*')
                     ],
                     [
                         'label' => Yii::t('admin/default', 'MODULES'),
                         'url' => ['/admin/app/modules'],
                         'icon' => 'puzzle',
-                        'visible' => Yii::$app->user->can('/admin/admin/modules/index') || Yii::$app->user->can('/admin/admin/modules/*')
+                        'visible' => false,
+                        'sort' => 1,
+                        //'visible' => Yii::$app->user->can('/admin/admin/modules/index') || Yii::$app->user->can('/admin/admin/modules/*')
                     ],
                     [
                         'label' => Yii::t('admin/default', 'DYNAMIC_FORM'),
                         'url' => ['/admin/app/dynamic-form'],
                         'icon' => 'arrow-right',
-                        'visible' => YII_DEBUG,
+                        'sort' => 1,
+                        'visible' => false,
                         //  'visible' => Yii::$app->user->can('/admin/admin/dynamic-form/index') || Yii::$app->user->can('/admin/admin/dynamic-form/*')
                     ],
                     [
                         'label' => Yii::t('admin/default', 'HELP'),
                         'url' => ['/admin/app/help'],
                         'icon' => 'info',
-                        'visible' => Yii::$app->user->can('/admin/admin/help/index') || Yii::$app->user->can('/admin/admin/help/*')
+                        'sort' => 1,
+                        'visible' => false,
+                        //'visible' => Yii::$app->user->can('/admin/admin/help/index') || Yii::$app->user->can('/admin/admin/help/*')
                     ],
                     [
                         'label' => Yii::t('admin/default', 'TEMPLATE'),
                         'url' => ['/admin/app/template'],
                         'icon' => 'template',
-                        'visible' => Yii::$app->user->can('/admin/admin/template/index') || Yii::$app->user->can('/admin/admin/template/*')
+                        'sort' => 1111,
+                        'visible' => false,
+                        //'visible' => Yii::$app->user->can('/admin/admin/template/index') || Yii::$app->user->can('/admin/admin/template/*')
+                    ],
+                    [
+                        'label' => Yii::t('app/default', 'SETTINGS'),
+                        'url' => ['/admin/app/settings'],
+                        'icon' => 'settings',
+                        'sort' => 1,
+                        'visible' => Yii::$app->user->can('/admin/admin/settings/index') || Yii::$app->user->can('/admin/admin/settings/*')
                     ],
                 ]
             ]

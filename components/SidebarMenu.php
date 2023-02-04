@@ -1,6 +1,7 @@
 <?php
 namespace panix\mod\admin\components;
 
+use panix\engine\CMS;
 use panix\mod\admin\models\Modules;
 use Yii;
 use panix\engine\data\Widget;
@@ -35,19 +36,23 @@ class SidebarMenu extends Widget
      */
     public function findMenu($mod = false)
     {
-        $result = array();
-        $installedModules = Modules::getEnabled();
+        $result = [];
+        //$installedModules = Modules::getEnabled();
+        $installedModules = Yii::$app->getModules();
+
         foreach ($installedModules as $module) {
             //Yii::import('mod.' . $module->name . '.' . ucfirst($module->name) . 'Module');
             //if (method_exists($class, 'getAdminMenu')) {
             //    $result = CMap::mergeArray($result, $class::getAdminMenu());
             //}
             if (Yii::$app->hasModule($module->name)) {
-                if (isset(Yii::$app->getModule($module->name)->adminMenu)) {
+                if (method_exists(Yii::$app->getModule($module->name),'getAdminMenu')) {
+                //if (isset(Yii::$app->getModule($module->name)->adminMenu)) {
                     $result = ArrayHelper::merge($result, Yii::$app->getModule($module->name)->getAdminMenu());
                 }
             }
         }
+
         return ($mod) ? $result[$mod] : $result;
 
     }
