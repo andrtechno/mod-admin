@@ -18,7 +18,8 @@ class AjaxController extends AdminController
 
     public function actionSwitchTheme()
     {
-        Yii::$app->session->set('dashboard_theme', (Yii::$app->request->post('theme')=='light')?'dark':'light');
+        //Yii::$app->session->set('dashboard_theme', (Yii::$app->request->post('theme')=='light')?'dark':'light');
+        Yii::$app->session->set('dashboard_theme', Yii::$app->request->post('theme'));
         return $this->asJson(['success'=>true]);
     }
 
