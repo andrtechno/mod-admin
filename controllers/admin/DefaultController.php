@@ -6,6 +6,7 @@ namespace panix\mod\admin\controllers\admin;
 use panix\engine\CMS;
 use panix\engine\grid\GridColumns;
 use panix\mod\admin\models\DesktopWidgets;
+use panix\mod\admin\models\search\SessionSearch;
 use panix\mod\cart\models\Order;
 use Yii;
 use yii\data\ArrayDataProvider;
@@ -32,7 +33,19 @@ class DefaultController extends AdminController
             ],
         ];
     }
+    public function actionSession()
+    {
+        $this->pageName = Yii::t('app/admin', 'Session');
+        $this->view->params['breadcrumbs'][] = $this->pageName;
 
+        $searchModel = new SessionSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('session',[
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
     public function actionIndex()
     {
         $this->pageName = Yii::t('app/admin', 'CMS');
