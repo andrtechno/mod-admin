@@ -73,4 +73,22 @@ class SettingsController extends AdminController
         ]);
     }
 
+    public function actionSendEmail()
+    {
+        try {
+            $mailer = Yii::$app->mailer;
+            $mailer->compose()
+                ->setTo(Yii::$app->settings->get('app', 'email'))
+                ->setHtmlBody('<b>Test mail text</b>')
+                ->setSubject('Test mail subject')
+                ->send();
+            $result['success'] = true;
+            $result['message'] = 'Email sent successfully';
+        } catch (Exception $e) {
+            $result['success'] = false;
+            $result['message'] = $e->getMessage();
+        }
+
+        return $this->asJson($result);
+    }
 }
