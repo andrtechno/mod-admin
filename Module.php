@@ -122,28 +122,28 @@ class Module extends WebModule implements BootstrapInterface
                     [
                         'label' => Yii::t('admin/default', 'LANGUAGES'),
                         'url' => ['/admin/app/languages'],
-                        'icon' => 'language',
+                        'icon' => 'fad fa-language',
                         'sort' => 2,
                         'visible' => Yii::$app->user->can('/admin/admin/languages/index') || Yii::$app->user->can('/admin/admin/languages/*')
                     ],
                     [
                         'label' => Yii::t('admin/default', 'WIDGETS'),
                         'url' => ['/admin/app/widgets'],
-                        'icon' => 'chip',
+                        'icon' => 'fad fa-microchip',
                         'sort' => 1,
                         'visible' => Yii::$app->user->can('/admin/admin/widgets/index') || Yii::$app->user->can('/admin/admin/widgets/*')
                     ],
                     [
                         'label' => Yii::t('admin/default', 'BLOCKS'),
                         'url' => ['/admin/app/blocks'],
-                        'icon' => 'blocks',
+                        'icon' => 'fad fa-cubes',
                         'sort' => 1,
                         'visible' => Yii::$app->user->can('/admin/admin/blocks/index') || Yii::$app->user->can('/admin/admin/blocks/*')
                     ],
                     [
                         'label' => Yii::t('admin/default', 'Mails tpl'),
                         'url' => ['/admin/app/mail-template'],
-                        'icon' => 'envelope',
+                        'icon' => 'fad fa-envelope',
                         'sort' => 1,
                         'visible' => false,
                         //'visible' => Yii::$app->user->can('/admin/admin/mail-template/index') || Yii::$app->user->can('/admin/admin/mail-template/*')
@@ -151,21 +151,21 @@ class Module extends WebModule implements BootstrapInterface
                     [
                         'label' => Yii::t('admin/default', 'DATABASE'),
                         'url' => ['/admin/app/database'],
-                        'icon' => 'database',
+                        'icon' => 'fad fa-database',
                         'sort' => 1,
                         'visible' => Yii::$app->user->can('/admin/admin/database/index') || Yii::$app->user->can('/admin/admin/database/*')
                     ],
                     [
                         'label' => Yii::t('admin/default', 'LOGS'),
                         'url' => ['/admin/app/logs'],
-                        'icon' => 'log',
+                        'icon' => 'fad fa-file',
                         'sort' => 1,
                         'visible' => Yii::$app->user->can('/admin/admin/logs/index') || Yii::$app->user->can('/admin/admin/logs/*')
                     ],
                     [
                         'label' => Yii::t('admin/default', 'MODULES'),
                         'url' => ['/admin/app/modules'],
-                        'icon' => 'puzzle',
+                        'icon' => 'fad fa-puzzle-piece',
                         'visible' => false,
                         'sort' => 1,
                         //'visible' => Yii::$app->user->can('/admin/admin/modules/index') || Yii::$app->user->can('/admin/admin/modules/*')
@@ -197,7 +197,7 @@ class Module extends WebModule implements BootstrapInterface
                     [
                         'label' => Yii::t('app/default', 'SETTINGS'),
                         'url' => ['/admin/app/settings'],
-                        'icon' => 'settings',
+                        'icon' => 'fad fa-wrench', //fa-wrench fa-cog fa-cogs
                         'sort' => 1,
                         'visible' => Yii::$app->user->can('/admin/admin/settings/index') || Yii::$app->user->can('/admin/admin/settings/*')
                     ],
