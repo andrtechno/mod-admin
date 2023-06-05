@@ -56,8 +56,8 @@ class SettingsController extends AdminController
                         }
                         $img->save($faviconFile);
                     }
-                    if(file_exists(Yii::getAlias('@app/web/assets/') . 'favicon-16.' . $model->favicon->extension)){
-                        FileHelper::unlink(Yii::getAlias('@app/web/assets/') . 'favicon-16.' . $model->favicon->extension);
+                    if(file_exists(Yii::getAlias('@app/web/assets/') . 'favicon-57.' . $model->favicon->extension)){
+                        FileHelper::unlink(Yii::getAlias('@app/web/assets/') . 'favicon-57.' . $model->favicon->extension);
                     }
 
                     $model->favicon = 'favicon.' . $model->favicon->extension;
