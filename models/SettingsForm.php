@@ -124,7 +124,10 @@ class SettingsForm extends SettingsModel
 
 
             [['no_image'], 'file', 'skipOnEmpty' => true, 'extensions' => self::$extensionNoImage],
-            [['favicon'], 'file', 'skipOnEmpty' => true, 'checkExtensionByMimeType' => false, 'extensions' => self::$extensionFavicon],
+            //@todo need testing min params for PNG and ICO
+            [['favicon'], 'image', 'skipOnEmpty' => true, 'checkExtensionByMimeType' => false, 'extensions' => self::$extensionFavicon,
+                'minWidth' => 57,
+                'minHeight' => 57],
             [['captcha_class'], 'default'],
 
             //[['email', 'recaptcha_key', 'recaptcha_secret'], 'filter', 'filter' => 'trim'],
