@@ -6,6 +6,7 @@ use Yii;
 use panix\engine\controllers\AdminController;
 use panix\mod\admin\models\SettingsForm;
 use yii\web\UploadedFile;
+use yii\helpers\FileHelper;
 
 class SettingsController extends AdminController
 {
@@ -54,6 +55,9 @@ class SettingsController extends AdminController
                             $img->resize(180, 180);
                         }
                         $img->save($faviconFile);
+                    }
+                    if(file_exists(Yii::getAlias('@app/web/assets/') . 'favicon-16.' . $model->favicon->extension)){
+                        FileHelper::unlink(Yii::getAlias('@app/web/assets/') . 'favicon-16.' . $model->favicon->extension);
                     }
 
                     $model->favicon = 'favicon.' . $model->favicon->extension;
