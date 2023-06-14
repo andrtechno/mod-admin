@@ -371,7 +371,7 @@ class DefaultController extends AdminController
     }
 
 
-    public function getAddonsMenu()
+    /*public function getAddonsMenu()
     {
         return [
             [
@@ -393,5 +393,5 @@ class DefaultController extends AdminController
                 ]
             ],
         ];
-    }
+    }*/
 }
