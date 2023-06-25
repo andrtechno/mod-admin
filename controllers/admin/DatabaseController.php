@@ -23,14 +23,14 @@ class DatabaseController extends AdminController
         $this->pageName = Yii::t('admin/default', 'DATABASE');
         $this->view->params['breadcrumbs'][] = $this->pageName;
 
-        if ($model->load(Yii::$app->request->post())) {
+        /*if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
                 $model->save();
                 if ($model->backup) {
                     $db->export();
                 }
             }
-        }
+        }*/
 
 
         $fdir = opendir(Yii::getAlias($db->backupPath));
@@ -134,7 +134,24 @@ class DatabaseController extends AdminController
             'sort' => $sort,
         ]);
 
+        $db = Yii::$app->db;
+        $dbSchema = $db->schema;
+        $tables = [];
+        $dataDb=[];
+        foreach ($dbSchema->tableNames as $tbl) {
+            // $tbl_name = str_replace('`', '', $tbl->rawName);
+            $tables[$tbl] = $tbl;
+            $dataDb[] = [
+                'name' => $tbl,
+            ];
+        }
+        $providerDbs = new ArrayDataProvider([
+            'allModels' => $dataDb,
+            'pagination' => false,
+        ]);
+
         return $this->render('index', [
+            'providerDbs'=>$providerDbs,
             'model' => $model,
             'data_db' => $data_db,
             'db' => $db,
@@ -159,6 +176,12 @@ class DatabaseController extends AdminController
         if (!Yii::$app->request->isPjax || !Yii::$app->request->isAjax) {
             return $this->redirect(['/admin/app/database']);
         }
+    }
+
+    public function actionClearCache($table){
+        Yii::$app->db->getSchema()->refreshTableSchema($table);
+        Yii::$app->session->setFlash("success", Yii::t('app/default', $table.' схема очищена'));
+        return $this->redirect(['index']);
     }
 
 }
