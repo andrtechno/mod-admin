@@ -3,6 +3,7 @@
 namespace panix\mod\admin\controllers\admin;
 
 use Yii;
+use yii\helpers\FileHelper;
 use yii\helpers\Html;
 use yii\data\ArrayDataProvider;
 use panix\engine\controllers\AdminController;
@@ -30,7 +31,7 @@ class DatabaseController extends AdminController
                     $db->export();
                 }
             }
-        }*/
+        }
 
 
         $fdir = opendir(Yii::getAlias($db->backupPath));
@@ -47,7 +48,7 @@ class DatabaseController extends AdminController
             }
         }
         closedir($fdir);
-
+*/
 
         $sort = new \yii\data\Sort([
             'attributes' => [
@@ -68,6 +69,8 @@ class DatabaseController extends AdminController
         $providerOptimize = null;
         $totaltotal = 0;
         $totalfree = 0;
+        //Yii::$app->db->serverVersion
+
         if ($type == 'optimize') {
             // $db = Yii::$app->db->schema->tableNames;
 
@@ -126,34 +129,32 @@ class DatabaseController extends AdminController
         }
 
 
-        $data_db = new ArrayDataProvider([
+        /*$data_db = new ArrayDataProvider([
             'allModels' => $data,
             'pagination' => [
                 'pageSize' => 10,
             ],
             'sort' => $sort,
-        ]);
+        ]);*/
 
         $db = Yii::$app->db;
         $dbSchema = $db->schema;
-        $tables = [];
-        $dataDb=[];
+        $dataDb = [];
         foreach ($dbSchema->tableNames as $tbl) {
-            // $tbl_name = str_replace('`', '', $tbl->rawName);
-            $tables[$tbl] = $tbl;
-            $dataDb[] = [
-                'name' => $tbl,
-            ];
+            $dataDb[] = ['name' => $tbl];
         }
         $providerDbs = new ArrayDataProvider([
             'allModels' => $dataDb,
             'pagination' => false,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
         ]);
 
         return $this->render('index', [
-            'providerDbs'=>$providerDbs,
+            'providerDbs' => $providerDbs,
             'model' => $model,
-            'data_db' => $data_db,
+            //'data_db' => $data_db,
             'db' => $db,
             'providerRepair' => $providerRepair,
             'providerOptimize' => $providerOptimize,
@@ -167,7 +168,7 @@ class DatabaseController extends AdminController
         if (isset($file)) {
             $filePath = Yii::getAlias(Yii::$app->db->backupPath) . DIRECTORY_SEPARATOR . $file;
             if (file_exists($filePath)) {
-                @unlink($filePath);
+                FileHelper::unlink($filePath);
                 Yii::$app->session->setFlash("success", Yii::t('app/default', 'FILE_SUCCESS_DELETE'));
             } else {
                 Yii::$app->session->setFlash("danger", Yii::t('app/default', 'FILE_NOT_FOUND'));
@@ -178,9 +179,10 @@ class DatabaseController extends AdminController
         }
     }
 
-    public function actionClearCache($table){
+    public function actionClearCache($table)
+    {
         Yii::$app->db->getSchema()->refreshTableSchema($table);
-        Yii::$app->session->setFlash("success", Yii::t('app/default', $table.' схема очищена'));
+        Yii::$app->session->setFlash("success", Yii::t('app/default', $table . ' схема очищена'));
         return $this->redirect(['index']);
     }
 

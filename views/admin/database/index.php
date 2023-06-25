@@ -68,77 +68,7 @@ echo GridView::widget([
 
 
 <div class="row">
-    <div class="col-md-6">
-        <?php
 
-        $form = ActiveForm::begin();
-        ?>
-        <div class="card">
-            <div class="card-header">
-                <h5><?= $this->context->pageName ?></h5>
-            </div>
-            <div class="card-body">
-                <?= $form->field($model, 'backup')->checkbox() ?>
-                <?= $form->field($model, 'backup_limit') ?>
-
-
-            </div>
-            <div class="card-footer text-center">
-                <?= Html::submitButton(Yii::t('app/default', 'SAVE'), ['class' => 'btn btn-success']) ?>
-            </div>
-        </div>
-        <?php ActiveForm::end(); ?>
-
-
-        <?php
-        Pjax::begin([
-            'id' => 'pjax-grid-db',
-        ]);
-        ?>
-        <?=
-        GridView::widget([
-            'id' => 'grid-db',
-            'tableOptions' => ['class' => 'table table-striped'],
-            'dataProvider' => $data_db,
-            // 'filterModel' => $searchModel,
-            'layoutOptions' => ['title' => $this->context->pageName],
-            'columns' => [
-                [
-                    'attribute' => 'filename',
-                    'header' => Yii::t('app/default', 'FILENAME'),
-                    'format' => 'raw',
-                    'contentOptions' => ['class' => 'text-left'],
-                ],
-                [
-                    'attribute' => 'filesize',
-                    'header' => Yii::t('app/default', 'SIZE'),
-                    'format' => 'raw',
-                    'contentOptions' => ['class' => 'text-center'],
-                ],
-                [
-                    'attribute' => 'url',
-                    'header' => Yii::t('app/default', 'OPTIONS'),
-                    'format' => 'raw',
-                    'contentOptions' => ['class' => 'text-center'],
-                ],
-                /* [
-                     'class' => 'panix\engine\grid\columns\ActionColumn',
-                     'template' => '{delete}',
-                     'header' => Yii::t('app/default', 'OPTIONS'),
-                     'buttons' => [
-                         'delete' => function ($url, $model, $key) {
-
-                             return Html::a('<i class="icon-delete"></i>', $url, [
-                                 'title' => Yii::t('app/default', 'DELETE'),
-                                 'class' => 'btn btn-sm btn-danger']);
-                         }
-                     ]
-                 ]*/
-            ]
-        ]);
-        ?>
-        <?php Pjax::end(); ?>
-    </div>
 
 
     <div class="col-md-6">
@@ -166,7 +96,7 @@ echo GridView::widget([
                 ?>
                 <div class="form-group row" style="">
                     <div class="col-sm-12 text-center">
-                        <?= Html::dropDownList('datatable[]', null, $tables, ['multiple' => true, 'class' => 'custom-select']) ?>
+                        <?php //echo Html::dropDownList('datatable[]', null, $tables, ['multiple' => true, 'class' => 'custom-select']) ?>
                     </div>
                 </div>
                 <div class="form-group row">
