@@ -30,15 +30,6 @@ use panix\engine\Html;
         <td>System TimeZone <span class="float-right"><?= $timezone ?></span></td>
         <td>OS: <span class="float-right"><?= $os ?></span></td>
     </tr>
-    <tr>
-        <td>Backup dir size <span class="float-right"><?= $backup_dir_size ?></span></td>
-        <td>Uplaods dir size <span class="float-right"><?= $uploads_dir_size ?></span></td>
-    </tr>
-    <tr>
-        <td>Assets dir size <span class="float-right"><?= $assets_dir_size ?></span></td>
-        <td>Cache dir size <span class="float-right"><?= $cache_dir_size ?></span></td>
-    </tr>
-
 </table>
 
 

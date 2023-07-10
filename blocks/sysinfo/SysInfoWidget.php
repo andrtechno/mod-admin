@@ -32,30 +32,6 @@ class SysInfoWidget extends Widget
         $php = ($phpver >= "5.1") ? $this->labelHtml(PHP_VERSION, 'success') : $this->labelHtml("$phpver (" . @php_sapi_name() . ")", 'danger');
 
 
-        $uploadsDirSize = Yii::$app->cache->get('cache-uploads-' . $this->id);
-        if ($uploadsDirSize === false) {
-            $uploadsDirSize = CMS::dir_size(Yii::getAlias('@uploads'));
-            Yii::$app->cache->set('cache-uploads-' . $this->id, $uploadsDirSize, 3600 * 12);
-        }
-
-        $backupsDirSize = Yii::$app->cache->get('cache-backup-' . $this->id);
-        if ($backupsDirSize === false) {
-            $backupsDirSize = CMS::dir_size(Yii::getAlias('@app/backups'));
-            Yii::$app->cache->set('cache-backup-' . $this->id, $backupsDirSize, 3600 * 12);
-        }
-
-
-        $assetsDirSize = Yii::$app->cache->get('cache-assets-' . $this->id);
-        if ($assetsDirSize === false) {
-            $assetsDirSize = CMS::dir_size(Yii::getAlias('@app/web/assets'));
-            Yii::$app->cache->set('cache-assets-' . $this->id, $assetsDirSize, 3600 * 12);
-        }
-
-        $cacheDirSize = Yii::$app->cache->get('cache-dir-' . $this->id);
-        if ($cacheDirSize === false) {
-            $cacheDirSize = CMS::dir_size(Yii::getAlias(Yii::$app->getCache()->cachePath));
-            Yii::$app->cache->set('cache-dir-' . $this->id, $cacheDirSize, 3600 * 12);
-        }
         $checkOs = ini_set('disable_functions', "php_uname") ? @php_uname('s') : PHP_OS;
         return $this->render($this->skin, array(
             'cms_ver' => $this->labelHtml(Yii::$app->version),
@@ -69,10 +45,6 @@ class SysInfoWidget extends Widget
             'os' => $checkOs,
             'php' => $php,
             'pdo' => $pdo,
-            'backup_dir_size' => CMS::fileSize($backupsDirSize['size']),
-            'uploads_dir_size' => CMS::fileSize($uploadsDirSize['size']),
-            'assets_dir_size' => CMS::fileSize($assetsDirSize['size']),
-            'cache_dir_size' => CMS::fileSize($cacheDirSize['size']),
             'timezone' => Yii::$app->settings->get('app', 'timezone'),
         ));
     }

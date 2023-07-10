@@ -6,16 +6,15 @@ use panix\engine\CMS;
 
 
 
-
 $tabs[] = [
-    'label' => Yii::t('app','На сегодня'),
+    'label' => Yii::t('wgt_PrivatBank/default','TODAY'),
     'content' => $this->render('_today_pb', ['result' => $result]),
     'headerOptions' => [],
     'options' => ['class' => 'flex-sm-fill text-center nav-item'],
     'visible' => true,
 ];
 $tabs[] = [
-    'label' => Yii::t('app','За вчера'),
+    'label' => Yii::t('wgt_PrivatBank/default','YESTERDAY'),
     'content' => $this->render('_all', ['result' => $result2]),
     'headerOptions' => [],
     'options' => ['class' => 'flex-sm-fill text-center nav-item'],
