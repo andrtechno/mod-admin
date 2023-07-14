@@ -83,7 +83,8 @@ class SettingsController extends AdminController
             $mailer = Yii::$app->mailer;
             $mailer->compose()
                 ->setTo(Yii::$app->settings->get('app', 'email'))
-                ->setHtmlBody('<b>Test mail text</b>')
+                ->setHtmlBody('<html><b>Test mail html</b></html>')
+                ->setTextBody('Test mail text')
                 ->setSubject('Test mail subject')
                 ->send();
             $result['success'] = true;
