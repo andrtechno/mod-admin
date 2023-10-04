@@ -32,11 +32,19 @@ use yii\helpers\Html;
 <?php
 $this->registerJs("
 $(document).on('click','.mail-test',function(){
-    $.get($(this).attr('href'), function( data ) {
-        if(data.success){
-            common.notify(data.message,'success');
-        }else{
-            common.notify(data.message,'error');
+    $.ajax({
+        url: $(this).attr('href'),
+        type: 'GET',
+        dataType: 'json',
+        success: function(data, textStatus, jqXHR){
+            if(data.success){
+                common.notify(data.message, 'success');
+            }else{
+                common.notify(data.message, 'error');
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            common.notify(jqXHR.status+' '+jqXHR.responseText, 'error');
         }
     });
     return false;
