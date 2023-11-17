@@ -65,13 +65,16 @@ class DefaultController extends AdminController
     public function actionQueueCounter()
     {
 
-        $queueAllItems = (new \yii\db\Query())
-            ->select(['pushed_at', 'ttr', 'delay', 'priority', 'reserved_at', 'attempt', 'done_at', 'channel'])
-            ->from(Yii::$app->queue->tableName)
-            ->where(['done_at' => null])
-            ->groupBy(['channel'])
-            ->createCommand()
-            ->queryAll();
+        $q = (new \yii\db\Query());
+        $q->select(['pushed_at', 'ttr', 'delay', 'priority', 'reserved_at', 'attempt', 'done_at', 'channel']);
+        $q->from(Yii::$app->queue->tableName);
+        $q->where(['done_at' => null]);
+        if (Yii::$app->db->driverName == 'pgsql') {
+            $q->groupBy(['pushed_at', 'ttr', 'delay', 'priority', 'reserved_at', 'attempt', 'done_at', 'channel']);
+        }else{
+            $q->groupBy(['pushed_at',]);
+        }
+        $queueAllItems = $q->createCommand()->queryAll();
 
 
         $result = [];
