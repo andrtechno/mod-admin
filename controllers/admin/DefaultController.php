@@ -72,7 +72,7 @@ class DefaultController extends AdminController
         if (Yii::$app->db->driverName == 'pgsql') {
             $q->groupBy(['pushed_at', 'ttr', 'delay', 'priority', 'reserved_at', 'attempt', 'done_at', 'channel']);
         }else{
-            $q->groupBy(['pushed_at',]);
+            $q->groupBy(['pushed_at']);
         }
         $queueAllItems = $q->createCommand()->queryAll();
 
