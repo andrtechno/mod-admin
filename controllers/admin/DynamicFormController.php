@@ -38,6 +38,7 @@ class DynamicFormController extends AdminController
             'searchModel' => $searchModel,
         ]);
     }
+
     public function actionUpdate($id = false)
     {
         $model = DynamicForm::findModel($id);
@@ -52,15 +53,21 @@ class DynamicFormController extends AdminController
         $this->view->params['breadcrumbs'][] = Yii::t('app/default', 'UPDATE');
 
 
-
         $post = Yii::$app->request->post();
-        if ($model->load($post) && $model->validate()) {
-            $model->save();
-            return $this->redirectPage($isNew, $post);
+        if ($model->load($post)) {
+            if ($model->validate()) {
+                $model->save();
+                return $this->redirectPage($isNew, $post);
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+    public function actionCreate()
+    {
+        return $this->actionUpdate(false);
     }
 }

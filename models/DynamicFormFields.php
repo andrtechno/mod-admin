@@ -7,7 +7,7 @@ use Yii;
 use panix\engine\db\ActiveRecord;
 use yii\helpers\Json;
 
-class DynamicForm extends ActiveRecord
+class DynamicFormFields extends ActiveRecord
 {
     const MODULE_ID = 'admin';
 
@@ -16,7 +16,7 @@ class DynamicForm extends ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%dynamic_form}}';
+        return '{{%dynamic_form_fields}}';
     }
 
     /**

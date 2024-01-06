@@ -11,6 +11,7 @@ $form = ActiveForm::begin();
     </div>
     <div class="card-body">
         <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
+        <?= $form->field($model, 'csrf')->checkbox() ?>
 
 
         <?php
@@ -18,7 +19,11 @@ $form = ActiveForm::begin();
             'model' => $model,
             'attribute' => 'rules',
             'allowEmptyList' => false,
-            'enableGuessTitle' => true,
+            'min' => 1,
+            //'max'=>10,
+            'prepend'=>true,
+            'sortable' => true,
+            // 'enableGuessTitle' => true,
             //'rendererClass'=>\panix\ext\multipleinput\renderers\ListRenderer::class,
             'rendererClass' => \panix\ext\multipleinput\renderers\TableListRenderer::class,
             //'addButtonPosition' => \panix\ext\multipleinput\MultipleInput::POS_HEADER, // show add button in the header
@@ -40,22 +45,29 @@ $form = ActiveForm::begin();
                     ],
                 ],
                 [
-                    'name' => 'required',
-                    'title' => 'required',
-                    'type' => \panix\ext\multipleinput\MultipleInputColumn::TYPE_CHECKBOX,
+                    'name' => 'type',
+                    'title' => 'type',
+                    'type' => \panix\ext\multipleinput\MultipleInputColumn::TYPE_DROPDOWN,
                     'enableError' => false,
+                    'items' => [
+                        'textInput' => 'textInput',
+                        'textArea' => 'textArea',
+                    ]
                 ],
-
                 [
                     'name' => 'validator',
                     'title' => 'validator',
                     'type' => \panix\ext\multipleinput\MultipleInputColumn::TYPE_CHECKBOX_LIST,
                     'enableError' => false,
                     'items' => [
-
+                        'required' => 'required',
                         'email' => 'email',
                         'string' => 'string',
                         'integer' => 'integer',
+                        'trim' => 'trim',
+                        'double' => 'double',
+                        'boolean' => 'boolean',
+                        'number' => 'number',
                         'url' => 'url',
                     ]
                 ],
@@ -70,3 +82,7 @@ $form = ActiveForm::begin();
     </div>
 </div>
 <?php ActiveForm::end(); ?>
+
+<?php
+echo \panix\mod\admin\widgets\dynamicform\DynamicFormWidget::widget(['id' => 1]);
+?>
