@@ -7,7 +7,8 @@ use panix\engine\widgets\Pjax;
 
 
 Pjax::begin([
-    'id' => 'pjax-container', 'enablePushState' => false,
+    'id' => 'pjax-container',
+    'enablePushState' => false,
 ]);
 
 echo GridView::widget([
@@ -45,17 +46,5 @@ echo GridView::widget([
         ]
     ]
 ]);
-Pjax::end(); ?>
-<?php
-//$test = \panix\mod\admin\models\Timeline::findOne(8);
-//\panix\engine\CMS::dump($test->event_data);
-//$eventData = unserialize($test->event_data);
-
-//$newEvent = new \panix\mod\admin\components\TimelineEvent;
-//$newEvent->test = 'hahah';
-//$newEvent->callback = 'onTest';
-
-//\panix\engine\CMS::dump($event);die;
-//\panix\mod\admin\models\Timeline::add2($newEvent);
-
-
+Pjax::end();
+?>
