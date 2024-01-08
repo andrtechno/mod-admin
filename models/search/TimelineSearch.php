@@ -17,7 +17,7 @@ class TimelineSearch extends Timeline
     {
         return [
             [['id'], 'integer'],
-            [['action'], 'safe'],
+            [['event_data'], 'safe'],
         ];
     }
 
@@ -57,8 +57,6 @@ class TimelineSearch extends Timeline
         $query->andFilterWhere([
             'id' => $this->id,
         ]);
-
-        $query->andFilterWhere(['like', 'action', $this->action]);
 
         return $dataProvider;
     }
