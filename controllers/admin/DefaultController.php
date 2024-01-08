@@ -7,6 +7,7 @@ use panix\engine\CMS;
 use panix\engine\grid\GridColumns;
 use panix\mod\admin\models\DesktopWidgets;
 use panix\mod\admin\models\search\SessionSearch;
+use panix\mod\admin\models\search\TimelineSearch;
 use panix\mod\cart\models\Order;
 use Yii;
 use yii\data\ArrayDataProvider;
@@ -56,12 +57,27 @@ class DefaultController extends AdminController
         return $this->render('index');
     }
 
+    public function actionTimeline()
+    {
+        $this->pageName = Yii::t('app/admin', 'TIMELINE');
+        $this->view->params['breadcrumbs'][] = $this->pageName;
+
+        $searchModel = new TimelineSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('timeline',[
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     public function actionSendChat()
     {
         if (!empty($_POST)) {
             echo \panix\mod\admin\blocks\chat\ChatWidget::sendChat($_POST);
         }
     }
+
     public function actionQueueCounter()
     {
         $q = (new \yii\db\Query());

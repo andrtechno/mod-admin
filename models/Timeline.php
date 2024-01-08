@@ -2,12 +2,11 @@
 
 namespace panix\mod\admin\models;
 
-
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-
+use panix\mod\user\models\User;
 
 class Timeline extends ActiveRecord
 {
@@ -50,17 +49,21 @@ class Timeline extends ActiveRecord
     }
 
     /**
-     * @param $action
+     * @param $event
      * @param array $fields
      * @throws \Throwable
      */
-    public static function add($action, $fields = [])
+    public static function add($event, $fields = [])
     {
         $model = new static;
         $model->user_id = (isset($fields['user_id'])) ? $fields['user_id'] : Yii::$app->user->id;
-        $model->action = $action;
-        //$model->text = '';
+        $model->event_data = serialize($event);
         $model->insert(false);
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     public function behaviors()
